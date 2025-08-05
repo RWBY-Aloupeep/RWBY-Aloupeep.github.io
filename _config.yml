@@ -9,9 +9,9 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default"
-title                    : ""
+title                    : "Homepage"
 title_separator          : "-"
-name                     : &name "Diwen (Steven) Xu"
+name                     : &name "Steven Xu"
 description              : &description "Enjoy~"
 url                      : https://rwby-aloupeep.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
