@@ -11,6 +11,8 @@ redirect_from:
 
 Education
 ======
-* <i><b>Master of Science</b> in Applied and Computational Mathematics</i> at the <b>University of Washington</b>, Seattle, 2027(expected)
-* <i><b>Bachelor of Science</b> in Applied Mathematics</i> at the <b>Chinese University of Hong Kong</b>, Shenzhen, 2025
+* <i><b>Master of Science</b> in Applied and Computational Mathematics</i>
+at the <b>University of Washington</b>, Seattle, 2027 (expected)
+* <i><b>Bachelor of Science</b> in Applied Mathematics</i>
+at the <b>Chinese University of Hong Kong</b>, Shenzhen, 2025
 * <i>Summer Program</i> at the <b>University of Cambridge</b>, Pembroke College, 2023

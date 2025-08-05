@@ -9,10 +9,10 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default"
-title                    : "Diwen (Steven) Xu"
-title_separator          : ""
-name                     : &name ""
-description              : &description ""
+title                    : ""
+title_separator          : "-"
+name                     : &name "Diwen (Steven) Xu"
+description              : &description "Enjoy~"
 url                      : https://rwby-aloupeep.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "RWBY-Aloupeep/RWBY-Aloupeep.github.io"
