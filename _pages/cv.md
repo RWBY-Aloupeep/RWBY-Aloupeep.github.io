@@ -9,8 +9,6 @@ redirect_from:
 
 {% include base_path %}
 ## Education
-- <i><b>Master of Science</b> in Applied and Computational Mathematics</i>  
-&emsp; &emsp; &emsp; &emsp; at the <b>University of Washington</b>, Seattle, 2027 (expected)
-- <i><b>Bachelor of Science</b> in Applied Mathematics</i>  
-&emsp; &emsp; &emsp; &emsp; at the <b>Chinese University of Hong Kong</b>, Shenzhen, 2025
-<i>Summer Program</i> at the <b>University of Cambridge</b>, Pembroke College, 2023
+- <i><b>Master of Science</b> in Applied and Computational Mathematics</i>, <b>University of Washington</b>, Seattle, 2027
+- <i><b>Bachelor of Science</b> in Applied Mathematics</i>, <b>Chinese University of Hong Kong</b>, Shenzhen, 2025
+- <i>Summer Program</i>, <b>University of Cambridge</b>, Pembroke College, 2023
