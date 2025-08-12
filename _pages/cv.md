@@ -8,7 +8,10 @@ redirect_from:
 ---
 
 {% include base_path %}
-## Education
-- <i><b>Master of Science</b> in Applied and Computational Mathematics</i>, <b>University of Washington</b>, Seattle, 2027
-- <i><b>Bachelor of Science</b> in Applied Mathematics</i>, <b>Chinese University of Hong Kong</b>, Shenzhen, 2025
-- <i>Summer Program</i>, <b>University of Cambridge</b>, Pembroke College, 2023
+## Education Background
+- <b>Master of Science</b> in Computational Mathematics, <b>University of Washington</b>, Seattle, 2027
+- <b>Bachelor of Science</b> in Applied Mathematics, <b>Chinese University of Hong Kong</b>, Shenzhen</i>, 2025
+- Summer Program, <b>University of Cambridge</b>, Pembroke College, 2023
+
+## Research Experience
+- <b>Research Assistant</b> supervised by Dr. Xiaoguang Han, 2024
