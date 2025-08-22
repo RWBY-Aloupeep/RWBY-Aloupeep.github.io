@@ -14,4 +14,4 @@ redirect_from:
 - Summer Program, <b>University of Cambridge</b>, Pembroke College, 2023
 
 ## Research Experience
-- <b>Research Assistant</b> supervised by Dr. Xiaoguang Han, 2024
+- <b>Research Assistant</b>, supervised by Dr. Xiaoguang Han, CUHK-SZ, 2024
