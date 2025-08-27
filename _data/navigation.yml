@@ -31,6 +31,9 @@ main:
 
   - title: "Misc"
     url: /misc/
+
+  - title: "Acks"
+    url: /acks/
     
   # - title: "Guide"
   #   url: /markdown/
