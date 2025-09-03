@@ -2,8 +2,8 @@ const canvas = document.getElementById("stars-canvas");
 const ctx = canvas.getContext("2d");
 
 let stars = [];
-const numStars = 15;
-let mouse = { x: null, y: null, radius: 10 };
+const numStars = 10;
+let mouse = { x: null, y: null, radius: 8 };
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -31,12 +31,50 @@ function drawStar(ctx, x, y, r, points = 5) {
 
   // shiny silver gradient
   let gradient = ctx.createRadialGradient(x, y, innerRadius * 0.2, x, y, outerRadius);
-  gradient.addColorStop(0, "#ffffff");
-  gradient.addColorStop(0.5, "#c0c0c0");
+  gradient.addColorStop(0, "#c0c0c0");
+  gradient.addColorStop(0.5, "#a0a0a0ff");
   gradient.addColorStop(1, "#808080");
+
+  // add glowing effect
+  ctx.shadowBlur = 20;
+  ctx.shadowColor = "rgba(200, 200, 255, 0.8)";
 
   ctx.fillStyle = gradient;
   ctx.fill();
+
+  // reset shadow for next shapes
+  ctx.shadowBlur = 0;
+}
+
+function resolveCollision(s1, s2) {
+  const dx = s2.x - s1.x;
+  const dy = s2.y - s1.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+
+  if (dist < s1.radius + s2.radius) {
+    // simple elastic collision
+    const angle = Math.atan2(dy, dx);
+
+    // separate stars so they don’t overlap
+    const overlap = s1.radius + s2.radius - dist;
+    const moveX = Math.cos(angle) * overlap / 2;
+    const moveY = Math.sin(angle) * overlap / 2;
+
+    s1.x -= moveX;
+    s1.y -= moveY;
+    s2.x += moveX;
+    s2.y += moveY;
+
+    // swap velocities (1D elastic along angle)
+    const v1 = s1.vx * Math.cos(angle) + s1.vy * Math.sin(angle);
+    const v2 = s2.vx * Math.cos(angle) + s2.vy * Math.sin(angle);
+
+    const temp = v1;
+    s1.vx += (v2 - v1) * Math.cos(angle);
+    s1.vy += (v2 - v1) * Math.sin(angle);
+    s2.vx += (temp - v2) * Math.cos(angle);
+    s2.vy += (temp - v2) * Math.sin(angle);
+  }
 }
 
 class Star {
@@ -105,6 +143,12 @@ init();
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   stars.forEach(s => s.update());
+  // check pairwise collisions
+  for (let i = 0; i < stars.length; i++) {
+    for (let j = i + 1; j < stars.length; j++) {
+      resolveCollision(stars[i], stars[j]);
+    }
+  }
   requestAnimationFrame(animate);
 }
 animate();
