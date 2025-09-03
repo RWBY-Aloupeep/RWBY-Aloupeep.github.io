@@ -3,19 +3,34 @@ const ctx = canvas.getContext("2d");
 
 let stars = [];
 const numStars = 8;
-let mouse = { x: null, y: null, radius: 80 };
+let mouse = { x: null, y: null, radius: 40 };
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
 resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
+window.addEventListener("resize", () => {
+  resizeCanvas();
+  init(); // re-spawn stars inside new bounds
+});
 
 window.addEventListener("mousemove", e => {
   mouse.x = e.x;
   mouse.y = e.y;
 });
+
+function getBounds() {
+  const nav = document.querySelector("nav");       // your top nav element
+  const footer = document.querySelector("footer"); // your sitemap/footer element
+  const navHeight = nav ? nav.offsetHeight : 0;
+  const footerHeight = footer ? footer.offsetHeight : 0;
+
+  return {
+    top: navHeight,
+    bottom: canvas.height - footerHeight
+  };
+}
 
 class Star {
   constructor(x, y, radius) {
@@ -38,22 +53,28 @@ class Star {
     ctx.closePath();
   }
 
-  update() {
-    // bounce off edges
+  update(bounds) {
+    // bounce horizontally
     if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
       this.vx *= -1;
     }
-    if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+
+    // bounce vertically but respect nav + footer
+    if (this.y - this.radius < bounds.top) {
+      this.y = bounds.top + this.radius;
+      this.vy *= -1;
+    }
+    if (this.y + this.radius > bounds.bottom) {
+      this.y = bounds.bottom - this.radius;
       this.vy *= -1;
     }
 
-    // mouse collision physics
+    // mouse repulsion
     let dx = mouse.x - this.x;
     let dy = mouse.y - this.y;
     let dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist < mouse.radius + this.radius) {
-      // simple repulsion
       let angle = Math.atan2(dy, dx);
       this.vx -= Math.cos(angle) * 0.5;
       this.vy -= Math.sin(angle) * 0.5;
@@ -72,10 +93,16 @@ class Star {
 // init stars
 function init() {
   stars = [];
+  const bounds = getBounds();
+
   for (let i = 0; i < numStars; i++) {
     let radius = 12 + Math.random() * 8;
+
     let x = Math.random() * (canvas.width - radius * 2) + radius;
-    let y = Math.random() * (canvas.height - radius * 2) + radius;
+
+    // spawn only between nav and footer
+    let y = Math.random() * (bounds.bottom - bounds.top - radius * 2) + bounds.top + radius;
+
     stars.push(new Star(x, y, radius));
   }
 }
@@ -83,7 +110,8 @@ init();
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  stars.forEach(s => s.update());
+  const bounds = getBounds();
+  stars.forEach(s => s.update(bounds));
   requestAnimationFrame(animate);
 }
 animate();
