@@ -12,6 +12,7 @@ redirect_from:
 - <b>Master of Science</b> in Computational Mathematics, <b>University of Washington</b>, Seattle, 2027
 - <b>Bachelor of Science</b> in Applied Mathematics, <b>Chinese University of Hong Kong</b>, Shenzhen, 2025
 - Summer Program, <b>University of Cambridge</b>, Pembroke College, 2023
+- Changzhou Beijiao High School, 2021; Changzhou Foreign Languages School, 2018; Changzhou Xiheng St. Elementary School, 2015
 
 ## Research Experience
 - <b>Research Assistant</b>, supervised by Dr. Xiaoguang Han, CUHK-SZ, 2024
