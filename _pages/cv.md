@@ -15,4 +15,4 @@ redirect_from:
 - Changzhou Beijiao H.S., 2021; Changzhou Foreign Languages M.S., 2018; Changzhou Xiheng Street E.S., 2015
 
 ## Research Experience
-- <b>Research Assistant</b>, supervised by Dr. Xiaoguang Han, CUHK-SZ, 2024
+- <b>Research Assistant</b>, Supervised by Dr. Xiaoguang Han, CUHK-SZ, 2024
