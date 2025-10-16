@@ -349,9 +349,6 @@ b, i, strong, em, blockquote, p, q, span, figure, img, h1, h2, header, input, a,
    You can customize this by setting the CSS variable --bold-text-color in your theme files
    (for example in _sass/theme/_default.scss). If not set, it falls back to the blue below.
 */
-strong, b {
-  color: var(--bold-text-color, #8e7cc3);
-}
 
 /* Italic color: applies to <em> and <i>. Default fallback uses the requested #ffb703. */
 em, i {
