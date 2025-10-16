@@ -6,14 +6,14 @@ author_profile: true
 
 {% include base_path %}
 
-*“Happiness is the meaning and the purpose of life, the whole aim and end of human existence.”* - Aristotle
+<i>“Happiness is the meaning and the purpose of life, the whole aim and end of human existence.”</i> - Aristotle
 
-**Philosophy** is really important to me. I’ve always been inspired by philosophers like Aristotle and Descartes.
+<b>Philosophy</b> is really important to me, especially philosophers like Aristotle and Descartes.
 
-I love **music**, especially post-rock and light music. Ed Sheeran is my favorite artist.
+I love <b>music</b>, especially post-rock and light music. Ed Sheeran is my favorite artist.
 
-I love **anime**. Sword Art Online, Reborn! are my favorites.
+I love <b>anime</b>. Sword Art Online, Reborn! are my favorites.
 
-I love **games**, especially Metroidvania and Elden Ring.
+I love <b>games</b>, especially Metroidvania and Elden Ring.
 
-I love **swimming**, including Freestyle, Breaststroke, Backstroke, and Butterfly.  
+I love <b>swimming</b>, including Freestyle, Breaststroke, Backstroke, and Butterfly.

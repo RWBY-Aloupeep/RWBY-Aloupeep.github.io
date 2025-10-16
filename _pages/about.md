@@ -7,10 +7,10 @@ redirect_from:
   - /about.html
 ---
 
-<span style="color:#ffb703;">*“All men by nature desire to know.”* — Aristotle</span>
+<i>“All men by nature desire to know.”</i> — Aristotle
 
-Driven by curiosity about the physical world, I am pursuing a Master's degree in <span style="color:#0077b6; font-weight:bold;">Computational Mathematics</span> at the <span style="color:#0077b6; font-weight:bold;">University of Washington</span>. Previously, I earned my Bachelor's degree in <span style="color:#0077b6; font-weight:bold;">Applied Mathematics</span> from the <span style="color:#0077b6; font-weight:bold;">Chinese University of Hong Kong</span>, where I was advised by [Dr. Xiaoguang Han](https://gaplab.cuhk.edu.cn/pages/people){:target="_blank" style="text-decoration: none;"} and [Dr. Shihua Gong](https://www.shihua-gong.org/){:target="_blank" style="text-decoration: none;"}.
+Driven by curiosity about the physical world, I am pursuing a Master's degree in <b>Computational Mathematics</b> at the <b>University of Washington</b>. Previously, I earned my Bachelor's degree in <b>Applied Mathematics</b> from the <b>Chinese University of Hong Kong</b>, where I was advised by [Dr. Xiaoguang Han](https://gaplab.cuhk.edu.cn/pages/people){:target="_blank" style="text-decoration: none;"} and [Dr. Shihua Gong](https://www.shihua-gong.org/){:target="_blank" style="text-decoration: none;"}.
 
-My research explores the integration of **numerical** and **neural methods** for **physics simulation** in science and engineering, with particular interests in graphics and physics. Broadly, my work bridges **visual computing**, **scientific computing**, and **artificial intelligence**, focusing on **differentiable simulation** and **neural surrogate**.
+My research explores the integration of <b>numerical</b> and <b>neural methods</b> for <b>physics simulation</b> in science and engineering, with particular interests in graphics and physics. Broadly, my work bridges <b>visual computing</b>, <b>scientific computing</b>, and <b>artificial intelligence</b>, focusing on <b>differentiable simulation</b> and <b>neural surrogate</b>.
 
-As Richard Feynman once said, *“What I cannot create, I do not understand.”* My long-term goal is to build the next generation of **AI-accelerated physics engines** — systems that not only simulate the world, but also help us understand it more deeply.
+As Richard Feynman once said, <i>“What I cannot create, I do not understand.”</i> My long-term goal is to build the next generation of <b>AI-accelerated physics engines</b> — systems that not only simulate the world, but also help us understand it more deeply.
