@@ -13,7 +13,7 @@ title                    : "Diwen (Steven) Xu"
 title_separator          : "-"
 name                     : &name "Diwen (Steven) Xu"
 description              : &description "Enjoying what I am suffering.
-                                         Remembering that I am going to die."
+                                         Remembering that I'll die."
 url                      : https://rwby-aloupeep.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "RWBY-Aloupeep/RWBY-Aloupeep.github.io"
@@ -27,7 +27,7 @@ author:
   name             : "Steven Xu 许迪文"
   pronouns         :  
   bio              : "Enjoying what I am suffering.
-                      Remembering that I am going to die."
+                      Remembering that I'll die."
   location         : 
   uri              : # URL
   email            : "rwbyaloupeep@gmail.com" 
