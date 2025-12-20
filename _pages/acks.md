@@ -1,7 +1,7 @@
 ---
 title: "Acknowledgments"
 permalink: /acks/
-author_profile: true
+author_profile: false
 ---
 
 {% include base_path %}
