@@ -12,7 +12,7 @@ $background                 : #474747;
 $background-light           : mix(#fff, $background, 80%);
 $background-lighter         : mix(#fff, $background, 90%);
 $text                       : #ffffff;
-$link                       : #0ea1c5;
+$link                       : #8b5cf6;
 $link-dark                  : mix(#000, $link, 25%);
 $link-light                 : mix(#fff, $link, 25%);
 
@@ -51,5 +51,8 @@ html[data-theme="dark"] {
     --global-text-color                 : #{$text};
     --global-text-color-light           : #{$light-gray};
     --global-thead-color                : #{$background-lighter};
-    --italic-text-color                 : #eab308;
+    --global-bg-gradient                : radial-gradient(1100px circle at 10% 5%, rgba(139, 92, 246, 0.18), transparent 55%),
+                                          radial-gradient(900px circle at 85% 15%, rgba(212, 175, 55, 0.16), transparent 45%);
+    --global-heading-accent-color       : #{$link};
+    --italic-text-color                 : #d4af37;
 }
