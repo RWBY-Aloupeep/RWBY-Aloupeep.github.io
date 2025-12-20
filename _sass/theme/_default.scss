@@ -36,16 +36,16 @@ $sidebar-screen-min-width   : 1024px;
     --global-code-background-color      : #fafafa;
     --global-code-text-color            : #{$darker-gray};
     --global-fig-caption-color          : mix(#fff,  #{$dark-gray}, 25%);
-    --global-link-color                 : #52adc8;
-    --global-link-color-hover           : mix(#000, #2f7f93, 25%);
-    --global-link-color-visited         : mix(#fff, #2f7f93, 25%);  
+    --global-link-color                 : #6d28d9;
+    --global-link-color-hover           : mix(#000, #6d28d9, 25%);
+    --global-link-color-visited         : mix(#fff, #6d28d9, 25%);  
     --global-masthead-link-color        : #{$dark-gray};
     --global-masthead-link-color-hover  : mix(#000, #{$gray}, 25%);    
     --global-text-color                 : #{$dark-gray};
     --global-text-color-light           : #{$light-gray};
     --global-thead-color                : #{$lighter-gray};
-    --global-bg-gradient                : radial-gradient(1100px circle at 10% 5%, rgba(82, 173, 200, 0.16), transparent 55%),
-                                          radial-gradient(900px circle at 85% 15%, rgba(234, 179, 8, 0.12), transparent 45%);
-    --global-heading-accent-color       : #52adc8;
-    --italic-text-color                 : #eab308;
+    --global-bg-gradient                : radial-gradient(1100px circle at 10% 5%, rgba(109, 40, 217, 0.16), transparent 55%),
+                                          radial-gradient(900px circle at 85% 15%, rgba(212, 175, 55, 0.14), transparent 45%);
+    --global-heading-accent-color       : #6d28d9;
+    --italic-text-color                 : #d4af37;
 }
