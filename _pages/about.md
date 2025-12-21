@@ -7,11 +7,11 @@ redirect_from:
   - /about.html
 ---
 
-<div class="hero-splash" style="background-image: url('{{ site.baseurl }}/images/homepage.png');">
+<div class="hero-splash" style="background-image: url('{{ site.baseurl }}/images/homepage.jpg);">
   <div class="hero-splash__overlay"></div>
   <div class="hero-splash__content">
-    <h1 class="hero-splash__title">{{ site.author.name }}</h1>
-    <p class="hero-splash__bio">{{ site.author.bio | newline_to_br }}</p>
+    <h1 class="hero-splash__title"></h1>
+    <p class="hero-splash__bio"></p>
   </div>
 </div>
 
