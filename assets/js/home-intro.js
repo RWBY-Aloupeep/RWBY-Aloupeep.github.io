@@ -20,11 +20,15 @@ const initHomeIntro = () => {
 
   document.body.classList.add("home-intro-active");
   overlay.setAttribute("aria-hidden", "false");
+  setTimeout(() => {
+    document.body.classList.add("home-intro-ready");
+  }, 600);
 
   overlay.addEventListener("click", () => {
     overlay.classList.add("is-hidden");
     overlay.setAttribute("aria-hidden", "true");
     document.body.classList.remove("home-intro-active");
+    document.body.classList.remove("home-intro-ready");
     sessionStorage.setItem(INTRO_STORAGE_KEY, "true");
   }, { once: true });
 };
