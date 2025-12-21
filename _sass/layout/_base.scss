@@ -20,6 +20,7 @@ body {
   padding-bottom: 9em;
   font-family: $global-font-family;
   line-height: 1.5;
+  overflow-x: hidden;
 
   &.overflow--hidden {
     /* when primary navigation is visible, the content in the background won't scroll */
@@ -37,16 +38,6 @@ h1, h2, h3, h4, h5, h6 {
 h1, h2, h3 {
   position: relative;
   letter-spacing: 0.01em;
-
-  &::after {
-    content: "";
-    display: block;
-    margin-top: 0.4em;
-    width: 2.6em;
-    height: 3px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--global-heading-accent-color), transparent);
-  }
 }
 
 h1 {
