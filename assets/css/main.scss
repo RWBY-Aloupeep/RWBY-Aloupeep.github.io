@@ -4,9 +4,11 @@
 /*
  * This file controls what is imported from /_sass
  *
- * Note that the files are processed in the order they are imported, so they are partly
-   sorted by the dependencies. Also, the first two lines of the file are required by Jekyll.
+   * Note that the files are processed in the order they are imported, so they are partly
+     sorted by the dependencies. Also, the first two lines of the file are required by Jekyll.
  */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap");
 
 @import
     "vendor/breakpoint/breakpoint",
@@ -50,7 +52,7 @@
   color: #fff;
   background-position: center;
   background-size: cover;
-  margin: 0;
+  margin: 0 0 2.5rem;
   width: 100%;
 }
 
