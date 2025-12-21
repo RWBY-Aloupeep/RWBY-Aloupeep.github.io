@@ -55,6 +55,26 @@
     clear: both;
     list-style-type: none;
   }
+
+  .greedy-nav--no-collapse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > button,
+    .hidden-links {
+      display: none !important;
+    }
+
+    .visible-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      width: 100%;
+    }
+  }
 }
 
 .masthead__menu-item {
@@ -64,7 +84,8 @@
   white-space: nowrap;
 
   &--lg {
-    padding-right: 2em;
+    margin: 0 1.5rem;
+    font-size: 1.35rem;
     font-weight: 700;
   }
 }

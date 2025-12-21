@@ -3,11 +3,22 @@
 <div class="masthead">
   <div class="masthead__inner-wrap">
     <div class="masthead__menu">
-      <nav id="site-nav" class="greedy-nav">
+      {% assign nav_links = site.data.navigation.main %}
+      {% assign nav_count = nav_links | size %}
+      {% assign nav_split = nav_count | divided_by: 2 %}
+      <nav id="site-nav" class="greedy-nav greedy-nav--no-collapse">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
+          {% for link in nav_links limit: nav_split %}
+            {% if link.url contains 'http' %}
+              {% assign domain = '' %}
+            {% else %}
+              {% assign domain = base_path %}
+            {% endif %}
+            <li class="masthead__menu-item"><a href="{{ domain }}{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
           <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="{{ base_path }}/">{{ site.title }}</a></li>
-          {% for link in site.data.navigation.main %}
+          {% for link in nav_links offset: nav_split %}
             {% if link.url contains 'http' %}
               {% assign domain = '' %}
             {% else %}
