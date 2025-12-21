@@ -10,7 +10,7 @@ redirect_from:
 <div class="home-intro">
   <div class="home-intro__overlay" data-home-intro aria-hidden="true">
     <div class="home-intro__text">
-      <p class="home-intro__line home-intro__line--first">《》</p>
+      <p class="home-intro__line home-intro__line--first">《   》</p>
       <p class="home-intro__line home-intro__line--second">Welcome to my story.</p>
       <p class="home-intro__line home-intro__line--third">Enjoy~</p>
     </div>
