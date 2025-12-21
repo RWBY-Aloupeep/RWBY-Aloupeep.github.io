@@ -8,7 +8,6 @@ redirect_from:
 ---
 
 <div class="hero-splash" style="background-image: url('{{ site.baseurl }}/images/homepage.jpg');">
-  <div class="hero-splash__overlay"></div>
   <div class="hero-splash__content">
     <h1 class="hero-splash__title"></h1>
     <p class="hero-splash__bio"></p>

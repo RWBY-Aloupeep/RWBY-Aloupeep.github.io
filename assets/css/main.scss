@@ -50,14 +50,8 @@
   color: #fff;
   background-position: center;
   background-size: cover;
-  margin: 0 calc(50% - 50vw);
-  width: 100vw;
-}
-
-.hero-splash__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  margin: 0;
+  width: 100%;
 }
 
 .hero-splash__content {

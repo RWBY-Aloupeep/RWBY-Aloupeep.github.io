@@ -205,15 +205,19 @@
   }
 
   .visible-links {
-    display: table;
+    display: flex;
+    align-items: center;
+    width: 100%;
 
     li {
-      display: table-cell;
+      display: flex;
       vertical-align: middle;
 
       &:first-child {
         font-weight: bold;
         text-wrap: wrap;
+        order: 2;
+        margin: 0 auto;
 
         a {
           margin-left: 0;
@@ -228,12 +232,27 @@
     }
 
     #theme-toggle {
+      order: 4;
+
       a {
         width: 25px;
         display: flex;
         justify-content: center;
         cursor: pointer;
       }
+    }
+
+    .masthead__menu-item:not(.persist) {
+      order: 1;
+    }
+
+    .masthead__menu-item:not(.persist):nth-of-type(2) {
+      margin-right: auto;
+    }
+
+    .masthead__menu-item:not(.persist):nth-last-of-type(2) {
+      order: 3;
+      margin-left: auto;
     }
 
     a {
