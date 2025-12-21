@@ -1,11 +1,19 @@
 ---
 permalink: /
-title: "Biography"
-author_profile: true
+title: ""
+author_profile: false
 redirect_from: 
   - /about/
   - /about.html
 ---
+
+<div class="hero-splash" style="background-image: url('{{ site.baseurl }}/images/homepage.png');">
+  <div class="hero-splash__overlay"></div>
+  <div class="hero-splash__content">
+    <h1 class="hero-splash__title">{{ site.author.name }}</h1>
+    <p class="hero-splash__bio">{{ site.author.bio | newline_to_br }}</p>
+  </div>
+</div>
 
 <i>“All men by nature desire to know.”</i> — Aristotle
 
