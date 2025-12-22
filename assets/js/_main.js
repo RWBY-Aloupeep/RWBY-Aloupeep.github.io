@@ -92,9 +92,6 @@ $(document).ready(function () {
 
   // If the user hasn't chosen a theme, follow the OS preference
   setTheme();
-  requestAnimationFrame(() => {
-    document.body.classList.add("page-transition-ready");
-  });
   window.matchMedia('(prefers-color-scheme: dark)')
         .addEventListener("change", (e) => {
           if (!localStorage.getItem("theme")) {
