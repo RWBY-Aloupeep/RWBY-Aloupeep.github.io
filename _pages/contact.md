@@ -1,5 +1,5 @@
 ---
-title: "联系方式Contact"
+title: "Contact"
 permalink: /contact/
 author_profile: false
 ---
