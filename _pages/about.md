@@ -10,12 +10,12 @@ redirect_from:
 <div class="home-intro">
   <div class="home-intro__overlay" data-home-intro aria-hidden="true">
     <div class="home-intro__text">
-      <p class="home-intro__line home-intro__line--first">《   》</p>
+      <p class="home-intro__line home-intro__line--first">《 <span class="home-intro__cursor">|</span> 》</p>
       <p class="home-intro__line home-intro__line--second">Welcome to my story.</p>
       <p class="home-intro__line home-intro__line--third">Enjoy~</p>
     </div>
   </div>
-<div class="home-intro__content">
+<div class="home-intro__content" markdown="1">
     <div class="hero-splash" style="background-image: url('{{ site.baseurl }}/images/homepage.jpg');">
       <div class="hero-splash__content">
         <h1 class="hero-splash__title"></h1>
