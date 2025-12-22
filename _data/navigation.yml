@@ -34,6 +34,9 @@ main:
 
   - title: "Acks"
     url: /acks/
+
+  - title: "联系方式Contact"
+    url: /contact/
     
   # - title: "Guide"
   #   url: /markdown/
