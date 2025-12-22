@@ -4,6 +4,7 @@ const ctx = canvas.getContext("2d");
 let stars = [];
 const numStars = 10;
 let mouse = { x: null, y: null, radius: 8 };
+const exclusionZone = { widthRatio: 0.4, heightRatio: 0.4 };
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -77,6 +78,52 @@ function resolveCollision(s1, s2) {
   }
 }
 
+function getExclusionRect(padding = 0) {
+  const width = canvas.width * exclusionZone.widthRatio;
+  const height = canvas.height * exclusionZone.heightRatio;
+  const left = (canvas.width - width) / 2 - padding;
+  const right = (canvas.width + width) / 2 + padding;
+  const top = (canvas.height - height) / 2 - padding;
+  const bottom = (canvas.height + height) / 2 + padding;
+
+  return { left, right, top, bottom };
+}
+
+function isInExclusionZone(x, y, radius = 0) {
+  const rect = getExclusionRect(radius);
+  return x > rect.left && x < rect.right && y > rect.top && y < rect.bottom;
+}
+
+function pushOutOfExclusion(star) {
+  if (!isInExclusionZone(star.x, star.y, star.radius)) {
+    return;
+  }
+
+  const rect = getExclusionRect(star.radius);
+  const distances = [
+    { edge: "left", distance: Math.abs(star.x - rect.left) },
+    { edge: "right", distance: Math.abs(rect.right - star.x) },
+    { edge: "top", distance: Math.abs(star.y - rect.top) },
+    { edge: "bottom", distance: Math.abs(rect.bottom - star.y) },
+  ];
+  distances.sort((a, b) => a.distance - b.distance);
+  const nearest = distances[0].edge;
+
+  if (nearest === "left") {
+    star.x = rect.left - 1;
+    star.vx = -Math.abs(star.vx);
+  } else if (nearest === "right") {
+    star.x = rect.right + 1;
+    star.vx = Math.abs(star.vx);
+  } else if (nearest === "top") {
+    star.y = rect.top - 1;
+    star.vy = -Math.abs(star.vy);
+  } else {
+    star.y = rect.bottom + 1;
+    star.vy = Math.abs(star.vy);
+  }
+}
+
 class Star {
   constructor(x, y, radius) {
     this.x = x;
@@ -121,6 +168,8 @@ class Star {
     this.x += this.vx;
     this.y += this.vy;
 
+    pushOutOfExclusion(this);
+
     this.vx *= 0.98; // friction
     this.vy *= 0.98;
 
@@ -133,8 +182,14 @@ function init() {
   stars = [];
   for (let i = 0; i < numStars; i++) {
     let radius = 12 + Math.random() * 8;
-    let x = Math.random() * (canvas.width - radius * 2) + radius;
-    let y = Math.random() * (canvas.height - radius * 2) + radius;
+    let x = 0;
+    let y = 0;
+    let attempts = 0;
+    do {
+      x = Math.random() * (canvas.width - radius * 2) + radius;
+      y = Math.random() * (canvas.height - radius * 2) + radius;
+      attempts += 1;
+    } while (isInExclusionZone(x, y, radius) && attempts < 50);
     stars.push(new Star(x, y, radius));
   }
 }
