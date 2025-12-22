@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d");
 let stars = [];
 const numStars = 10;
 let mouse = { x: null, y: null, radius: 8 };
-const exclusionZone = { widthRatio: 0.5, heightRatio: 1.0 };
+const exclusionZone = { widthRatio: 0.6, heightRatio: 1.0 };
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
