@@ -185,8 +185,12 @@ function init() {
     let x = 0;
     let y = 0;
     let attempts = 0;
+    const halfWidth = canvas.width / 2;
+    const isLeftSide = i < numStars / 2;
+    const minX = isLeftSide ? radius : halfWidth + radius;
+    const maxX = isLeftSide ? halfWidth - radius : canvas.width - radius;
     do {
-      x = Math.random() * (canvas.width - radius * 2) + radius;
+      x = Math.random() * (maxX - minX) + minX;
       y = Math.random() * (canvas.height - radius * 2) + radius;
       attempts += 1;
     } while (isInExclusionZone(x, y, radius) && attempts < 50);
