@@ -23,12 +23,36 @@ const initHomeIntro = () => {
   overlay.setAttribute("aria-hidden", "false");
 
   let canDismiss = false;
+  let pendingDismiss = false;
+  let dismissedNow = false;
+  const dismissIntro = () => {
+    if (dismissedNow) {
+      return;
+    }
+    dismissedNow = true;
+    overlay.classList.add("is-hidden");
+    overlay.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("home-intro-active");
+    document.body.classList.remove("home-intro-ready");
+    sessionStorage.setItem(INTRO_STORAGE_KEY, "true");
+    overlay.removeEventListener("click", handleOverlayClick);
+  };
+  const handleOverlayClick = () => {
+    if (!canDismiss) {
+      pendingDismiss = true;
+      return;
+    }
+    dismissIntro();
+  };
   const enableDismiss = () => {
     if (canDismiss) {
       return;
     }
     canDismiss = true;
     overlay.classList.add("is-clickable");
+    if (pendingDismiss) {
+      dismissIntro();
+    }
   };
 
   if (finalLine) {
@@ -41,16 +65,7 @@ const initHomeIntro = () => {
 
   setTimeout(enableDismiss, 4500);
 
-  overlay.addEventListener("click", () => {
-    if (!canDismiss) {
-      return;
-    }
-    overlay.classList.add("is-hidden");
-    overlay.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("home-intro-active");
-    document.body.classList.remove("home-intro-ready");
-    sessionStorage.setItem(INTRO_STORAGE_KEY, "true");
-  }, { once: true });
+  overlay.addEventListener("click", handleOverlayClick);
 };
 
 if (document.readyState === "loading") {
