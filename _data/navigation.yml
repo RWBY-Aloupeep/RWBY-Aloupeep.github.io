@@ -29,6 +29,9 @@ main:
   # - title: "Projects"
   #   url: /projs/
 
+  - title: "Study"
+    url: /study/
+
   - title: "Misc"
     url: /misc/
 
