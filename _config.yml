@@ -16,7 +16,7 @@ description              : &description |
   Enjoy the suffering.
   Actions shape the mind.
   The mind shapes fate.
-url                      : https://rwby-aloupeep.github.io
+url                      : # https://rwby-aloupeep.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "RWBY-Aloupeep/RWBY-Aloupeep.github.io"
 
