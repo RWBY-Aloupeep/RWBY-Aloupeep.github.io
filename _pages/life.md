@@ -1,6 +1,6 @@
 ---
-title: "Miscellaneous"
-permalink: /misc/
+title: "Life · Chapter III"
+permalink: /life/
 author_profile: false
 ---
 
