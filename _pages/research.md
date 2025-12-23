@@ -7,6 +7,6 @@ author_profile: false
 
 {% include base_path %}
 
-## Research Experience
+## Experience
 - <b>Community Contributor</b>, Physics-Based Simulation Online Book, 2025
 - <b>Research Assistant</b>, Supervised by Dr. Xiaoguang Han, CUHK-SZ, 2024
