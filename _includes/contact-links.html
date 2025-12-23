@@ -13,9 +13,6 @@
     <li class="author__desktop"><i class="fas fa-fw fa-building-columns icon-pad-right" aria-hidden="true"></i>{{ author.employer }}</li>
   {% endif %}
   {% assign website_url = author.uri | default: site.url %}
-  {% if website_url %}
-    <li><a target="_blank" rel="noopener noreferrer" href="{{ website_url }}"><i class="fas fa-fw fa-link icon-pad-right" aria-hidden="true"></i>{{ website_url }}</a></li>
-  {% endif %}
   {% assign email_address = author.email | strip %}
   {% if email_address %}
     <li><a target="_blank" rel="noopener noreferrer" href="mailto:{{ email_address }}"><i class="fas fa-fw fa-envelope icon-pad-right" aria-hidden="true"></i>{{ email_address }}</a></li>
