@@ -77,6 +77,7 @@
 
 .home-intro {
   position: relative;
+  --home-intro-bg: none;
 }
 
 .home-intro__overlay {
@@ -86,7 +87,11 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: transparent;
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+    var(--home-intro-bg, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--global-text-color);
   z-index: 1000;
   cursor: default;
