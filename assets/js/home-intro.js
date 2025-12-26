@@ -62,8 +62,12 @@ const initHomeIntro = () => {
     }
   };
 
+  const handleFinalLineAnimationEnd = () => {
+    enableDismiss();
+  };
+
   if (finalLine) {
-    finalLine.addEventListener("animationend", enableDismiss, { once: true });
+    finalLine.addEventListener("animationend", handleFinalLineAnimationEnd, { once: true });
   }
 
   setTimeout(() => {
