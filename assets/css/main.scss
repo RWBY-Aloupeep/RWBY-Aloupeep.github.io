@@ -139,6 +139,9 @@
   opacity: 1;
   visibility: visible;
   transition: opacity 0.6s ease, transform 0.6s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .home-hero {
