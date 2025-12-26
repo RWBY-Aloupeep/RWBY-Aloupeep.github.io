@@ -15,12 +15,10 @@ const initHomeIntro = () => {
   const redirectTarget = overlay.dataset.homeIntroTarget;
   const dismissed = sessionStorage.getItem(INTRO_STORAGE_KEY) === "true";
   if (dismissed) {
-    if (redirectTarget) {
-      window.location.href = redirectTarget;
-      return;
-    }
     overlay.classList.add("is-hidden");
     overlay.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("home-intro-active");
+    document.body.classList.remove("home-intro-ready");
     return;
   }
 
