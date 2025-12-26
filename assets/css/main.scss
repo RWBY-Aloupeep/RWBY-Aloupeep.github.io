@@ -78,6 +78,9 @@
 .home-intro {
   position: relative;
   min-height: 100vh;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 
 .home-intro__overlay {
