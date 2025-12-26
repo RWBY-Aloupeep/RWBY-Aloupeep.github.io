@@ -16,8 +16,9 @@ redirect_from:
     </div>
   </div>
   <div class="home-intro__content">
-    <div class="hero-splash" style="background-image: url('{{ site.baseurl }}/images/homepage.jpg');">
-    </div>
+    <figure class="home-hero">
+      <img class="home-hero__image" src="{{ '/images/homepage.jpg' | relative_url }}" alt="Homepage welcome artwork">
+    </figure>
   </div>
 </div>
 

@@ -142,23 +142,16 @@
 }
 
 .home-hero {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin: 0 auto;
-  width: 100%;
-  max-width: 1200px;
-  height: 100vh;
-  position: relative;
+  max-width: 1080px;
 }
 
 .home-hero__image {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  height: auto;
 }
+
 
 .home-intro__overlay.is-clickable {
   cursor: pointer;
