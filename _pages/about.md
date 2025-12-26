@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-<div class="home-intro">
+<div class="home-intro" style="--home-intro-bg: url('{{ site.baseurl }}/images/homepage.jpg');">
   <div class="home-intro__overlay" data-home-intro aria-hidden="true">
     <div class="home-intro__text">
       <p class="home-intro__line home-intro__line--first">《 <span class="home-intro__cursor">|</span> 》</p>
