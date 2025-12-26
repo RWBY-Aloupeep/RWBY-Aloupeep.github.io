@@ -1,26 +1,5 @@
 const INTRO_STORAGE_KEY = "homeIntroDismissed";
 
-const getIntroDismissed = () => {
-  try {
-    return (
-      window.localStorage.getItem(INTRO_STORAGE_KEY) === "true" ||
-      window.sessionStorage.getItem(INTRO_STORAGE_KEY) === "true"
-    );
-  } catch (error) {
-    return false;
-  }
-};
-
-const persistIntroDismissed = () => {
-  try {
-    window.sessionStorage.setItem(INTRO_STORAGE_KEY, "true");
-  } catch (error) {}
-
-  try {
-    window.localStorage.setItem(INTRO_STORAGE_KEY, "true");
-  } catch (error) {}
-};
-
 const initHomeIntro = () => {
   const intro = document.querySelector(".home-intro");
   if (!intro) {
