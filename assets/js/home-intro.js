@@ -12,8 +12,13 @@ const initHomeIntro = () => {
   }
 
   const finalLine = intro.querySelector(".home-intro__line--third");
+  const redirectTarget = overlay.dataset.homeIntroTarget;
   const dismissed = sessionStorage.getItem(INTRO_STORAGE_KEY) === "true";
   if (dismissed) {
+    if (redirectTarget) {
+      window.location.href = redirectTarget;
+      return;
+    }
     overlay.classList.add("is-hidden");
     overlay.setAttribute("aria-hidden", "true");
     return;
@@ -35,6 +40,10 @@ const initHomeIntro = () => {
     document.body.classList.remove("home-intro-active");
     document.body.classList.remove("home-intro-ready");
     sessionStorage.setItem(INTRO_STORAGE_KEY, "true");
+    if (redirectTarget) {
+      window.location.href = redirectTarget;
+      return;
+    }
     overlay.removeEventListener("click", handleOverlayClick);
   };
   const handleOverlayClick = () => {
