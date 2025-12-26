@@ -1,5 +1,26 @@
 const INTRO_STORAGE_KEY = "homeIntroDismissed";
 
+const getIntroDismissed = () => {
+  try {
+    return (
+      window.localStorage.getItem(INTRO_STORAGE_KEY) === "true" ||
+      window.sessionStorage.getItem(INTRO_STORAGE_KEY) === "true"
+    );
+  } catch (error) {
+    return false;
+  }
+};
+
+const persistIntroDismissed = () => {
+  try {
+    window.sessionStorage.setItem(INTRO_STORAGE_KEY, "true");
+  } catch (error) {}
+
+  try {
+    window.localStorage.setItem(INTRO_STORAGE_KEY, "true");
+  } catch (error) {}
+};
+
 const initHomeIntro = () => {
   const intro = document.querySelector(".home-intro");
   if (!intro) {
@@ -13,7 +34,7 @@ const initHomeIntro = () => {
 
   const finalLine = intro.querySelector(".home-intro__line--third");
   const redirectTarget = overlay.dataset.homeIntroTarget;
-  const dismissed = sessionStorage.getItem(INTRO_STORAGE_KEY) === "true";
+  const dismissed = getIntroDismissed();
   if (dismissed) {
     overlay.classList.add("is-hidden");
     overlay.setAttribute("aria-hidden", "true");
@@ -37,7 +58,7 @@ const initHomeIntro = () => {
     overlay.setAttribute("aria-hidden", "true");
     document.body.classList.remove("home-intro-active");
     document.body.classList.remove("home-intro-ready");
-    sessionStorage.setItem(INTRO_STORAGE_KEY, "true");
+    persistIntroDismissed();
     if (redirectTarget) {
       window.location.href = redirectTarget;
       return;
