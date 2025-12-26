@@ -79,9 +79,6 @@
 
 .home-intro {
   position: relative;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
 }
 
 .home-intro__overlay {
@@ -145,13 +142,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
 }
 
 .home-hero {
-  margin: 0;
-  max-width: none;
-  width: 100%;
+  margin: 0 auto;
+  max-width: 1080px;
 }
 
 .home-hero__image {
