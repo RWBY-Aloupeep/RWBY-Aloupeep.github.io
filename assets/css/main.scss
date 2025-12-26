@@ -144,13 +144,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
+  padding: 0 24px;
+  box-sizing: border-box;
   min-height: 100vh;
 }
 
 .home-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto;
-  width: calc(100% - 48px);
+  width: 100%;
   max-width: 1200px;
   height: 100vh;
   position: relative;
