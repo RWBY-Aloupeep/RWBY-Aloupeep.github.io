@@ -150,8 +150,8 @@
 
 .home-hero {
   margin: 0 auto;
-  max-width: none;
-  width: 100%;
+  width: calc(100% - 48px);
+  max-width: 1200px;
   height: 100vh;
   position: relative;
 }
