@@ -1,7 +1,6 @@
 ---
-layout: splash
+layout: archive
 permalink: /
-title: ""
 author_profile: false
 redirect_from: 
   - /about/

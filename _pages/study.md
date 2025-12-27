@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: archive
 title: "Study · Chapter I"
 permalink: /study/
 author_profile: false

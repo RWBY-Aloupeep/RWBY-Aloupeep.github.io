@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: archive
 title: "Research · Chapter II"
 permalink: /research/
 author_profile: false
