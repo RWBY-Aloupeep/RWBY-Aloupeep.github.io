@@ -21,7 +21,6 @@ body {
   font-family: $global-font-family;
   line-height: 1.5;
   overflow-x: hidden;
-  text-align: center;
 
   &.overflow--hidden {
     /* when primary navigation is visible, the content in the background won't scroll */
