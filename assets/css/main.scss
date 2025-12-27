@@ -146,10 +146,13 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
 }
 
 .home-hero {
-  display: block;
+  display: flex;
+  justify-content: center;
   margin: 0 auto;
   width: 100%;
   max-width: 1080px;
@@ -157,7 +160,9 @@
 
 .home-hero__image {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: min(100%, 960px);
+  margin: 0 auto;
   height: auto;
 }
 
