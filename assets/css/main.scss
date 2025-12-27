@@ -79,6 +79,9 @@
 
 .home-intro {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .home-intro__overlay {
@@ -142,10 +145,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .home-hero {
+  display: block;
   margin: 0 auto;
+  width: 100%;
   max-width: 1080px;
 }
 
