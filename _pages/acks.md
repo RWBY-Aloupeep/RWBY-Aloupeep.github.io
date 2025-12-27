@@ -1,5 +1,5 @@
 ---
-layout: archive
+layout: single
 title: "Acknowledgments"
 permalink: /acks/
 author_profile: false

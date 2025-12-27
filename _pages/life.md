@@ -1,5 +1,5 @@
 ---
-layout: archive
+layout: single
 title: "Life · Chapter III"
 permalink: /life/
 author_profile: false
