@@ -107,6 +107,13 @@
   font-size: clamp(1.25rem, 3vw, 2rem);
   letter-spacing: 0.06em;
   font-weight: 500;
+    transform: translateY(-32px);
+}
+
+@media (max-width: 768px) {
+  .home-intro__text {
+    transform: translateY(-20px);
+  }
 }
 
 .home-intro__line {
