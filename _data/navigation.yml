@@ -32,8 +32,11 @@ main:
   - title: "Study"
     url: /study/
 
-  - title: "Misc"
-    url: /misc/
+  - title: "Research"
+    url: /research/
+
+  - title: "Life"
+    url: /life/
 
   - title: "Acks"
     url: /acks/
