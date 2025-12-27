@@ -213,3 +213,33 @@
     opacity: 0.06;
   }
 }
+
+/* Center all page content */
+#main,
+.page,
+.splash,
+.archive,
+.page__inner-wrap,
+.page__content,
+.page__meta,
+.page__share,
+.page__related,
+.page__related .grid__wrapper,
+.page__hero,
+.page__hero .wrapper,
+.breadcrumbs,
+.page__footer {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+th,
+td {
+  text-align: center;
+}
