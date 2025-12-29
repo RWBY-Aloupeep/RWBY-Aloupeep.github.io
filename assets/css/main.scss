@@ -46,13 +46,13 @@
 .hero-splash {
   position: relative;
   display: flex;
-  min-height: 60vh; /* 原来 80vh 太高了 */
+  min-height: 30vh;
   align-items: center;
   justify-content: center;
   text-align: center;
   background-position: center;
   background-size: cover;
-  margin: 0 0 1.8rem; /* 减小和正文的割裂感 */
+  margin: 0 0 0.8rem;
   width: 100%;
 }
 
@@ -60,14 +60,14 @@
   position: relative;
   z-index: 1;
   max-width: 720px;
-  padding: 2.2rem 1.5rem 1.6rem; /* 下方 padding 小一点 */
+  padding: 2.2rem 1.5rem 1.6rem;
 }
 
 .hero-splash__title {
-  margin: 0 0 0.6rem; /* 标题和正文拉近 */
-  font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+  margin: 0 0 0.6rem;
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
   letter-spacing: 0.015em;
-  color: #1f2933; /* 深灰黑，比纯黑高级 */
+  color: #000000;
   font-weight: 600;
 }
 
@@ -75,7 +75,7 @@
   margin: 0;
   font-size: 1.05rem;
   line-height: 1.55;
-  color: #4b5563; /* 和正文一致的中灰 */
+  color: #000000;
 }
 
 .home-intro {
