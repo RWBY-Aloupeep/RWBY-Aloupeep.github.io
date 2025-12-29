@@ -339,6 +339,19 @@
   }
 }
 
+.archive {
+  .author__urls {
+    display: block;
+    position: static;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    z-index: auto;
+  }
+}
+
 .comment {
   @include clearfix();
   margin: 1em 0;
