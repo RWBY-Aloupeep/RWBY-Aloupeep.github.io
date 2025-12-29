@@ -13,6 +13,9 @@ redirect_from:
       <p class="home-intro__line home-intro__line--first">《 <span class="home-intro__cursor">|</span> 》</p>
       <p class="home-intro__line home-intro__line--second">Welcome to my story.</p>
       <p class="home-intro__line home-intro__line--third">Enjoy~</p>
+      <div class="home-intro__arrow" aria-hidden="true">
+        <span class="home-intro__arrow-icon"></span>
+      </div>
     </div>
   </div>
 <div class="home-intro__content" markdown="1">

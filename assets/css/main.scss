@@ -157,6 +157,22 @@
   animation: introCursorBlink 2.8s ease-in-out infinite;
 }
 
+.home-intro__arrow {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+.home-intro__arrow-icon {
+  width: 16px;
+  height: 16px;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  opacity: 0.5;
+  animation: homeIntroArrow 2.4s ease-in-out infinite;
+}
+
 .home-intro__content {
   opacity: 1;
   visibility: visible;
