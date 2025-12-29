@@ -203,6 +203,21 @@
   }
 }
 
+@keyframes homeIntroArrow {
+  0% {
+    transform: translateY(0) rotate(-45deg);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(8px) rotate(-45deg);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateY(0) rotate(-45deg);
+    opacity: 0.25;
+  }
+}
+
 @keyframes homeIntroFloat {
   0% {
     transform: translate3d(0, 0, 0);
@@ -234,6 +249,11 @@
   .home-intro__cursor {
     animation: none !important;
     opacity: 0.12;
+  }
+
+  .home-intro__arrow-icon {
+    animation: none !important;
+    opacity: 0.45;
   }
 
   .home-intro__overlay,
