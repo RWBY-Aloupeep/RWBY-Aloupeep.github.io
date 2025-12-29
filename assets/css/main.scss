@@ -122,9 +122,6 @@
 .home-intro__line {
   margin: 0;
   opacity: 1;
-  animation: homeIntroFloat 6s ease-in-out infinite;
-  will-change: transform, text-shadow;
-  transform: translate3d(0, 0, 0);
 }
 
 .home-intro__line--first {
@@ -215,27 +212,6 @@
   100% {
     transform: translateY(0) rotate(-45deg);
     opacity: 0.25;
-  }
-}
-
-@keyframes homeIntroFloat {
-  0% {
-    transform: translate3d(0, 0, 0);
-    text-shadow:
-      0 1px 1px rgba(0,0,0,0.10),
-      0 10px 26px rgba(0,0,0,0.12);
-  }
-  50% {
-    transform: translate3d(1px, -10px, 0);
-    text-shadow:
-      0 2px 2px rgba(0,0,0,0.14),
-      0 18px 42px rgba(0,0,0,0.16);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-    text-shadow:
-      0 1px 1px rgba(0,0,0,0.10),
-      0 10px 26px rgba(0,0,0,0.12);
   }
 }
 
