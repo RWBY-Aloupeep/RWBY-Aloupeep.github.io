@@ -11,7 +11,6 @@ const initHomeIntro = () => {
     return;
   }
 
-  const finalLine = intro.querySelector(".home-intro__line--third");
   const dismissed = sessionStorage.getItem(INTRO_STORAGE_KEY) === "true";
   if (dismissed) {
     overlay.classList.add("is-hidden");
@@ -55,15 +54,7 @@ const initHomeIntro = () => {
     }
   };
 
-  if (finalLine) {
-    finalLine.addEventListener("animationend", enableDismiss, { once: true });
-  }
-
-  setTimeout(() => {
-    document.body.classList.add("home-intro-ready");
-  }, 600);
-
-  setTimeout(enableDismiss, 4500);
+  enableDismiss();
 
   overlay.addEventListener("click", handleOverlayClick);
 };

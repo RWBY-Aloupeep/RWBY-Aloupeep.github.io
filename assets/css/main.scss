@@ -52,7 +52,7 @@
   text-align: center;
   background-position: center;
   background-size: cover;
-  margin: 0 0 0.8rem;
+  margin: 0;
   width: 100%;
 }
 
@@ -64,7 +64,7 @@
 }
 
 .hero-splash__title {
-  margin: 0 0 0.6rem;
+  margin: 0;
   font-size: clamp(2.2rem, 4.5vw, 3.6rem);
   letter-spacing: 0.015em;
   color: #4b5563;
@@ -121,8 +121,8 @@
 
 .home-intro__line {
   margin: 0;
-  opacity: 0;
-  transform: translateY(4px);
+  opacity: 1;
+  transform: none;
 }
 
 .home-intro__line--first {
@@ -164,51 +164,6 @@
   visibility: hidden;
   transform: translateY(12px);
   pointer-events: none;
-}
-
-.home-intro-ready .home-intro__line--first {
-  animation: introFadeInFirst 1.2s ease-out 0.6s forwards;
-}
-
-.home-intro-ready .home-intro__line--second {
-  animation: introFadeInSecond 1s ease-out 1.2s forwards;
-}
-
-.home-intro-ready .home-intro__line--third {
-  animation: introFadeInThird 0.7s ease-out 3s forwards;
-}
-
-@keyframes introFadeInFirst {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 0.9;
-    transform: translateY(0);
-  }
-}
-
-@keyframes introFadeInSecond {
-  from {
-    opacity: 0;
-    transform: translateY(2px);
-  }
-  to {
-    opacity: 0.75;
-    transform: translateY(0);
-  }
-}
-
-@keyframes introFadeInThird {
-  from {
-    opacity: 0;
-    transform: translateY(1px);
-  }
-  to {
-    opacity: 0.75;
-    transform: translateY(0);
-  }
 }
 
 @keyframes introCursorBlink {
