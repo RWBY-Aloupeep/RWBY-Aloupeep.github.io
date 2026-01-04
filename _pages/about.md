@@ -24,9 +24,8 @@ redirect_from:
       <h1 class="hero-splash__title">Hi, I'm Steven.</h1>
     </div>
   </div>
-  <i>“All men by nature desire to know.”</i> — Aristotle
 
-  Driven by curiosity about the physical world, I am pursuing a Master's degree in Computational Mathematics at the [University of Washington](https://amath.washington.edu/){:target="_blank" style="text-decoration: none;"}. Previously, I earned my Bachelor's degree in Applied Mathematics from the [Chinese University of Hong Kong](https://sse.cuhk.edu.cn/en){:target="_blank" style="text-decoration: none;"}, where I was advised by [Dr. Xiaoguang Han](https://gaplab.cuhk.edu.cn/pages/people){:target="_blank" style="text-decoration: none;"} and [Dr. Shihua Gong](https://www.shihua-gong.org/){:target="_blank" style="text-decoration: none;"}.
+  Driven by curiosity about the physical world, I am pursuing a Master's degree in Computational Mathematics at the [University of Washington](https://amath.washington.edu/){:target="_blank" style="text-decoration: none;"}. My research interests focus on physics-based simulation, particularly differentiable simulation. I am actively seeking research assistant or internship opportunities to further explore these directions.
 
   <br>
   
