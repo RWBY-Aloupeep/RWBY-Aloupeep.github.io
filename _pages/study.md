@@ -17,9 +17,9 @@ author_profile: false
 
 ## Notes
 ### Physics-Based Simulation
-- [Fluid Dynamics]({{ '/files/Fluid-Dynamics.pdf' | relative_url }})
+- [Fluid Dynamics]({{ '/files/Fluid-Dynamics.pdf' | relative_url }}){:target="_blank" rel="noopener"}
 
 ### Scientific Computing
-- [Scientific Computing]({{ '/files/Scientific-Computing.pdf' | relative_url }})
+- [Scientific Computing]({{ '/files/Scientific-Computing.pdf' | relative_url }}){:target="_blank" rel="noopener"}
 
 ### Visual Computing
