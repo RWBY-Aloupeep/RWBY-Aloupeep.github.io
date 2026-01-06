@@ -16,6 +16,10 @@ author_profile: false
 - Changzhou Beijiao H.S., 2021; Changzhou Foreign Languages M.S., 2018; Changzhou Xiheng Street E.S., 2015
 
 ## Notes
+### Physics-Based Simulation
+- [Fluid Dynamics]({{ '/files/Fluid-Dynamics.pdf' | relative_url }})
+
 ### Scientific Computing
+- [Scientific Computing]({{ '/files/Scientific-Computing.pdf' | relative_url }})
 
 ### Visual Computing
