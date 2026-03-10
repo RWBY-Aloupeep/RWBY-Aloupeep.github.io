@@ -24,3 +24,7 @@ author_profile: false
 
 ### Visual Computing
 - [Introduction To Computer Animation]({{ '/files/Introduction-To-Computer-Animation.pdf' | relative_url }}){:target="_blank" rel="noopener"}
+
+### Others
+- [Vector Calculus And Complex Variables]({{ '/files/Vector-Calculus-And-Complex-Variables.pdf' | relative_url }}){:target="_blank" rel="noopener"}
+- [Dynamical Systems And Chaos]({{ '/files/Dynamical-Systems-And-Chaos.pdf' | relative_url }}){:target="_blank" rel="noopener"}
