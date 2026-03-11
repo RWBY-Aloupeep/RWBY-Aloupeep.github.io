@@ -15,6 +15,22 @@ var breaks = [];
 
 function updateNav() {
 
+  if ($nav.hasClass('greedy-nav--no-collapse')) {
+    $hlinks.children().appendTo($vlinks);
+    breaks = [];
+    $btn.addClass('hidden').removeClass('close');
+    $hlinks.addClass('hidden');
+
+    var mastheadHeightNoCollapse = $('.masthead').height();
+    $('body').css('padding-top', mastheadHeightNoCollapse + 'px');
+    if ($(".author__urls-wrapper button").is(":visible")) {
+      $(".sidebar").css("padding-top", "");
+    } else {
+      $(".sidebar").css("padding-top", mastheadHeightNoCollapse + "px");
+    }
+    return;
+  }
+
   var availableSpace = $btn.hasClass('hidden') ? $nav.width() : $nav.width() - $btn.width() - 30;
 
   // The visible list is overflowing the nav

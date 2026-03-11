@@ -27,6 +27,13 @@
   }
 }
 
+.archive--home {
+  @include breakpoint($large) {
+    @include span(10 of 12);
+    @include prefix(1 of 12);
+  }
+}
+
 .archive__subtitle {
   margin: 1.414em 0 0;
   padding-bottom: 0.5em;
