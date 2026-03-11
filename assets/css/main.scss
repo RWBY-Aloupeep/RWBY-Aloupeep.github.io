@@ -101,16 +101,16 @@
 
 .home-intro__text {
   font-family: "Playfair Display", "Cormorant Garamond", "Cinzel", serif;
-  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-size: clamp(1.5rem, 3.6vw, 2.4rem);
   letter-spacing: 0.06em;
   font-weight: 500;
   margin: 0 auto;
-  transform: translateY(-56px);
+  transform: translateY(-92px);
 }
 
 @media (max-width: 768px) {
   .home-intro__text {
-    transform: translateY(-32px);
+    transform: translateY(-56px);
   }
 }
 
