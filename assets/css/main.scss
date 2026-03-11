@@ -82,6 +82,14 @@
   position: relative;
 }
 
+.archive.archive--home {
+  @include breakpoint($large) {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .home-intro__overlay {
   position: relative;
   min-height: 100vh;
@@ -105,12 +113,12 @@
   letter-spacing: 0.06em;
   font-weight: 500;
   margin: 0 auto;
-  transform: translateY(-92px);
+  transform: translateY(-112px);
 }
 
 @media (max-width: 768px) {
   .home-intro__text {
-    transform: translateY(-56px);
+    transform: translateY(-72px);
   }
 }
 
