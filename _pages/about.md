@@ -18,6 +18,7 @@ redirect_from:
       </div>
     </div>
   </div>
+<script src="{{ site.baseurl }}/assets/js/home-intro.js"></script>
 <div class="home-intro__content" markdown="1">
   <div class="hero-splash">
     <div class="hero-splash__content">
@@ -32,5 +33,3 @@ redirect_from:
   <img class="hero-splash__image" src="{{ site.baseurl }}/images/homepage.jpg" alt="Homepage illustration">
 </div>
 </div>
-
-<script src="{{ site.baseurl }}/assets/js/home-intro.js" defer></script>
