@@ -83,8 +83,9 @@
 }
 
 .home-intro__overlay {
-  position: fixed;
-  inset: 0;
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,13 +97,6 @@
   opacity: 1;
   visibility: visible;
   transition: opacity 0.8s ease, visibility 0s linear 0s;
-}
-
-.home-intro__overlay.is-hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.8s ease, visibility 0s linear 0.8s;
 }
 
 .home-intro__text {
@@ -165,20 +159,7 @@
 }
 
 .home-intro__content {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.home-intro__overlay.is-clickable {
-  cursor: pointer;
-}
-
-.home-intro-active .home-intro__content {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(12px);
-  pointer-events: none;
+  padding-top: 1.5rem;
 }
 
 @keyframes introCursorBlink {
@@ -224,10 +205,5 @@
   .home-intro__arrow-icon {
     animation: none !important;
     opacity: 0.45;
-  }
-
-  .home-intro__overlay,
-  .home-intro__content {
-    transition: none !important;
   }
 }

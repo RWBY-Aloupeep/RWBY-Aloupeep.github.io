@@ -1,5 +1,3 @@
-const INTRO_STORAGE_KEY = "homeIntroDismissed";
-
 const initHomeIntro = () => {
   const intro = document.querySelector(".home-intro");
   if (!intro) {
@@ -7,56 +5,24 @@ const initHomeIntro = () => {
   }
 
   const overlay = intro.querySelector(".home-intro__overlay");
-  if (!overlay) {
+  const content = intro.querySelector("#home-content");
+  const scrollTrigger = intro.querySelector("[data-home-intro-scroll]");
+
+  if (!overlay || !content) {
     return;
   }
 
-  const dismissed = sessionStorage.getItem(INTRO_STORAGE_KEY) === "true";
-  if (dismissed) {
-    overlay.classList.add("is-hidden");
-    overlay.setAttribute("aria-hidden", "true");
-    return;
-  }
-
-  document.body.classList.add("home-intro-active");
-  overlay.setAttribute("aria-hidden", "false");
-
-  let canDismiss = false;
-  let pendingDismiss = false;
-  let dismissedNow = false;
-  const dismissIntro = () => {
-    if (dismissedNow) {
+  const scrollToContent = () => {
+    content.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  const handleIntroClick = (event) => {
+    if (scrollTrigger && !scrollTrigger.contains(event.target)) {
       return;
     }
-    dismissedNow = true;
-    overlay.classList.add("is-hidden");
-    overlay.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("home-intro-active");
-    document.body.classList.remove("home-intro-ready");
-    sessionStorage.setItem(INTRO_STORAGE_KEY, "true");
-    overlay.removeEventListener("click", handleOverlayClick);
-  };
-  const handleOverlayClick = () => {
-    if (!canDismiss) {
-      pendingDismiss = true;
-      return;
-    }
-    dismissIntro();
-  };
-  const enableDismiss = () => {
-    if (canDismiss) {
-      return;
-    }
-    canDismiss = true;
-    overlay.classList.add("is-clickable");
-    if (pendingDismiss) {
-      dismissIntro();
-    }
+   scrollToContent();
   };
 
-  enableDismiss();
-
-  overlay.addEventListener("click", handleOverlayClick);
+  overlay.addEventListener("click", handleIntroClick);
 };
 
 if (document.readyState === "loading") {
