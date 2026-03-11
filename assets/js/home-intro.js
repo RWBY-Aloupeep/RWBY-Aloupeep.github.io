@@ -6,7 +6,6 @@ const initHomeIntro = () => {
 
   const overlay = intro.querySelector(".home-intro__overlay");
   const content = intro.querySelector("#home-content");
-  const scrollTrigger = intro.querySelector("[data-home-intro-scroll]");
 
   if (!overlay || !content) {
     return;
@@ -15,14 +14,27 @@ const initHomeIntro = () => {
   const scrollToContent = () => {
     content.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  const handleIntroClick = (event) => {
-    if (scrollTrigger && !scrollTrigger.contains(event.target)) {
-      return;
+  const isInteractiveElement = (target) => {
+    if (!(target instanceof Element)) {
+      return false;
     }
-   scrollToContent();
+    return Boolean(target.closest("a, button, input, textarea, select, summary"));
   };
 
-  overlay.addEventListener("click", handleIntroClick);
+  overlay.addEventListener("click", (event) => {
+    if (isInteractiveElement(event.target)) {
+      return;
+    }
+    scrollToContent();
+  });
+
+  overlay.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+    event.preventDefault();
+    scrollToContent();
+  });
 };
 
 if (document.readyState === "loading") {
