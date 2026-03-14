@@ -21,6 +21,7 @@ author_profile: false
 
 ### Scientific Computing
 - [Scientific Computing]({{ '/files/Scientific-Computing.pdf' | relative_url }}){:target="_blank" rel="noopener"}
+- [Numerical Analysis]({{ '/files/Numerical-Analysis.pdf' | relative_url }}){:target="_blank" rel="noopener"}
 
 ### Visual Computing
 - [Introduction To Computer Animation]({{ '/files/Introduction-To-Computer-Animation.pdf' | relative_url }}){:target="_blank" rel="noopener"}
