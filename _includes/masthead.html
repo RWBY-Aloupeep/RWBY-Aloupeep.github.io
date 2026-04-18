@@ -5,7 +5,7 @@
     <div class="masthead__menu">
       {% assign nav_links = site.data.navigation.main %}
       <nav id="site-nav" class="greedy-nav greedy-nav--no-collapse">
-        <button><div class="navicon"></div></button>
+        <button class="hidden" aria-label="Open menu"><div class="navicon"></div></button>
         <ul class="visible-links">
           <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="{{ base_path }}/">{{ site.title }}</a></li>
           {% for link in nav_links %}
