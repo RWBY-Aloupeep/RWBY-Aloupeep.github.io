@@ -60,7 +60,12 @@
 .page__footer-copyright {
   font-family: $global-font-family;
   font-size: $type-size-7;
-  color: #333;
+  color: #222;
+}
+
+.page__footer-copyright a {
+  color: #0645ad;
+  text-decoration: underline;
 }
 
 .page__footer-follow {

@@ -10,9 +10,9 @@ redirect_from:
 <div class="home-intro">
   <div class="home-intro__overlay" data-home-intro role="button" tabindex="0" aria-label="Scroll to content">
     <div class="home-intro__text">
-      <p class="home-intro__line home-intro__line--first">《 <span class="home-intro__cursor">|</span> 》</p>
+      <h2 class="home-intro__line home-intro__line--first">《 <span class="home-intro__cursor">|</span> 》</h2>
       <h1 class="home-intro__line home-intro__line--second">Welcome to my story.</h1>
-      <p class="home-intro__line home-intro__line--third">Enjoy~</p>
+      <h2 class="home-intro__line home-intro__line--third">Enjoy~</h2>
       <div class="home-intro__arrow" aria-hidden="true" data-home-intro-scroll>
         <span class="home-intro__arrow-icon"></span>
       </div>
