@@ -38,8 +38,8 @@ main:
   - title: "Life"
     url: /life/
 
-  #   - title: "Acks"
-  #     url: /acks/
+  - title: "Acks"
+    url: /acks/
 
   - title: "Contact"
     url: /contact/
