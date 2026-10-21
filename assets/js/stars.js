@@ -1,5 +1,6 @@
 // Stars floating behind the home page hero: a tiny 2D physics simulation with
-// elastic collisions, pointer repulsion, and a no-fly zone around the text.
+// elastic collisions, pointer repulsion, and no-fly zones around the elements
+// marked [data-stars-avoid] (the text and the "Begin" cue).
 // Colors come from the --star-* custom properties, so they follow the theme.
 (() => {
   const hero = document.querySelector("[data-hero]");
@@ -9,20 +10,20 @@
   }
 
   const ctx = canvas.getContext("2d");
-  const text = hero.querySelector("[data-hero-text]");
+  const avoided = hero.querySelectorAll("[data-stars-avoid]");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const CRUISE_SPEED = 0.35; // px per frame the stars settle back to
   const DAMPING = 0.97; // how quickly extra speed bleeds off
   const POINTER_RADIUS = 70;
   const POINTER_FORCE = 0.6;
-  const TEXT_PADDING = 28;
+  const ZONE_PADDING = 28;
 
   let width = 0;
   let height = 0;
   let stars = [];
   let palette = null;
-  let exclusion = null;
+  let zones = [];
   let frame = 0;
   let lastTime = 0;
   let onScreen = true;
@@ -46,51 +47,57 @@
     canvas.height = Math.round(height * ratio);
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-    if (text) {
-      const box = text.getBoundingClientRect();
-      exclusion = {
-        left: box.left - rect.left - TEXT_PADDING,
-        right: box.right - rect.left + TEXT_PADDING,
-        top: box.top - rect.top - TEXT_PADDING,
-        bottom: box.bottom - rect.top + TEXT_PADDING,
-      };
-    }
+    // Offsets (the hero is their offset parent) rather than bounding boxes,
+    // so the entrance animation's slide does not shift the zones.
+    zones = Array.from(avoided, (el) => ({
+      left: el.offsetLeft - ZONE_PADDING,
+      right: el.offsetLeft + el.offsetWidth + ZONE_PADDING,
+      top: el.offsetTop - ZONE_PADDING,
+      bottom: el.offsetTop + el.offsetHeight + ZONE_PADDING,
+    }));
   };
 
-  const inExclusion = (x, y, r) =>
-    exclusion &&
-    x > exclusion.left - r &&
-    x < exclusion.right + r &&
-    y > exclusion.top - r &&
-    y < exclusion.bottom + r;
+  const zoneAt = (x, y, r) =>
+    zones.find(
+      (zone) =>
+        x > zone.left - r &&
+        x < zone.right + r &&
+        y > zone.top - r &&
+        y < zone.bottom + r
+    );
 
-  // Push a star out through the nearest edge of the text box and point it away.
-  const leaveExclusion = (star) => {
-    if (!inExclusion(star.x, star.y, star.r)) {
+  // Push a star out through the nearest side of the zone it is in and point it
+  // away. Sides too close to the hero's edge for the star to fit are skipped,
+  // or the wall bounce would push it straight back in.
+  const leaveZones = (star) => {
+    const zone = zoneAt(star.x, star.y, star.r);
+    if (!zone) {
       return;
     }
-    const edges = [
-      { side: "left", d: star.x - (exclusion.left - star.r) },
-      { side: "right", d: exclusion.right + star.r - star.x },
-      { side: "top", d: star.y - (exclusion.top - star.r) },
-      { side: "bottom", d: exclusion.bottom + star.r - star.y },
-    ].sort((a, b) => a.d - b.d);
+    const sides = [
+      { side: "left", d: star.x - (zone.left - star.r), room: zone.left - 2 * star.r },
+      { side: "right", d: zone.right + star.r - star.x, room: width - zone.right - 2 * star.r },
+      { side: "top", d: star.y - (zone.top - star.r), room: zone.top - 2 * star.r },
+      { side: "bottom", d: zone.bottom + star.r - star.y, room: height - zone.bottom - 2 * star.r },
+    ];
+    const open = sides.filter((side) => side.room > 0);
+    const exit = (open.length ? open : sides).sort((a, b) => a.d - b.d)[0];
 
-    switch (edges[0].side) {
+    switch (exit.side) {
       case "left":
-        star.x = exclusion.left - star.r - 1;
+        star.x = zone.left - star.r - 1;
         star.vx = -Math.abs(star.vx);
         break;
       case "right":
-        star.x = exclusion.right + star.r + 1;
+        star.x = zone.right + star.r + 1;
         star.vx = Math.abs(star.vx);
         break;
       case "top":
-        star.y = exclusion.top - star.r - 1;
+        star.y = zone.top - star.r - 1;
         star.vy = -Math.abs(star.vy);
         break;
       default:
-        star.y = exclusion.bottom + star.r + 1;
+        star.y = zone.bottom + star.r + 1;
         star.vy = Math.abs(star.vy);
     }
   };
@@ -111,7 +118,7 @@
         x = minX + Math.random() * Math.max(maxX - minX, 0);
         y = r + Math.random() * Math.max(height - 2 * r, 0);
         attempts += 1;
-      } while (inExclusion(x, y, r) && attempts < 50);
+      } while (zoneAt(x, y, r) && attempts < 50);
 
       const angle = Math.random() * Math.PI * 2;
       stars.push({
@@ -209,7 +216,7 @@
         star.y = Math.min(Math.max(star.y, star.r), height - star.r);
       }
 
-      leaveExclusion(star);
+      leaveZones(star);
     }
 
     for (let i = 0; i < stars.length; i += 1) {
@@ -276,7 +283,7 @@
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {
       measure();
-      stars.forEach(leaveExclusion);
+      stars.forEach(leaveZones);
       draw();
     });
   }

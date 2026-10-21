@@ -17,13 +17,10 @@ layout: default
 
 {%- if page.eyebrow -%}
   {%- assign eyebrow = page.eyebrow -%}
+{%- elsif chapter.label -%}
+  {%- assign eyebrow = chapter.label -%}
 {%- elsif chapter -%}
-  {%- assign numeral_size = chapter.numeral | size -%}
-  {%- if numeral_size <= 4 -%}
-    {%- assign eyebrow = "Chapter " | append: chapter.numeral -%}
-  {%- else -%}
-    {%- assign eyebrow = chapter.numeral -%}
-  {%- endif -%}
+  {%- assign eyebrow = "Chapter " | append: chapter.numeral -%}
 {%- endif -%}
 
 <article class="chapter">

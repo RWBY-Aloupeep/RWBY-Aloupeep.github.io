@@ -133,7 +133,6 @@
   display: grid;
   align-items: center;
   gap: 3rem;
-  max-width: calc(var(--wrap-wide) + 2 * var(--gutter));
   padding-top: clamp(4rem, 10vw, 7rem);
   padding-bottom: clamp(4rem, 10vw, 7rem);
 

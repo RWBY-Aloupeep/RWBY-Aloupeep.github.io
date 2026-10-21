@@ -8,18 +8,18 @@ scripts:
 
 <section class="hero" data-hero>
   <canvas class="hero__stars" aria-hidden="true" data-stars></canvas>
-  <div class="hero__text" data-hero-text>
+  <div class="hero__text" data-stars-avoid>
     <p class="hero__mark" aria-hidden="true">《 <span class="hero__cursor">|</span> 》</p>
     <h1 class="hero__title">{{ page.hero.title }}</h1>
     <p class="hero__sub">{{ page.hero.subtitle }}</p>
   </div>
-  <a class="hero__cue" href="#prologue">
+  <a class="hero__cue" href="#prologue" data-stars-avoid>
     <span>Begin</span>
     {% include icon.html name="arrow-down" %}
   </a>
 </section>
 
-<section class="prologue wrap" id="prologue" aria-labelledby="prologue-title">
+<section class="prologue wrap wrap--wide" id="prologue" aria-labelledby="prologue-title">
   <figure class="prologue__portrait">
     <picture>
       <source type="image/webp" srcset="{{ '/images/avatar-480.webp' | relative_url }} 480w, {{ '/images/avatar.webp' | relative_url }} 960w" sizes="(min-width: 760px) 22rem, 70vw">
@@ -51,7 +51,7 @@ scripts:
     {%- for chapter in site.data.navigation.chapters %}
     <li>
       <a class="toc__item" href="{{ chapter.url | relative_url }}">
-        <span class="toc__numeral">{{ chapter.numeral }}</span>
+        <span class="toc__numeral">{{ chapter.numeral | default: chapter.label }}</span>
         <span class="toc__text">
           <span class="toc__title">{{ chapter.title }}</span>
           <span class="toc__summary">{{ chapter.summary }}</span>
