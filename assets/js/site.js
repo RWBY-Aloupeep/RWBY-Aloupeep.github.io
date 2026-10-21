@@ -24,7 +24,8 @@
     }
   };
 
-  applyTheme(root.getAttribute("data-theme") || (systemDark.matches ? "dark" : "light"));
+  // The inline script has already picked the theme; sync the button with it.
+  applyTheme(root.getAttribute("data-theme"));
 
   if (toggle) {
     toggle.addEventListener("click", () => {

@@ -1,6 +1,6 @@
 {%- assign nav = site.data.navigation -%}
 <header class="site-header">
-  <div class="site-header__inner wrap">
+  <div class="site-header__inner wrap wrap--wide">
     <a class="brand" href="{{ '/' | relative_url }}"{% if page.url == "/" %} aria-current="page"{% endif %}>{{ site.author.name }}</a>
 
     <nav class="site-nav" aria-label="Main">

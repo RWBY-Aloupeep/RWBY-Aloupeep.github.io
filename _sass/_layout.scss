@@ -21,7 +21,6 @@
   align-items: center;
   gap: 0.5rem;
   height: var(--header-h);
-  max-width: calc(var(--wrap-wide) + 2 * var(--gutter));
 }
 
 .brand {
@@ -188,9 +187,13 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem 1.5rem;
-  max-width: calc(var(--wrap-wide) + 2 * var(--gutter));
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+// On narrow screens the line breaks at the separator, never inside a phrase.
+.site-footer__copy > span {
+  white-space: nowrap;
 }
 
 .site-footer__sep {

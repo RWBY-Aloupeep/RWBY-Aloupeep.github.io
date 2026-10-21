@@ -2,6 +2,10 @@
 # up the header menu, the table of contents on the home page, and the
 # previous/next links at the bottom of each chapter.
 #
+# Numbered chapters have a `numeral` and are labelled "Chapter I", "Chapter II"…
+# Unnumbered ones (a prologue, an epilogue, an interlude) have a `label`
+# instead, shown in place of both.
+#
 # `nav` is the shorter label used in the header menu (defaults to `title`).
 chapters:
   - numeral: "I"
@@ -19,7 +23,7 @@ chapters:
     url: /life/
     summary: "Philosophy, music, anime, games, and swimming."
 
-  - numeral: "Epilogue"
+  - label: "Epilogue"
     title: "Acknowledgments"
     nav: "Acks"
     url: /acks/

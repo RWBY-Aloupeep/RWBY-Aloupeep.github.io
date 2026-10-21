@@ -29,6 +29,7 @@ author:
 twitter:
   card: summary_large_image
 
+# Profile links for search engines. Keep them in step with `author` above.
 social:
   name: "Diwen (Steven) Xu"
   links:

@@ -14,7 +14,10 @@
 
 .chapter__title {
   margin-top: 1rem;
-  font-size: clamp(3.25rem, 9vw, 5.5rem);
+  // The 13vw cap only matters on phones narrower than 400px, where it keeps a
+  // long one-word title ("Acknowledgments") from running off the screen.
+  // unquote() stops Sass from treating min() as its own function.
+  font-size: unquote("min(13vw, clamp(3.25rem, 9vw, 5.5rem))");
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.02em;

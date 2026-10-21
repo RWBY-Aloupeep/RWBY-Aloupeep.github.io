@@ -1,37 +1,40 @@
 {%- comment -%}
-  Contact links built from `author` in _config.yml.
+  Contact links built from `author` in _config.yml. A link is left out when
+  its field is empty.
   style="icons" — icon-only row (footer)
   style="row"   — icon + label row (home page)
   style="cards" — large cards with handles (contact page)
 {%- endcomment -%}
 {%- assign author = site.author -%}
 {%- assign style = include.style | default: "row" -%}
+{%- assign services = "email,github,linkedin" | split: "," -%}
 <ul class="contact contact--{{ style }}">
-  {%- if author.email %}
+  {%- for service in services %}
+  {%- assign id = author[service] -%}
+  {%- if id == nil or id == "" %}{% continue %}{% endif -%}
+  {%- case service -%}
+  {%- when "email" -%}
+    {%- assign label = "Email" -%}
+    {%- assign icon = "mail" -%}
+    {%- assign href = "mailto:" | append: id -%}
+    {%- assign handle = id -%}
+  {%- when "github" -%}
+    {%- assign label = "GitHub" -%}
+    {%- assign icon = "github" -%}
+    {%- assign href = "https://github.com/" | append: id -%}
+    {%- assign handle = "@" | append: id -%}
+  {%- when "linkedin" -%}
+    {%- assign label = "LinkedIn" -%}
+    {%- assign icon = "linkedin" -%}
+    {%- assign href = "https://www.linkedin.com/in/" | append: id -%}
+    {%- assign handle = "in/" | append: id -%}
+  {%- endcase %}
   <li>
-    <a class="contact__link" href="mailto:{{ author.email }}">
-      {% include icon.html name="mail" %}
-      {%- if style == "icons" %}<span class="visually-hidden">Email</span>{% else %}<span class="contact__label">Email</span>{% endif %}
-      {%- if style == "cards" %}<span class="contact__handle">{{ author.email }}</span>{% endif %}
+    <a class="contact__link" href="{{ href }}"{% unless service == "email" %} target="_blank" rel="noopener"{% endunless %}>
+      {% include icon.html name=icon %}
+      {%- if style == "icons" %}<span class="visually-hidden">{{ label }}</span>{% else %}<span class="contact__label">{{ label }}</span>{% endif %}
+      {%- if style == "cards" %}<span class="contact__handle">{{ handle }}</span>{% endif %}
     </a>
   </li>
-  {%- endif %}
-  {%- if author.github %}
-  <li>
-    <a class="contact__link" href="https://github.com/{{ author.github }}" target="_blank" rel="noopener">
-      {% include icon.html name="github" %}
-      {%- if style == "icons" %}<span class="visually-hidden">GitHub</span>{% else %}<span class="contact__label">GitHub</span>{% endif %}
-      {%- if style == "cards" %}<span class="contact__handle">@{{ author.github }}</span>{% endif %}
-    </a>
-  </li>
-  {%- endif %}
-  {%- if author.linkedin %}
-  <li>
-    <a class="contact__link" href="https://www.linkedin.com/in/{{ author.linkedin }}" target="_blank" rel="noopener">
-      {% include icon.html name="linkedin" %}
-      {%- if style == "icons" %}<span class="visually-hidden">LinkedIn</span>{% else %}<span class="contact__label">LinkedIn</span>{% endif %}
-      {%- if style == "cards" %}<span class="contact__handle">in/{{ author.linkedin }}</span>{% endif %}
-    </a>
-  </li>
-  {%- endif %}
+  {%- endfor %}
 </ul>
