@@ -1,0 +1,78 @@
+---
+layout: default
+---
+{%- comment -%}
+  A chapter-style page: eyebrow label, large title, optional epigraph, then the
+  content. Pages listed in _data/navigation.yml are treated as chapters: they
+  get their "Chapter N" label automatically and previous/next links at the end.
+{%- endcomment -%}
+{%- assign chapters = site.data.navigation.chapters -%}
+{%- assign chapter = nil -%}
+{%- for item in chapters -%}
+  {%- if item.url == page.url -%}
+    {%- assign chapter = item -%}
+    {%- assign index = forloop.index0 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if page.eyebrow -%}
+  {%- assign eyebrow = page.eyebrow -%}
+{%- elsif chapter -%}
+  {%- assign numeral_size = chapter.numeral | size -%}
+  {%- if numeral_size <= 4 -%}
+    {%- assign eyebrow = "Chapter " | append: chapter.numeral -%}
+  {%- else -%}
+    {%- assign eyebrow = chapter.numeral -%}
+  {%- endif -%}
+{%- endif -%}
+
+<article class="chapter">
+  <header class="chapter__header wrap">
+    {%- if eyebrow %}
+    <p class="eyebrow">{{ eyebrow }}</p>
+    {%- endif %}
+    <h1 class="chapter__title">{{ page.heading | default: page.title }}</h1>
+    {%- if page.epigraph %}
+    <figure class="epigraph">
+      <blockquote><p>{{ page.epigraph.quote }}</p></blockquote>
+      <figcaption>{{ page.epigraph.author }}</figcaption>
+    </figure>
+    {%- endif %}
+  </header>
+
+  <div class="chapter__body wrap prose">
+    {{ content }}
+  </div>
+
+  {%- if chapter %}
+  {%- assign prev_index = index | minus: 1 -%}
+  {%- assign next_index = index | plus: 1 -%}
+  <nav class="chapter-nav wrap" aria-label="Chapters">
+    {%- if index == 0 %}
+    <a class="chapter-nav__link chapter-nav__link--prev" href="{{ '/' | relative_url }}">
+      <span class="chapter-nav__dir">{% include icon.html name="arrow-left" %} Previous</span>
+      <span class="chapter-nav__title">Prologue</span>
+    </a>
+    {%- else %}
+    {%- assign prev = chapters[prev_index] %}
+    <a class="chapter-nav__link chapter-nav__link--prev" href="{{ prev.url | relative_url }}">
+      <span class="chapter-nav__dir">{% include icon.html name="arrow-left" %} Previous</span>
+      <span class="chapter-nav__title">{{ prev.title }}</span>
+    </a>
+    {%- endif %}
+
+    {%- if next_index < chapters.size %}
+    {%- assign next = chapters[next_index] %}
+    <a class="chapter-nav__link chapter-nav__link--next" href="{{ next.url | relative_url }}">
+      <span class="chapter-nav__dir">Next {% include icon.html name="arrow-right" %}</span>
+      <span class="chapter-nav__title">{{ next.title }}</span>
+    </a>
+    {%- else %}
+    <a class="chapter-nav__link chapter-nav__link--next" href="{{ '/' | relative_url }}">
+      <span class="chapter-nav__dir">The end {% include icon.html name="arrow-right" %}</span>
+      <span class="chapter-nav__title">Back to the beginning</span>
+    </a>
+    {%- endif %}
+  </nav>
+  {%- endif %}
+</article>

@@ -1,6 +1,10 @@
-{% include base_path %}
-
-<div class="page__footer-copyright">
-  &copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}, {{ site.data.ui-text[site.locale].powered_by | default: "Powered by" }} <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.<br />
-  Site last updated {{ "now" | date: '%Y-%m-%d' %}}
-</div>
+<footer class="site-footer">
+  <div class="site-footer__inner wrap">
+    <p class="site-footer__copy">
+      &copy; {{ site.time | date: "%Y" }} {{ site.author.name }}
+      <span class="site-footer__sep" aria-hidden="true">·</span>
+      Updated {{ site.time | date: "%B %Y" }}
+    </p>
+    {% include contact-links.html style="icons" %}
+  </div>
+</footer>

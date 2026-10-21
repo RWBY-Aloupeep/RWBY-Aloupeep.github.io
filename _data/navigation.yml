@@ -1,48 +1,31 @@
-# The following is the order of the links in the header of the website.
+# The site is told as a story. Chapters are listed in reading order: they make
+# up the header menu, the table of contents on the home page, and the
+# previous/next links at the bottom of each chapter.
 #
-# Changing the order here will adjust the order and you can also add additional
-# links. Removing a link prevents it from showing in the header, but does not
-# prevent it from being included in the site.
-#
-# NOTE that only one of the CV options should be selected, the first is for the
-#      Markdown formatted page while the second is generated using JSON.
-
-main:
-  # - title: "Publications"
-  #   url: /publications/
-
-  # - title: "Talks"
-  #   url: /talks/    
-
-  # - title: "Teaching"
-  #   url: /teaching/    
-        
-  # - title: "Blog Posts"
-  #   url: /year-archive/
-    
-  # - title: "CV"
-  #   url: /cv/
-    
-  # - title: "CV"
-  #   url: /cv-json/
-
-  # - title: "Projects"
-  #   url: /projs/
-
-  - title: "Study"
+# `nav` is the shorter label used in the header menu (defaults to `title`).
+chapters:
+  - numeral: "I"
+    title: "Study"
     url: /study/
+    summary: "Education, honors, and lecture notes."
 
-  - title: "Research"
+  - numeral: "II"
+    title: "Research"
     url: /research/
+    summary: "High-fidelity and differentiable multi-physics simulation."
 
-  - title: "Life"
+  - numeral: "III"
+    title: "Life"
     url: /life/
+    summary: "Philosophy, music, anime, games, and swimming."
 
-  - title: "Acks"
+  - numeral: "Epilogue"
+    title: "Acknowledgments"
+    nav: "Acks"
     url: /acks/
+    summary: "To the people who shaped who I am."
 
+# Extra header links shown after the chapters.
+links:
   - title: "Contact"
     url: /contact/
-    
-  # - title: "Guide"
-  #   url: /markdown/

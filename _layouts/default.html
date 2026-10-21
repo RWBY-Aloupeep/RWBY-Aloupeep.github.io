@@ -1,33 +1,14 @@
----
-layout: compress
----
-
-{% include base_path %}
-
 <!doctype html>
-<html lang="{{ site.locale | slice: 0,2 }}" class="no-js"{% if site.site_theme == "dark" %} data-theme="dark"{% endif %}>
-  <head>
-    {% include head.html %}
-    {% include head/custom.html %}
-  </head>
-
-  <body>
-    <canvas id="stars-canvas"></canvas>
-    <script src="/assets/js/stars.js"></script>
-
-    {% include browser-upgrade.html %}
-    {% include masthead.html %}
-
+<html lang="{{ site.lang | default: 'en' }}" class="no-js">
+<head>
+  {% include head.html %}
+</head>
+<body class="{{ page.body_class | default: layout.body_class }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+  {% include header.html %}
+  <main id="main" tabindex="-1">
     {{ content }}
-
-    <div class="page__footer">
-      <footer>
-        {% include footer/custom.html %}
-        {% include footer.html %}
-      </footer>
-    </div>
-
-    {% include scripts.html %}
-
-  </body>
+  </main>
+  {% include footer.html %}
+</body>
 </html>

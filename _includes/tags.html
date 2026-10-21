@@ -1,0 +1,8 @@
+{%- comment -%}
+  A row of tags. Usage: {% include tags.html items=page.topics %}
+{%- endcomment -%}
+<ul class="tags">
+  {%- for tag in include.items %}
+  <li class="tag">{{ tag }}</li>
+  {%- endfor %}
+</ul>

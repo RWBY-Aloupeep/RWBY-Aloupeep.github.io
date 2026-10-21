@@ -1,0 +1,28 @@
+{%- assign nav = site.data.navigation -%}
+<header class="site-header">
+  <div class="site-header__inner wrap">
+    <a class="brand" href="{{ '/' | relative_url }}"{% if page.url == "/" %} aria-current="page"{% endif %}>{{ site.author.name }}</a>
+
+    <nav class="site-nav" aria-label="Main">
+      <button class="site-nav__toggle icon-button" type="button" aria-expanded="false" aria-controls="site-menu" data-menu-toggle>
+        <span class="site-nav__open">{% include icon.html name="menu" %}</span>
+        <span class="site-nav__close">{% include icon.html name="close" %}</span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+      <ul class="site-nav__list" id="site-menu">
+        {%- for item in nav.chapters %}
+        <li><a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.nav | default: item.title }}</a></li>
+        {%- endfor %}
+        {%- for item in nav.links %}
+        <li><a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a></li>
+        {%- endfor %}
+      </ul>
+    </nav>
+
+    <button class="theme-toggle icon-button" type="button" aria-pressed="false" data-theme-toggle>
+      <span class="theme-toggle__moon">{% include icon.html name="moon" %}</span>
+      <span class="theme-toggle__sun">{% include icon.html name="sun" %}</span>
+      <span class="visually-hidden">Dark theme</span>
+    </button>
+  </div>
+</header>
