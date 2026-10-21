@@ -39,7 +39,7 @@ https://rwby-aloupeep.github.io
 
 ### 换照片
 
-照片放在 `images/`，每张都有 JPEG 和 WebP 两种格式、两种尺寸（例如 `homepage.jpg` 2400px 宽、`homepage-1200.jpg` 1200px 宽，WebP 同理）。请先缩小再上传，不要直接传相机原图（原来的原图有 29 MB）。
+照片放在 `images/`，每张都有 JPEG 和 WebP 两种格式、两种尺寸（例如头像 `avatar.jpg` 960px 宽、`avatar-480.jpg` 480px 宽，WebP 同理）。请先缩小再上传，不要直接传相机原图（原来的原图有 29 MB）。
 
 ## 目录结构
 

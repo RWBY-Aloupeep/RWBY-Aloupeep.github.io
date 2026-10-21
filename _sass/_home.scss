@@ -1,4 +1,4 @@
-// Home page (_layouts/home.html): hero, prologue, feature photo, contents, motto.
+// Home page (_layouts/home.html): hero, prologue, contents, motto.
 
 .hero {
   position: relative;
@@ -206,27 +206,7 @@
   margin-top: 2rem;
 }
 
-// Feature photo
-
-.feature img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  object-position: 50% 30%;
-  border-radius: var(--radius);
-  background: var(--bg-raised);
-
-  @media (max-width: $bp-md - 1px) {
-    aspect-ratio: 4 / 3;
-    object-position: 62% 30%;
-  }
-}
-
 // Table of contents
-
-.contents {
-  padding-top: clamp(4rem, 10vw, 7rem);
-}
 
 .toc {
   margin: 1.25rem 0 0;
