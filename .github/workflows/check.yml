@@ -1,0 +1,37 @@
+# Builds the site with the same gems GitHub Pages uses and checks that every
+# internal link, image and script points at a file that exists. Publishing is
+# still done by GitHub Pages itself (Settings → Pages → Deploy from a branch);
+# this only catches mistakes before they go live.
+name: Check site
+
+# Every push to any branch, so a pull request shows the result of its branch.
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Without a UTF-8 locale Ruby reads the pages as ASCII and html-proofer
+  # silently skips them.
+  LANG: C.UTF-8
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Build
+        run: bundle exec jekyll build
+
+      - name: Check links
+        run: |
+          gem install html-proofer --version "~> 5.0" --no-document
+          htmlproofer _site --disable-external
