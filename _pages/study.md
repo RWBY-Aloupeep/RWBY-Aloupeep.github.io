@@ -1,32 +1,24 @@
 ---
-layout: archive
-title: "Study · Chapter I"
+title: Study
 permalink: /study/
-author_profile: false
+redirect_from:
+  - /cv/
+  - /resume/
+epigraph:
+  quote: "All men by nature desire to know."
+  author: Aristotle
 ---
 
-{% include base_path %}
-
-<i>“All men by nature desire to know.”</i> — Aristotle
-
 ## Background
-- <b>Master of Science</b> in Computational Mathematics, <b>University of Washington</b>, Seattle, 2027
-- <b>Bachelor of Science</b> in Applied Mathematics, <b>Chinese University of Hong Kong</b>, Shenzhen, 2025
-- Summer School, <b>University of Cambridge</b>, Pembroke College, 2023
-- Changzhou Beijiao H.S., 2021; Changzhou Foreign Languages M.S., 2018; Changzhou Xiheng Street E.S., 2015
+
+{% include timeline.html items=site.data.education %}
+
+## Honors
+
+{% include timeline.html items=site.data.honors %}
 
 ## Notes
-### Physics-Based Simulation
-- [Fluid Dynamics]({{ '/files/Fluid-Dynamics.pdf' | relative_url }}){:target="_blank" rel="noopener"}
 
-### Scientific Computing
-- [Scientific Computing]({{ '/files/Scientific-Computing.pdf' | relative_url }}){:target="_blank" rel="noopener"}
-- [Numerical Analysis]({{ '/files/Numerical-Analysis.pdf' | relative_url }}){:target="_blank" rel="noopener"}
-- [Data-Driven Optimization]({{ '/files/Data-Driven-Optimization.pdf' | relative_url }}){:target="_blank" rel="noopener"}
+Lecture notes I have written along the way.
 
-### Visual Computing
-- [Introduction To Computer Animation]({{ '/files/Introduction-To-Computer-Animation.pdf' | relative_url }}){:target="_blank" rel="noopener"}
-
-### Others
-- [Vector Calculus And Complex Variables]({{ '/files/Vector-Calculus-And-Complex-Variables.pdf' | relative_url }}){:target="_blank" rel="noopener"}
-- [Dynamical Systems And Chaos]({{ '/files/Dynamical-Systems-And-Chaos.pdf' | relative_url }}){:target="_blank" rel="noopener"}
+{% include notes.html %}

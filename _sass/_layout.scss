@@ -1,0 +1,198 @@
+// Header, navigation, and footer.
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid transparent;
+  background: var(--bg-header);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  backdrop-filter: saturate(1.4) blur(12px);
+  transition: border-color 0.3s, background-color 0.3s;
+
+  &.is-scrolled,
+  .menu-open & {
+    border-bottom-color: var(--line);
+  }
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: var(--header-h);
+  max-width: calc(var(--wrap-wide) + 2 * var(--gutter));
+}
+
+.brand {
+  margin-right: auto;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+
+  &:hover {
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+}
+
+.site-nav__list {
+  display: flex;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    display: block;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    color: var(--text-muted);
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s, background-color 0.2s;
+
+    &:hover {
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    &[aria-current="page"] {
+      color: var(--accent);
+    }
+  }
+}
+
+.site-nav__toggle {
+  display: none;
+
+  .site-nav__close {
+    display: none;
+  }
+
+  &[aria-expanded="true"] {
+    .site-nav__open {
+      display: none;
+    }
+
+    .site-nav__close {
+      display: block;
+    }
+  }
+}
+
+// The moon shows in light mode (switch to dark) and the sun in dark mode.
+.theme-toggle__sun {
+  display: none;
+}
+
+[data-theme="dark"] {
+  .theme-toggle__sun {
+    display: block;
+  }
+
+  .theme-toggle__moon {
+    display: none;
+  }
+}
+
+@media (max-width: $bp-md - 1px) {
+  .js {
+    .site-nav__toggle {
+      display: inline-grid;
+    }
+
+    .site-nav__list {
+      position: absolute;
+      top: var(--header-h);
+      right: 0;
+      left: 0;
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      padding: 0.25rem var(--gutter) 1rem;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg);
+      box-shadow: var(--shadow);
+
+      a {
+        padding: 0.9rem 0;
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        font-size: 1rem;
+
+        &:hover {
+          background: none;
+        }
+      }
+
+      li:last-child a {
+        border-bottom: 0;
+      }
+    }
+
+    &.menu-open .site-nav__list {
+      display: flex;
+    }
+  }
+
+  // Without JavaScript the menu cannot open, so let the links wrap instead.
+  .no-js {
+    .site-header__inner {
+      flex-wrap: wrap;
+      height: auto;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+
+    .site-nav {
+      order: 3;
+      width: 100%;
+    }
+
+    .site-nav__list {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.site-footer {
+  margin-top: clamp(5rem, 12vw, 8rem);
+  border-top: 1px solid var(--line);
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  max-width: calc(var(--wrap-wide) + 2 * var(--gutter));
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.site-footer__sep {
+  margin: 0 0.4em;
+}

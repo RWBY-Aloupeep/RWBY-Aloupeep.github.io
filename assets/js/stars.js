@@ -1,213 +1,309 @@
-const canvas = document.getElementById("stars-canvas");
-const ctx = canvas.getContext("2d");
-
-let stars = [];
-const numStars = 10;
-let mouse = { x: null, y: null, radius: 8 };
-const exclusionZone = { widthRatio: 0.6, heightRatio: 1.0 };
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-
-window.addEventListener("mousemove", e => {
-  mouse.x = e.x;
-  mouse.y = e.y;
-});
-
-function drawStar(ctx, x, y, r, points = 5) {
-  let outerRadius = r;
-  let innerRadius = r * 0.5;
-
-  ctx.beginPath();
-  for (let i = 0; i < points * 2; i++) {
-    let angle = (Math.PI / points) * i;
-    let radius = i % 2 === 0 ? outerRadius : innerRadius;
-    ctx.lineTo(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
-  }
-  ctx.closePath();
-
-  // shiny silver gradient
-  let gradient = ctx.createRadialGradient(x, y, innerRadius * 0.2, x, y, outerRadius);
-  gradient.addColorStop(0, "#c0c0c0");
-  gradient.addColorStop(0.5, "#a0a0a0ff");
-  gradient.addColorStop(1, "#808080");
-
-  // add glowing effect
-  ctx.shadowBlur = 20;
-  ctx.shadowColor = "rgba(200, 200, 255, 0.8)";
-
-  ctx.fillStyle = gradient;
-  ctx.fill();
-
-  // reset shadow for next shapes
-  ctx.shadowBlur = 0;
-}
-
-function resolveCollision(s1, s2) {
-  const dx = s2.x - s1.x;
-  const dy = s2.y - s1.y;
-  const dist = Math.sqrt(dx * dx + dy * dy);
-
-  if (dist < s1.radius + s2.radius) {
-    // simple elastic collision
-    const angle = Math.atan2(dy, dx);
-
-    // separate stars so they don’t overlap
-    const overlap = s1.radius + s2.radius - dist;
-    const moveX = Math.cos(angle) * overlap / 2;
-    const moveY = Math.sin(angle) * overlap / 2;
-
-    s1.x -= moveX;
-    s1.y -= moveY;
-    s2.x += moveX;
-    s2.y += moveY;
-
-    // swap velocities (1D elastic along angle)
-    const v1 = s1.vx * Math.cos(angle) + s1.vy * Math.sin(angle);
-    const v2 = s2.vx * Math.cos(angle) + s2.vy * Math.sin(angle);
-
-    const temp = v1;
-    s1.vx += (v2 - v1) * Math.cos(angle);
-    s1.vy += (v2 - v1) * Math.sin(angle);
-    s2.vx += (temp - v2) * Math.cos(angle);
-    s2.vy += (temp - v2) * Math.sin(angle);
-  }
-}
-
-function getExclusionRect(padding = 0) {
-  const width = canvas.width * exclusionZone.widthRatio;
-  const height = canvas.height * exclusionZone.heightRatio;
-  const left = (canvas.width - width) / 2 - padding;
-  const right = (canvas.width + width) / 2 + padding;
-  const top = (canvas.height - height) / 2 - padding;
-  const bottom = (canvas.height + height) / 2 + padding;
-
-  return { left, right, top, bottom };
-}
-
-function isInExclusionZone(x, y, radius = 0) {
-  const rect = getExclusionRect(radius);
-  return x > rect.left && x < rect.right && y > rect.top && y < rect.bottom;
-}
-
-function pushOutOfExclusion(star) {
-  if (!isInExclusionZone(star.x, star.y, star.radius)) {
+// Stars floating behind the home page hero: a tiny 2D physics simulation with
+// elastic collisions, pointer repulsion, and a no-fly zone around the text.
+// Colors come from the --star-* custom properties, so they follow the theme.
+(() => {
+  const hero = document.querySelector("[data-hero]");
+  const canvas = hero && hero.querySelector("[data-stars]");
+  if (!canvas || !canvas.getContext) {
     return;
   }
 
-  const rect = getExclusionRect(star.radius);
-  const distances = [
-    { edge: "left", distance: Math.abs(star.x - rect.left) },
-    { edge: "right", distance: Math.abs(rect.right - star.x) },
-    { edge: "top", distance: Math.abs(star.y - rect.top) },
-    { edge: "bottom", distance: Math.abs(rect.bottom - star.y) },
-  ];
-  distances.sort((a, b) => a.distance - b.distance);
-  const nearest = distances[0].edge;
+  const ctx = canvas.getContext("2d");
+  const text = hero.querySelector("[data-hero-text]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  if (nearest === "left") {
-    star.x = rect.left - 1;
-    star.vx = -Math.abs(star.vx);
-  } else if (nearest === "right") {
-    star.x = rect.right + 1;
-    star.vx = Math.abs(star.vx);
-  } else if (nearest === "top") {
-    star.y = rect.top - 1;
-    star.vy = -Math.abs(star.vy);
-  } else {
-    star.y = rect.bottom + 1;
-    star.vy = Math.abs(star.vy);
-  }
-}
+  const CRUISE_SPEED = 0.35; // px per frame the stars settle back to
+  const DAMPING = 0.97; // how quickly extra speed bleeds off
+  const POINTER_RADIUS = 70;
+  const POINTER_FORCE = 0.6;
+  const TEXT_PADDING = 28;
 
-class Star {
-  constructor(x, y, radius) {
-    this.x = x;
-    this.y = y;
-    this.vx = (Math.random() - 0.5) * 2;
-    this.vy = (Math.random() - 0.5) * 2;
-    this.radius = radius;
-    this.rotation = Math.random() * Math.PI * 2; // start rotation
-    this.rotationSpeed = (Math.random() - 0.5) * 0.02; // small spin
-  }
+  let width = 0;
+  let height = 0;
+  let stars = [];
+  let palette = null;
+  let exclusion = null;
+  let frame = 0;
+  let lastTime = 0;
+  let onScreen = true;
+  const pointer = { x: -1e4, y: -1e4 };
 
-  draw() {
+  const readPalette = () => {
+    const style = getComputedStyle(document.documentElement);
+    palette = {
+      core: style.getPropertyValue("--star-core").trim() || "#ffffff",
+      edge: style.getPropertyValue("--star-edge").trim() || "#999999",
+      glow: style.getPropertyValue("--star-glow").trim() || "rgba(200, 200, 255, 0.7)",
+    };
+  };
+
+  const measure = () => {
+    const rect = hero.getBoundingClientRect();
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    width = rect.width;
+    height = rect.height;
+    canvas.width = Math.round(width * ratio);
+    canvas.height = Math.round(height * ratio);
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+    if (text) {
+      const box = text.getBoundingClientRect();
+      exclusion = {
+        left: box.left - rect.left - TEXT_PADDING,
+        right: box.right - rect.left + TEXT_PADDING,
+        top: box.top - rect.top - TEXT_PADDING,
+        bottom: box.bottom - rect.top + TEXT_PADDING,
+      };
+    }
+  };
+
+  const inExclusion = (x, y, r) =>
+    exclusion &&
+    x > exclusion.left - r &&
+    x < exclusion.right + r &&
+    y > exclusion.top - r &&
+    y < exclusion.bottom + r;
+
+  // Push a star out through the nearest edge of the text box and point it away.
+  const leaveExclusion = (star) => {
+    if (!inExclusion(star.x, star.y, star.r)) {
+      return;
+    }
+    const edges = [
+      { side: "left", d: star.x - (exclusion.left - star.r) },
+      { side: "right", d: exclusion.right + star.r - star.x },
+      { side: "top", d: star.y - (exclusion.top - star.r) },
+      { side: "bottom", d: exclusion.bottom + star.r - star.y },
+    ].sort((a, b) => a.d - b.d);
+
+    switch (edges[0].side) {
+      case "left":
+        star.x = exclusion.left - star.r - 1;
+        star.vx = -Math.abs(star.vx);
+        break;
+      case "right":
+        star.x = exclusion.right + star.r + 1;
+        star.vx = Math.abs(star.vx);
+        break;
+      case "top":
+        star.y = exclusion.top - star.r - 1;
+        star.vy = -Math.abs(star.vy);
+        break;
+      default:
+        star.y = exclusion.bottom + star.r + 1;
+        star.vy = Math.abs(star.vy);
+    }
+  };
+
+  const spawn = () => {
+    const count = width < 640 ? 6 : 10;
+    stars = [];
+    for (let i = 0; i < count; i += 1) {
+      const r = (width < 640 ? 9 : 12) + Math.random() * 8;
+      // Alternate sides so the stars frame the text instead of clumping.
+      const leftSide = i % 2 === 0;
+      const minX = leftSide ? r : width / 2 + r;
+      const maxX = leftSide ? width / 2 - r : width - r;
+      let x;
+      let y;
+      let attempts = 0;
+      do {
+        x = minX + Math.random() * Math.max(maxX - minX, 0);
+        y = r + Math.random() * Math.max(height - 2 * r, 0);
+        attempts += 1;
+      } while (inExclusion(x, y, r) && attempts < 50);
+
+      const angle = Math.random() * Math.PI * 2;
+      stars.push({
+        x,
+        y,
+        r,
+        vx: Math.cos(angle) * CRUISE_SPEED,
+        vy: Math.sin(angle) * CRUISE_SPEED,
+        rotation: Math.random() * Math.PI * 2,
+        spin: (Math.random() - 0.5) * 0.01,
+      });
+    }
+  };
+
+  const drawStar = (star) => {
+    const outer = star.r;
+    const inner = star.r * 0.5;
     ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate(this.rotation);
-    drawStar(ctx, 0, 0, this.radius, 5);
+    ctx.translate(star.x, star.y);
+    ctx.rotate(star.rotation);
+    ctx.beginPath();
+    for (let i = 0; i < 10; i += 1) {
+      const angle = (Math.PI / 5) * i;
+      const radius = i % 2 === 0 ? outer : inner;
+      ctx.lineTo(Math.cos(angle) * radius, Math.sin(angle) * radius);
+    }
+    ctx.closePath();
+    const gradient = ctx.createRadialGradient(0, 0, inner * 0.2, 0, 0, outer);
+    gradient.addColorStop(0, palette.core);
+    gradient.addColorStop(1, palette.edge);
+    ctx.fillStyle = gradient;
+    ctx.shadowBlur = 18;
+    ctx.shadowColor = palette.glow;
+    ctx.fill();
     ctx.restore();
+  };
+
+  // Equal-mass elastic collision: separate the pair, swap normal velocities.
+  const collide = (a, b) => {
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const dist = Math.hypot(dx, dy) || 0.0001;
+    const overlap = a.r + b.r - dist;
+    if (overlap <= 0) {
+      return;
+    }
+    const nx = dx / dist;
+    const ny = dy / dist;
+    a.x -= (nx * overlap) / 2;
+    a.y -= (ny * overlap) / 2;
+    b.x += (nx * overlap) / 2;
+    b.y += (ny * overlap) / 2;
+
+    const va = a.vx * nx + a.vy * ny;
+    const vb = b.vx * nx + b.vy * ny;
+    if (va - vb <= 0) {
+      return;
+    }
+    a.vx += (vb - va) * nx;
+    a.vy += (vb - va) * ny;
+    b.vx += (va - vb) * nx;
+    b.vy += (va - vb) * ny;
+  };
+
+  const step = (dt) => {
+    for (const star of stars) {
+      const dx = star.x - pointer.x;
+      const dy = star.y - pointer.y;
+      const dist = Math.hypot(dx, dy);
+      const reach = POINTER_RADIUS + star.r;
+      if (dist > 0 && dist < reach) {
+        const push = (1 - dist / reach) * POINTER_FORCE * dt;
+        star.vx += (dx / dist) * push;
+        star.vy += (dy / dist) * push;
+      }
+
+      // Bleed off extra speed but never stop drifting.
+      const speed = Math.hypot(star.vx, star.vy) || 0.0001;
+      const target = speed > CRUISE_SPEED
+        ? Math.max(CRUISE_SPEED, speed * Math.pow(DAMPING, dt))
+        : speed + (CRUISE_SPEED - speed) * 0.02 * dt;
+      star.vx *= target / speed;
+      star.vy *= target / speed;
+
+      star.x += star.vx * dt;
+      star.y += star.vy * dt;
+      star.rotation += star.spin * dt;
+
+      if (star.x < star.r || star.x > width - star.r) {
+        star.vx = star.x < star.r ? Math.abs(star.vx) : -Math.abs(star.vx);
+        star.x = Math.min(Math.max(star.x, star.r), width - star.r);
+      }
+      if (star.y < star.r || star.y > height - star.r) {
+        star.vy = star.y < star.r ? Math.abs(star.vy) : -Math.abs(star.vy);
+        star.y = Math.min(Math.max(star.y, star.r), height - star.r);
+      }
+
+      leaveExclusion(star);
+    }
+
+    for (let i = 0; i < stars.length; i += 1) {
+      for (let j = i + 1; j < stars.length; j += 1) {
+        collide(stars[i], stars[j]);
+      }
+    }
+  };
+
+  const draw = () => {
+    ctx.clearRect(0, 0, width, height);
+    stars.forEach(drawStar);
+  };
+
+  const tick = (time) => {
+    // Normalise to 60 fps so the motion looks the same on any refresh rate.
+    const dt = lastTime ? Math.min((time - lastTime) / (1000 / 60), 3) : 1;
+    lastTime = time;
+    step(dt);
+    draw();
+    frame = requestAnimationFrame(tick);
+  };
+
+  const shouldAnimate = () => onScreen && !document.hidden && !reducedMotion.matches;
+
+  const sync = () => {
+    if (shouldAnimate() && !frame) {
+      lastTime = 0;
+      frame = requestAnimationFrame(tick);
+    } else if (!shouldAnimate() && frame) {
+      cancelAnimationFrame(frame);
+      frame = 0;
+    }
+    if (!frame) {
+      draw();
+    }
+  };
+
+  const reset = () => {
+    measure();
+    spawn();
+    draw();
+  };
+
+  readPalette();
+  reset();
+  sync();
+
+  let resizeFrame = 0;
+  window.addEventListener("resize", () => {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(() => {
+      const oldWidth = width;
+      measure();
+      // Respawn on big layout changes (e.g. rotation); otherwise keep the scene.
+      if (Math.abs(width - oldWidth) > 120) {
+        spawn();
+      }
+      draw();
+    });
+  });
+
+  // Fonts change the text box size once they load.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      measure();
+      stars.forEach(leaveExclusion);
+      draw();
+    });
   }
 
-  update() {
-    this.rotation += this.rotationSpeed;
-    // bounce off edges
-    if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-      this.vx *= -1;
-    }
-    if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-      this.vy *= -1;
-    }
+  hero.addEventListener("pointermove", (event) => {
+    const rect = hero.getBoundingClientRect();
+    pointer.x = event.clientX - rect.left;
+    pointer.y = event.clientY - rect.top;
+  });
+  hero.addEventListener("pointerleave", () => {
+    pointer.x = -1e4;
+    pointer.y = -1e4;
+  });
 
-    // mouse collision physics
-    let dx = mouse.x - this.x;
-    let dy = mouse.y - this.y;
-    let dist = Math.sqrt(dx * dx + dy * dy);
-
-    if (dist < mouse.radius + this.radius) {
-      // simple repulsion
-      let angle = Math.atan2(dy, dx);
-      this.vx -= Math.cos(angle) * 0.5;
-      this.vy -= Math.sin(angle) * 0.5;
-    }
-
-    this.x += this.vx;
-    this.y += this.vy;
-
-    pushOutOfExclusion(this);
-
-    this.vx *= 0.98; // friction
-    this.vy *= 0.98;
-
-    this.draw();
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((entries) => {
+      onScreen = entries[0].isIntersecting;
+      sync();
+    }).observe(hero);
   }
-}
+  document.addEventListener("visibilitychange", sync);
+  reducedMotion.addEventListener("change", sync);
 
-// init stars
-function init() {
-  stars = [];
-  for (let i = 0; i < numStars; i++) {
-    let radius = 12 + Math.random() * 8;
-    let x = 0;
-    let y = 0;
-    let attempts = 0;
-    const halfWidth = canvas.width / 2;
-    const isLeftSide = i < numStars / 2;
-    const minX = isLeftSide ? radius : halfWidth + radius;
-    const maxX = isLeftSide ? halfWidth - radius : canvas.width - radius;
-    do {
-      x = Math.random() * (maxX - minX) + minX;
-      y = Math.random() * (canvas.height - radius * 2) + radius;
-      attempts += 1;
-    } while (isInExclusionZone(x, y, radius) && attempts < 50);
-    stars.push(new Star(x, y, radius));
-  }
-}
-init();
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  stars.forEach(s => s.update());
-  // check pairwise collisions
-  for (let i = 0; i < stars.length; i++) {
-    for (let j = i + 1; j < stars.length; j++) {
-      resolveCollision(stars[i], stars[j]);
+  new MutationObserver(() => {
+    readPalette();
+    if (!frame) {
+      draw();
     }
-  }
-  requestAnimationFrame(animate);
-}
-animate();
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+})();

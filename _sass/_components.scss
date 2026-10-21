@@ -1,0 +1,434 @@
+// Reusable pieces. Each block matches an include in _includes/.
+
+// Shared look for bordered surfaces that react on hover.
+@mixin surface {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.25s, transform 0.25s var(--ease);
+}
+
+@mixin surface-hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+@mixin label {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+// Epigraph under a chapter title.
+
+.epigraph {
+  max-width: 34rem;
+  margin-top: 2rem;
+
+  blockquote {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.4;
+
+    p::before {
+      content: "\201C";
+    }
+
+    p::after {
+      content: "\201D";
+    }
+  }
+
+  figcaption {
+    @include label;
+    margin-top: 0.85rem;
+    letter-spacing: 0.14em;
+
+    &::before {
+      content: "\2014\00a0";
+    }
+  }
+}
+
+// Contact links: icons (footer), row (home), cards (contact page).
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+}
+
+.contact--icons {
+  gap: 0.15rem;
+
+  .contact__link {
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    color: var(--text-muted);
+
+    &:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+  }
+
+  .icon {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}
+
+.contact--row {
+  .contact__link {
+    padding: 0.55rem 1.05rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-raised);
+
+    &:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  }
+
+  .icon {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+}
+
+.contact--cards {
+  display: grid;
+  gap: 0.75rem;
+
+  .contact__link {
+    @include surface;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.1rem 1rem;
+    height: 100%;
+    padding: 1.25rem;
+
+    &:hover {
+      @include surface-hover;
+    }
+  }
+
+  .icon {
+    grid-row: span 2;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0.7rem;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .contact__label {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+}
+
+.contact__handle {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+// Timeline (education, honors, experience).
+
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline__item {
+  position: relative;
+  padding: 0 0 2rem 2rem;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  // Dot
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0.45rem;
+    left: 0;
+    width: 0.65rem;
+    height: 0.65rem;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    background: var(--bg);
+  }
+
+  &:first-child::before {
+    background: var(--accent);
+  }
+
+  // Line down to the next dot
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 1.35rem;
+    bottom: -0.2rem;
+    left: calc(0.325rem - 0.5px);
+    width: 1px;
+    background: var(--line);
+  }
+}
+
+.timeline__year {
+  @include label;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline__title {
+  margin-top: 0.2rem;
+  font-size: 1.4rem;
+}
+
+.timeline__where {
+  margin-top: 0.15rem;
+  color: var(--text-muted);
+}
+
+.timeline__note {
+  margin-top: 0.1rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+// Lecture notes.
+
+.notes {
+  display: grid;
+  gap: 2rem;
+}
+
+.notes__topic {
+  @include label;
+  margin-bottom: 0.75rem;
+}
+
+.notes__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.note-card {
+  @include surface;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  height: 100%;
+  padding: 0.9rem 1rem;
+
+  &:hover {
+    @include surface-hover;
+  }
+}
+
+.note-card__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.note-card__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.note-card__title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.note-card__meta {
+  @include label;
+  margin-top: 0.2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+}
+
+.note-card__arrow {
+  color: var(--text-faint);
+  transition: color 0.2s, transform 0.25s var(--ease);
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .note-card:hover & {
+    color: var(--accent);
+    transform: translate(2px, -2px);
+  }
+}
+
+// Tags.
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-raised);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+
+// Text cards (Life).
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  @include surface;
+  padding: 1.5rem 1.6rem;
+
+  &:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.card__title {
+  font-size: 1.65rem;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 1.5rem;
+    height: 1px;
+    margin-top: 0.6rem;
+    background: var(--accent);
+  }
+}
+
+.card__text {
+  margin-top: 0.75rem;
+  color: var(--text-muted);
+}
+
+// Previous / next chapter.
+
+.chapter-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: clamp(4rem, 10vw, 6rem);
+}
+
+.chapter-nav__link {
+  @include surface;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.25rem 1.4rem;
+
+  &:hover {
+    @include surface-hover;
+  }
+}
+
+.chapter-nav__link--next {
+  grid-column: 2;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.chapter-nav__dir {
+  @include label;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.chapter-nav__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  transition: color 0.2s;
+
+  .chapter-nav__link:hover & {
+    color: var(--accent);
+  }
+}
+
+@media (max-width: $bp-sm - 1px) {
+  .chapter-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-nav__link--next {
+    grid-column: auto;
+  }
+}

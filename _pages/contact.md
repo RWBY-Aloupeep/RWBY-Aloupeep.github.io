@@ -1,8 +1,10 @@
 ---
-layout: archive
-title: "Contact"
+title: Contact
 permalink: /contact/
-author_profile: false
+eyebrow: Say hello
 ---
 
-{% include contact-links.html %}
+Questions, collaborations, or opportunities — feel free to reach out.
+{: .lead}
+
+{% include contact-links.html style="cards" %}

@@ -1,13 +1,10 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-group :jekyll_plugins do
-  gem 'jekyll'
-  gem 'jekyll-feed'
-  gem 'jekyll-sitemap'
-  gem 'jekyll-redirect-from'
-  gem 'jemoji'
-  gem 'webrick', '~> 1.8'
-end
+# Same Jekyll version and plugins that GitHub Pages builds the site with.
+gem "github-pages", group: :jekyll_plugins
 
-gem 'github-pages'
-gem 'connection_pool', '2.5.0'
+# Needed by `jekyll serve` on Ruby 3+.
+gem "webrick", "~> 1.8"
+
+# connection_pool 3 requires a newer Ruby than some GitHub Pages images ship.
+gem "connection_pool", "2.5.0"

@@ -1,0 +1,69 @@
+// Design tokens. Colors are CSS custom properties so the theme can switch at
+// runtime (see _includes/head.html); breakpoints are Sass variables because
+// media queries cannot read custom properties.
+
+$bp-sm: 520px;
+$bp-md: 760px;
+
+@mixin light-theme {
+  color-scheme: light;
+  --bg: #faf7f2;
+  --bg-raised: #ffffff;
+  --bg-header: rgba(250, 247, 242, 0.86);
+  --text: #1f1b17;
+  --text-muted: #5f574e;
+  --text-faint: #958b81;
+  --line: #e6dfd4;
+  --accent: #8f3249;
+  --accent-line: rgba(143, 50, 73, 0.35);
+  --accent-soft: rgba(143, 50, 73, 0.07);
+  --hero-glow: rgba(226, 150, 172, 0.24);
+  --star-core: #fffaf7;
+  --star-edge: #c79aa5;
+  --star-glow: rgba(143, 50, 73, 0.35);
+  --shadow: 0 1px 2px rgba(31, 27, 23, 0.04), 0 10px 30px rgba(31, 27, 23, 0.07);
+}
+
+@mixin dark-theme {
+  color-scheme: dark;
+  --bg: #121015;
+  --bg-raised: #1a171e;
+  --bg-header: rgba(18, 16, 21, 0.82);
+  --text: #ece6df;
+  --text-muted: #aea59c;
+  --text-faint: #6c6570;
+  --line: #2d2832;
+  --accent: #e8a4b5;
+  --accent-line: rgba(232, 164, 181, 0.4);
+  --accent-soft: rgba(232, 164, 181, 0.09);
+  --hero-glow: rgba(126, 104, 196, 0.2);
+  --star-core: #f6f3ff;
+  --star-edge: #8f8aa1;
+  --star-glow: rgba(200, 200, 255, 0.75);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+:root {
+  @include light-theme;
+  --font-display: "Cormorant Garamond", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
+  --font-body: "Source Serif 4", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --wrap: 46rem;
+  --wrap-wide: 76rem;
+  --gutter: clamp(1.25rem, 5vw, 2.5rem);
+  --header-h: 4rem;
+  --radius: 14px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+// Without a stored choice the inline script in <head> follows the system; this
+// covers the moment before it runs and visitors with JavaScript disabled.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include dark-theme;
+  }
+}
+
+:root[data-theme="dark"] {
+  @include dark-theme;
+}

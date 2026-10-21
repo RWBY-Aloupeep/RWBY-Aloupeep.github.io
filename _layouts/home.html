@@ -1,0 +1,72 @@
+---
+layout: default
+body_class: is-home
+scripts:
+  - /assets/js/stars.js
+---
+{%- assign author = site.author -%}
+
+<section class="hero" data-hero>
+  <canvas class="hero__stars" aria-hidden="true" data-stars></canvas>
+  <div class="hero__text" data-hero-text>
+    <p class="hero__mark" aria-hidden="true">《 <span class="hero__cursor">|</span> 》</p>
+    <h1 class="hero__title">{{ page.hero.title }}</h1>
+    <p class="hero__sub">{{ page.hero.subtitle }}</p>
+  </div>
+  <a class="hero__cue" href="#prologue">
+    <span>Begin</span>
+    {% include icon.html name="arrow-down" %}
+  </a>
+</section>
+
+<section class="prologue wrap" id="prologue" aria-labelledby="prologue-title">
+  <figure class="prologue__portrait">
+    <picture>
+      <source type="image/webp" srcset="{{ '/images/avatar-480.webp' | relative_url }} 480w, {{ '/images/avatar.webp' | relative_url }} 960w" sizes="(min-width: 760px) 22rem, 70vw">
+      <img src="{{ '/images/avatar.jpg' | relative_url }}" srcset="{{ '/images/avatar-480.jpg' | relative_url }} 480w, {{ '/images/avatar.jpg' | relative_url }} 960w" sizes="(min-width: 760px) 22rem, 70vw" width="960" height="1454" alt="Portrait of {{ author.short_name }}">
+    </picture>
+  </figure>
+
+  <div class="prologue__body">
+    <p class="eyebrow">Prologue</p>
+    <h2 class="prologue__title" id="prologue-title">Hi, I’m {{ author.short_name }}.</h2>
+    <p class="prologue__name">{{ author.name }} <span class="prologue__native" lang="zh-Hans">{{ author.native_name }}</span></p>
+    <div class="prologue__bio prose">
+      {{ content }}
+    </div>
+    {% include contact-links.html style="row" %}
+  </div>
+</section>
+
+<figure class="feature wrap wrap--wide">
+  <picture>
+    <source type="image/webp" srcset="{{ '/images/homepage-1200.webp' | relative_url }} 1200w, {{ '/images/homepage.webp' | relative_url }} 2400w" sizes="(min-width: 80rem) 76rem, 100vw">
+    <img src="{{ '/images/homepage.jpg' | relative_url }}" srcset="{{ '/images/homepage-1200.jpg' | relative_url }} 1200w, {{ '/images/homepage.jpg' | relative_url }} 2400w" sizes="(min-width: 80rem) 76rem, 100vw" width="2400" height="1600" loading="lazy" decoding="async" alt="{{ page.feature_alt }}">
+  </picture>
+</figure>
+
+<section class="contents wrap" aria-labelledby="contents-title">
+  <p class="eyebrow" id="contents-title">Contents</p>
+  <ol class="toc">
+    {%- for chapter in site.data.navigation.chapters %}
+    <li>
+      <a class="toc__item" href="{{ chapter.url | relative_url }}">
+        <span class="toc__numeral">{{ chapter.numeral }}</span>
+        <span class="toc__text">
+          <span class="toc__title">{{ chapter.title }}</span>
+          <span class="toc__summary">{{ chapter.summary }}</span>
+        </span>
+        <span class="toc__arrow">{% include icon.html name="arrow-right" %}</span>
+      </a>
+    </li>
+    {%- endfor %}
+  </ol>
+</section>
+
+{%- if author.motto %}
+<section class="motto wrap" aria-label="Motto">
+  {%- for line in author.motto %}
+  <p class="motto__line">{{ line }}</p>
+  {%- endfor %}
+</section>
+{%- endif %}

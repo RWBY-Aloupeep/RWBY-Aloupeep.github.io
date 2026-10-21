@@ -1,0 +1,18 @@
+{%- comment -%}
+  Vertical timeline. Usage: {% include timeline.html items=site.data.education %}
+  Each item has `year`, `title`, and optional `where` and `note`.
+{%- endcomment -%}
+<ol class="timeline">
+  {%- for item in include.items %}
+  <li class="timeline__item">
+    <p class="timeline__year">{{ item.year }}</p>
+    <h3 class="timeline__title">{{ item.title }}</h3>
+    {%- if item.where %}
+    <p class="timeline__where">{{ item.where }}</p>
+    {%- endif %}
+    {%- if item.note %}
+    <p class="timeline__note">{{ item.note }}</p>
+    {%- endif %}
+  </li>
+  {%- endfor %}
+</ol>

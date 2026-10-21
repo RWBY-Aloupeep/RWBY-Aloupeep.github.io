@@ -1,0 +1,25 @@
+// Chapter pages (_layouts/page.html).
+
+.chapter__header {
+  padding-top: clamp(3.5rem, 10vw, 6.5rem);
+
+  &::after {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    background: var(--line);
+  }
+}
+
+.chapter__title {
+  margin-top: 1rem;
+  font-size: clamp(3.25rem, 9vw, 5.5rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.chapter__body {
+  margin-top: clamp(2.5rem, 6vw, 3.5rem);
+}

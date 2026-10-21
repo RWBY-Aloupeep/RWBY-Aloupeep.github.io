@@ -1,0 +1,12 @@
+{%- comment -%}
+  A grid of text cards. Usage: {% include cards.html items=page.interests %}
+  Each item has a `name` and a `text` (Markdown allowed).
+{%- endcomment -%}
+<ul class="cards">
+  {%- for item in include.items %}
+  <li class="card">
+    <h2 class="card__title">{{ item.name }}</h2>
+    <p class="card__text">{{ item.text | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
+  </li>
+  {%- endfor %}
+</ul>
