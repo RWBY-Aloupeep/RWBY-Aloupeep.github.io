@@ -1,6 +1,6 @@
 // Stars floating behind the home page hero: a tiny 2D physics simulation with
 // elastic collisions, pointer repulsion, and no-fly zones around the elements
-// marked [data-stars-avoid] (the text and the "Begin" cue).
+// marked [data-stars-avoid] (the hero text).
 // Colors come from the --star-* custom properties, so they follow the theme.
 (() => {
   const hero = document.querySelector("[data-hero]");
@@ -103,10 +103,11 @@
   };
 
   const spawn = () => {
-    const count = width < 640 ? 6 : 10;
+    // The hero is a short band, so only a few, smaller stars.
+    const count = width < 640 ? 4 : 7;
     stars = [];
     for (let i = 0; i < count; i += 1) {
-      const r = (width < 640 ? 9 : 12) + Math.random() * 8;
+      const r = (width < 640 ? 8 : 10) + Math.random() * 6;
       // Alternate sides so the stars frame the text instead of clumping.
       const leftSide = i % 2 === 0;
       const minX = leftSide ? r : width / 2 + r;

@@ -4,7 +4,13 @@ body_class: is-home
 scripts:
   - /assets/js/stars.js
 ---
+{%- comment -%}
+  Home page: a short hero with the stars, the prologue, then one card per
+  numbered chapter showing what is inside it (from _includes/previews/), a
+  strip for each unnumbered chapter (the epilogue), and the motto.
+{%- endcomment -%}
 {%- assign author = site.author -%}
+{%- assign chapters = site.data.navigation.chapters -%}
 
 <section class="hero" data-hero>
   <canvas class="hero__stars" aria-hidden="true" data-stars></canvas>
@@ -13,60 +19,65 @@ scripts:
     <h1 class="hero__title">{{ page.hero.title }}</h1>
     <p class="hero__sub">{{ page.hero.subtitle }}</p>
   </div>
-  <a class="hero__cue" href="#prologue" data-stars-avoid>
-    <span>Begin</span>
-    {% include icon.html name="arrow-down" %}
-  </a>
 </section>
 
-<section class="prologue wrap wrap--wide" id="prologue" aria-labelledby="prologue-title">
-  <figure class="prologue__portrait">
-    <picture>
-      <source type="image/webp" srcset="{{ '/images/avatar-480.webp' | relative_url }} 480w, {{ '/images/avatar.webp' | relative_url }} 960w" sizes="(min-width: 760px) 22rem, 70vw">
-      <img src="{{ '/images/avatar.jpg' | relative_url }}" srcset="{{ '/images/avatar-480.jpg' | relative_url }} 480w, {{ '/images/avatar.jpg' | relative_url }} 960w" sizes="(min-width: 760px) 22rem, 70vw" width="960" height="1454" alt="Portrait of {{ author.short_name }}">
-    </picture>
-  </figure>
+<div class="home wrap wrap--wide">
+  <section class="prologue" id="prologue" aria-labelledby="prologue-title">
+    <figure class="prologue__portrait">
+      <picture>
+        <source type="image/webp" srcset="{{ '/images/avatar-480.webp' | relative_url }} 480w, {{ '/images/avatar.webp' | relative_url }} 960w" sizes="10.5rem">
+        <img src="{{ '/images/avatar-480.jpg' | relative_url }}" srcset="{{ '/images/avatar-480.jpg' | relative_url }} 480w, {{ '/images/avatar.jpg' | relative_url }} 960w" sizes="10.5rem" width="960" height="1454" alt="Portrait of {{ author.short_name }}">
+      </picture>
+    </figure>
 
-  <div class="prologue__body">
-    <p class="eyebrow">Prologue</p>
-    <h2 class="prologue__title" id="prologue-title">Hi, I’m {{ author.short_name }}.</h2>
-    <p class="prologue__name">{{ author.name }} <span class="prologue__native" lang="zh-Hans">{{ author.native_name }}</span></p>
-    <div class="prologue__bio prose">
-      {{ content }}
+    <div class="prologue__body">
+      <p class="eyebrow">Prologue</p>
+      <h2 class="prologue__title" id="prologue-title">Hi, I’m {{ author.short_name }}.</h2>
+      <p class="prologue__name">{{ author.name }} <span class="prologue__native" lang="zh-Hans">{{ author.native_name }}</span></p>
+      <div class="prologue__bio prose">
+        {{ content }}
+      </div>
+      {% include contact-links.html style="row" %}
     </div>
-    {% include contact-links.html style="row" %}
-  </div>
-</section>
+  </section>
 
-<figure class="feature wrap wrap--wide">
-  <picture>
-    <source type="image/webp" srcset="{{ '/images/homepage-1200.webp' | relative_url }} 1200w, {{ '/images/homepage.webp' | relative_url }} 2400w" sizes="(min-width: 80rem) 76rem, 100vw">
-    <img src="{{ '/images/homepage.jpg' | relative_url }}" srcset="{{ '/images/homepage-1200.jpg' | relative_url }} 1200w, {{ '/images/homepage.jpg' | relative_url }} 2400w" sizes="(min-width: 80rem) 76rem, 100vw" width="2400" height="1600" loading="lazy" decoding="async" alt="{{ page.feature_alt }}">
-  </picture>
-</figure>
-
-<section class="contents wrap" aria-labelledby="contents-title">
-  <p class="eyebrow" id="contents-title">Contents</p>
-  <ol class="toc">
-    {%- for chapter in site.data.navigation.chapters %}
-    <li>
-      <a class="toc__item" href="{{ chapter.url | relative_url }}">
-        <span class="toc__numeral">{{ chapter.numeral | default: chapter.label }}</span>
-        <span class="toc__text">
-          <span class="toc__title">{{ chapter.title }}</span>
-          <span class="toc__summary">{{ chapter.summary }}</span>
-        </span>
-        <span class="toc__arrow">{% include icon.html name="arrow-right" %}</span>
-      </a>
-    </li>
+  <section class="chapters" aria-label="Chapters">
+    {%- for chapter in chapters %}
+    {%- if chapter.numeral %}
+    <article class="chapter-card">
+      <header>
+        <p class="eyebrow">Chapter {{ chapter.numeral }}</p>
+        <h2 class="chapter-card__title">{{ chapter.title }}</h2>
+      </header>
+      <div class="chapter-card__body">
+        {%- if chapter.preview %}
+        {%- capture preview %}previews/{{ chapter.preview }}.html{% endcapture %}
+        {% include {{ preview }} chapter=chapter %}
+        {%- else %}
+        <p>{{ chapter.summary }}</p>
+        {%- endif %}
+      </div>
+      <a class="chapter-card__more" href="{{ chapter.url | relative_url }}">Read the chapter<span class="visually-hidden">: {{ chapter.title }}</span> {% include icon.html name="arrow-right" %}</a>
+    </article>
+    {%- endif %}
     {%- endfor %}
-  </ol>
-</section>
+  </section>
 
-{%- if author.motto %}
-<section class="motto wrap" aria-label="Motto">
-  {%- for line in author.motto %}
-  <p class="motto__line">{{ line }}</p>
+  {%- for chapter in chapters %}
+  {%- if chapter.label %}
+  <a class="chapter-strip" href="{{ chapter.url | relative_url }}">
+    <span class="chapter-strip__label">{{ chapter.label }}</span>
+    <span class="chapter-strip__title">{{ chapter.title }}</span>
+    <span class="chapter-strip__summary">{{ chapter.summary }} {% include icon.html name="arrow-right" %}</span>
+  </a>
+  {%- endif %}
   {%- endfor %}
-</section>
-{%- endif %}
+
+  {%- if author.motto %}
+  <p class="motto">
+    {%- for line in author.motto %}
+    <span class="motto__line">{{ line }}</span>
+    {%- endfor %}
+  </p>
+  {%- endif %}
+</div>

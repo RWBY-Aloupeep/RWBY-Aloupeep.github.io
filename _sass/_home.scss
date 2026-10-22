@@ -1,15 +1,17 @@
-// Home page (_layouts/home.html): hero, prologue, feature photo, contents, motto.
+// Home page (_layouts/home.html): hero, prologue, chapter cards, epilogue
+// strip, motto.
 
 .hero {
   position: relative;
   isolation: isolate;
   display: grid;
   place-items: center;
-  min-height: calc(100vh - var(--header-h));
-  min-height: calc(100svh - var(--header-h));
-  padding: 4rem var(--gutter) 7rem;
+  // Tall enough on a phone to leave the stars a band above and below the text.
+  min-height: clamp(19rem, 42vh, 22rem);
+  padding: 3rem var(--gutter);
   overflow: hidden;
-  background: radial-gradient(60% 50% at 50% 45%, var(--hero-glow), transparent 72%);
+  border-bottom: 1px solid var(--line);
+  background: radial-gradient(55% 60% at 50% 50%, var(--hero-glow), transparent 75%);
   text-align: center;
 }
 
@@ -23,15 +25,14 @@
 
 .hero__mark,
 .hero__title,
-.hero__sub,
-.hero__cue {
+.hero__sub {
   animation: hero-rise 1s var(--ease) both;
 }
 
 .hero__mark {
   color: var(--text-muted);
   font-family: var(--font-display);
-  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
   letter-spacing: 0.08em;
   animation-delay: 0.1s;
 }
@@ -44,53 +45,22 @@
 }
 
 .hero__title {
-  margin-top: 1.25rem;
-  font-size: clamp(2.75rem, 8vw, 6rem);
+  margin-top: 0.6rem;
+  font-size: clamp(2.4rem, 6vw, 3.75rem);
   font-style: italic;
   font-weight: 500;
   line-height: 1.05;
   letter-spacing: -0.015em;
-  animation-delay: 0.3s;
+  animation-delay: 0.25s;
 }
 
 .hero__sub {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   color: var(--text-muted);
   font-family: var(--font-display);
-  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
   font-style: italic;
-  animation-delay: 0.55s;
-}
-
-.hero__cue {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  margin-left: -2.5rem;
-  width: 5rem;
-  color: var(--text-muted);
-  font-family: var(--font-ui);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  text-decoration: none;
-  animation-delay: 1s;
-  transition: color 0.2s;
-
-  &:hover {
-    color: var(--accent);
-  }
-
-  .icon {
-    width: 1.1rem;
-    height: 1.1rem;
-    animation: hero-cue 2.4s ease-in-out infinite;
-  }
+  animation-delay: 0.45s;
 }
 
 @keyframes hero-rise {
@@ -116,52 +86,19 @@
   }
 }
 
-@keyframes hero-cue {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(6px);
-  }
-}
-
-// Prologue
+// Prologue: a small arched portrait beside the introduction.
 
 .prologue {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 3rem;
-  padding-top: clamp(4rem, 10vw, 7rem);
-  padding-bottom: clamp(4rem, 10vw, 7rem);
-
-  @media (min-width: $bp-md) {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(3rem, 7vw, 6rem);
-  }
+  gap: 1.5rem 2.5rem;
+  padding-top: clamp(2.5rem, 6vw, 3.5rem);
 }
 
-// Arched portrait with an offset outline behind it.
 .prologue__portrait {
-  position: relative;
-  justify-self: center;
-  width: 72%;
-  max-width: 20rem;
-
-  @media (min-width: $bp-md) {
-    width: 100%;
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border: 1px solid var(--accent-line);
-    border-radius: 50% 50% var(--radius) var(--radius) / 37.5% 37.5% var(--radius) var(--radius);
-    transform: translate(14px, 14px);
-  }
+  flex: none;
+  width: 10.5rem;
 
   img {
     width: 100%;
@@ -173,24 +110,23 @@
   }
 }
 
-.prologue__portrait,
 .prologue__body {
-  position: relative;
-  z-index: 0;
+  flex: 1 1 26rem;
+  min-width: 0;
 }
 
 .prologue__title {
-  margin-top: 0.9rem;
-  font-size: clamp(2.6rem, 6vw, 4rem);
+  margin-top: 0.5rem;
+  font-size: clamp(2.2rem, 4.5vw, 2.75rem);
   font-weight: 500;
   line-height: 1.05;
 }
 
 .prologue__name {
-  margin-top: 0.6rem;
+  margin-top: 0.35rem;
   color: var(--text-muted);
   font-family: var(--font-ui);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 }
 
 .prologue__native {
@@ -198,124 +134,217 @@
 }
 
 .prologue__bio {
-  margin-top: 1.5rem;
-  font-size: 1.125rem;
+  max-width: 40em;
+  margin-top: 0.85rem;
 }
 
 .prologue .contact {
-  margin-top: 2rem;
+  margin-top: 0.75rem;
 }
 
-// Feature photo
+// Chapter cards: one per numbered chapter, filled from _includes/previews/.
+// The "Read the chapter" link stretches over the whole card.
 
-.feature img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  object-position: 50% 30%;
-  border-radius: var(--radius);
-  background: var(--bg-raised);
+.chapters {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: clamp(2.5rem, 6vw, 3.5rem);
 
-  @media (max-width: $bp-md - 1px) {
-    aspect-ratio: 4 / 3;
-    object-position: 62% 30%;
+  @media (min-width: $bp-lg) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-// Table of contents
-
-.contents {
-  padding-top: clamp(4rem, 10vw, 7rem);
-}
-
-.toc {
-  margin: 1.25rem 0 0;
-  padding: 0;
-  border-top: 1px solid var(--line);
-  list-style: none;
-}
-
-.toc__item {
-  display: grid;
-  grid-template-columns: 7rem 1fr auto;
-  align-items: center;
+.chapter-card {
+  @include surface;
+  position: relative;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--text);
+  padding: 1.5rem;
+
+  &:hover {
+    @include surface-hover;
+  }
+}
+
+.chapter-card__title {
+  margin-top: 0.25rem;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.chapter-card__body {
+  display: grid;
+  gap: 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.chapter-card__quote {
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.3;
+
+  p::before {
+    content: "\201C";
+  }
+
+  p::after {
+    content: "\201D";
+  }
+}
+
+.chapter-card__aside {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.chapter-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  margin-top: auto;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 500;
   text-decoration: none;
 
-  @media (max-width: $bp-sm - 1px) {
-    grid-template-columns: 1fr auto;
-    gap: 0.25rem 1rem;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.25s var(--ease);
+  }
+
+  .chapter-card:hover & .icon {
+    transform: translateX(3px);
   }
 }
 
-.toc__numeral {
+// Compact lists inside the cards: a year column, then the entry.
+
+.mini-list {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    column-gap: 0.75rem;
+  }
+}
+
+.mini-list__year {
+  padding-top: 0.2em;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.mini-list__where {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.mini-list--plain {
+  gap: 0.35rem;
+
+  li {
+    display: block;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  .mini-list__where {
+    display: inline;
+    font-size: inherit;
+
+    &::before {
+      content: "\2014\00a0";
+    }
+  }
+}
+
+// Unnumbered chapters (the epilogue) get a single strip under the cards.
+
+.chapter-strip {
+  @include surface;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  margin-top: 0.75rem;
+  padding: 1rem 1.5rem;
+
+  &:hover {
+    @include surface-hover;
+  }
+}
+
+.chapter-strip__label {
   color: var(--text-muted);
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-style: italic;
-
-  @media (max-width: $bp-sm - 1px) {
-    grid-column: 1 / -1;
-    font-size: 1.1rem;
-  }
 }
 
-.toc__title {
-  display: block;
+.chapter-strip__title {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
-  font-weight: 500;
-  line-height: 1.1;
-  transition: color 0.2s;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
 
-  .toc__item:hover & {
-    color: var(--accent);
+.chapter-strip__summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+
+  // Pushed to the right edge; on a phone it wraps under the title instead.
+  @media (min-width: $bp-sm) {
+    margin-left: auto;
+  }
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
   }
 }
 
-.toc__summary {
-  display: block;
-  margin-top: 0.35rem;
-  color: var(--text-muted);
-  font-size: 0.95rem;
-}
-
-.toc__arrow {
-  color: var(--text-faint);
-  transition: color 0.2s, transform 0.3s var(--ease);
-
-  .toc__item:hover & {
-    color: var(--accent);
-    transform: translateX(4px);
-  }
-}
-
-// Motto
+// Motto: one line, the last sentence brighter.
 
 .motto {
-  padding-top: clamp(5rem, 12vw, 8rem);
-  text-align: center;
-
-  &::before {
-    content: "\2726";
-    display: block;
-    margin-bottom: 1.5rem;
-    color: var(--accent);
-    font-size: 0.9rem;
-  }
-}
-
-.motto__line {
+  margin-top: clamp(3rem, 7vw, 4.5rem);
   color: var(--text-muted);
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-size: clamp(1.3rem, 2.6vw, 1.6rem);
   font-style: italic;
-  line-height: 1.35;
+  line-height: 1.4;
+  text-align: center;
+  text-wrap: balance;
+}
 
-  &:last-child {
-    color: var(--text);
-  }
+.motto__line:last-child {
+  color: var(--text);
 }

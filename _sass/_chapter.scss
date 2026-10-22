@@ -1,28 +1,28 @@
 // Chapter pages (_layouts/page.html).
 
 .chapter__header {
-  padding-top: clamp(3.5rem, 10vw, 6.5rem);
+  padding-top: clamp(2.5rem, 6vw, 4rem);
 
   &::after {
     content: "";
     display: block;
     height: 1px;
-    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    margin-top: clamp(1.75rem, 4vw, 2.5rem);
     background: var(--line);
   }
 }
 
 .chapter__title {
-  margin-top: 1rem;
-  // The 13vw cap only matters on phones narrower than 400px, where it keeps a
-  // long one-word title ("Acknowledgments") from running off the screen.
-  // unquote() stops Sass from treating min() as its own function.
-  font-size: unquote("min(13vw, clamp(3.25rem, 9vw, 5.5rem))");
+  margin-top: 0.6rem;
+  // The 13vw cap only matters on phones narrower than about 340px, where it
+  // keeps a long one-word title ("Acknowledgments") from running off the
+  // screen. unquote() stops Sass from treating min() as its own function.
+  font-size: unquote("min(13vw, clamp(2.75rem, 7vw, 4.25rem))");
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.02em;
 }
 
 .chapter__body {
-  margin-top: clamp(2.5rem, 6vw, 3.5rem);
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
 }

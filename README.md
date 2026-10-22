@@ -13,11 +13,12 @@ https://rwby-aloupeep.github.io
 | 姓名、邮箱、GitHub、LinkedIn、座右铭 | `_config.yml` 里的 `author`（改了 GitHub 或 LinkedIn，同一文件的 `social.links` 也要跟着改） |
 | 首页自我介绍 | `_pages/home.md` 的正文 |
 | 首页开场文字（Welcome to my story.） | `_pages/home.md` 的 `hero` |
-| 导航菜单、首页目录、章节顺序 | `_data/navigation.yml` |
+| 导航菜单、首页的章节卡片、章节顺序 | `_data/navigation.yml` |
+| 首页章节卡片里列出的内容 | `_includes/previews/` 里对应章节的文件（数据仍来自 `_data/` 和各页面） |
 | 教育经历 / 荣誉 | `_data/education.yml` / `_data/honors.yml` |
 | 研究经历 | `_data/experience.yml` |
 | 研究方向标签 | `_pages/research.md` 的 `topics` |
-| 兴趣爱好卡片 | `_pages/life.md` 的 `interests` |
+| 兴趣爱好卡片 | `_pages/life.md` 的 `interests`（`brief` 是首页卡片上的简短版） |
 | 章节题词（引言） | 各页面 front matter 里的 `epigraph` |
 
 ### 添加一份新笔记
@@ -35,11 +36,11 @@ https://rwby-aloupeep.github.io
 ### 添加一个新章节
 
 1. 在 `_pages/` 新建 Markdown 文件，写好 `title`、`permalink`，可选 `epigraph`。
-2. 在 `_data/navigation.yml` 的 `chapters` 里按顺序加一项。带编号的章节写 `numeral`（页面上显示为 “Chapter IV”），不编号的（如序章、尾声）写 `label`（例如 `"Interlude"`）。菜单、首页目录和上一章 / 下一章链接会自动更新。
+2. 在 `_data/navigation.yml` 的 `chapters` 里按顺序加一项。带编号的章节写 `numeral`（页面上显示为 “Chapter IV”），不编号的（如序章、尾声）写 `label`（例如 `"Interlude"`）。菜单、首页和上一章 / 下一章链接会自动更新。带编号的章节在首页显示为卡片，默认显示 `summary`；想在卡片里列出具体内容，就在 `_includes/previews/` 里加一个文件，并在这一项里写 `preview: 文件名`（不带 `.html`）。不编号的章节在卡片下方显示为一条横栏。
 
 ### 换照片
 
-照片放在 `images/`，每张都有 JPEG 和 WebP 两种格式、两种尺寸（例如 `homepage.jpg` 2400px 宽、`homepage-1200.jpg` 1200px 宽，WebP 同理）。请先缩小再上传，不要直接传相机原图（原来的原图有 29 MB）。
+照片放在 `images/`，每张都有 JPEG 和 WebP 两种格式、两种尺寸（例如头像 `avatar.jpg` 960px 宽、`avatar-480.jpg` 480px 宽，WebP 同理）。请先缩小再上传，不要直接传相机原图（原来的原图有 29 MB）。
 
 ## 目录结构
 
@@ -48,7 +49,7 @@ _config.yml        站点设置和个人信息
 _data/             导航、经历、笔记等数据
 _pages/            各个页面（home、study、research、life、acks、contact、404）
 _layouts/          default（外框）、home（首页）、page（章节页）
-_includes/         页头、页脚、时间线、笔记卡片、图标等组件
+_includes/         页头、页脚、时间线、笔记卡片、图标等组件；previews/ 是首页章节卡片的内容
 _sass/             样式：tokens（配色、字体）、base、layout、components、chapter、home
 assets/css/        样式入口 main.scss
 assets/fonts/      网页字体 Cormorant Garamond、Source Serif 4（及其 OFL 许可证）
@@ -58,7 +59,7 @@ images/            照片、网站图标、社交分享预览图（og.jpg）
 .github/workflows/ 自动检查（见下）
 ```
 
-配色在 `_sass/_tokens.scss` 里统一定义，亮色和暗色各一套。字体在 `_sass/_fonts.scss` 里声明，文件放在 `assets/fonts/`，不从 Google Fonts 加载（Google Fonts 在中国大陆无法访问）。
+配色在 `_sass/_tokens.scss` 里统一定义：默认是紫黑色的深色主题，另有一套浅色，访客可以用页头右上角的按钮切换。字体在 `_sass/_fonts.scss` 里声明，文件放在 `assets/fonts/`，不从 Google Fonts 加载（Google Fonts 在中国大陆无法访问）。
 
 ## 自动检查
 
