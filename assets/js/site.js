@@ -6,16 +6,6 @@
   // Theme
 
   const toggle = document.querySelector("[data-theme-toggle]");
-  const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
-
-  const storedTheme = () => {
-    try {
-      const value = localStorage.getItem("theme");
-      return value === "dark" || value === "light" ? value : null;
-    } catch (error) {
-      return null;
-    }
-  };
 
   const applyTheme = (theme) => {
     root.setAttribute("data-theme", theme);
@@ -38,12 +28,6 @@
       }
     });
   }
-
-  systemDark.addEventListener("change", (event) => {
-    if (!storedTheme()) {
-      applyTheme(event.matches ? "dark" : "light");
-    }
-  });
 
   // Mobile menu
 
