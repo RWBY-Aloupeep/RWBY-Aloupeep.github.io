@@ -29,11 +29,11 @@
 
 .epigraph {
   max-width: 34rem;
-  margin-top: 2rem;
+  margin-top: 1.25rem;
 
   blockquote {
     font-family: var(--font-display);
-    font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
     font-style: italic;
     font-weight: 500;
     line-height: 1.4;
@@ -104,21 +104,20 @@
 }
 
 .contact--row {
+  gap: 0 1.5rem;
+
   .contact__link {
-    padding: 0.55rem 1.05rem;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: var(--bg-raised);
+    min-height: 2.75rem;
+    color: var(--accent);
 
     &:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+      color: var(--text);
     }
   }
 
   .icon {
-    width: 1.05rem;
-    height: 1.05rem;
+    width: 1rem;
+    height: 1rem;
   }
 }
 
@@ -175,7 +174,7 @@
 
 .timeline__item {
   position: relative;
-  padding: 0 0 2rem 2rem;
+  padding: 0 0 1.25rem 1.75rem;
 
   &:last-child {
     padding-bottom: 0;
@@ -217,8 +216,8 @@
 }
 
 .timeline__title {
-  margin-top: 0.2rem;
-  font-size: 1.4rem;
+  margin-top: 0.15rem;
+  font-size: 1.25rem;
 }
 
 .timeline__where {
@@ -347,7 +346,7 @@
 
 .card {
   @include surface;
-  padding: 1.5rem 1.6rem;
+  padding: 1.25rem 1.4rem;
 
   &:first-child {
     grid-column: 1 / -1;
@@ -355,7 +354,7 @@
 }
 
 .card__title {
-  font-size: 1.65rem;
+  font-size: 1.5rem;
 
   &::after {
     content: "";
@@ -378,7 +377,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  margin-top: clamp(4rem, 10vw, 6rem);
+  margin-top: clamp(2.5rem, 6vw, 3.5rem);
 }
 
 .chapter-nav__link {

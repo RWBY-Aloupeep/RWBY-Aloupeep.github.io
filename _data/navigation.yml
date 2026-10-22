@@ -1,5 +1,5 @@
 # The site is told as a story. Chapters are listed in reading order: they make
-# up the header menu, the table of contents on the home page, and the
+# up the header menu, the chapter cards on the home page, and the
 # previous/next links at the bottom of each chapter.
 #
 # Numbered chapters have a `numeral` and are labelled "Chapter I", "Chapter II"…
@@ -7,21 +7,26 @@
 # instead, shown in place of both.
 #
 # `nav` is the shorter label used in the header menu (defaults to `title`).
+# `preview` names the file in _includes/previews/ that fills the chapter's card
+# on the home page; without one the card shows `summary`.
 chapters:
   - numeral: "I"
     title: "Study"
     url: /study/
     summary: "Education, honors, and lecture notes."
+    preview: study
 
   - numeral: "II"
     title: "Research"
     url: /research/
-    summary: "High-fidelity and differentiable multi-physics simulation."
+    summary: "High-fidelity, differentiable multi-physics simulation, toward the next generation of physics engines."
+    preview: research
 
   - numeral: "III"
     title: "Life"
     url: /life/
     summary: "Philosophy, music, anime, games, and swimming."
+    preview: life
 
   - label: "Epilogue"
     title: "Acknowledgments"
