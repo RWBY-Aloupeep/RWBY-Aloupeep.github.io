@@ -1,13 +1,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
-  // Pick the theme before first paint so the page never flashes the wrong colors.
-  // Dark unless the visitor switched to light; site.js handles the toggle.
+  // Pick the theme before first paint so the page never flashes the wrong colors:
+  // the visitor's own choice if they used the toggle, otherwise the system's.
+  // site.js handles the toggle afterwards.
   (function () {
     var root = document.documentElement;
     var stored = null;
     try { stored = localStorage.getItem("theme"); } catch (e) {}
-    root.setAttribute("data-theme", stored === "light" ? "light" : "dark");
+    var dark = stored === "dark" || stored === "light"
+      ? stored === "dark"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    root.setAttribute("data-theme", dark ? "dark" : "light");
     root.className = root.className.replace(/\bno-js\b/, "js");
   })();
 </script>
@@ -21,7 +25,8 @@
 <link rel="icon" href="{{ '/images/favicon-32x32.png' | relative_url }}" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="{{ '/images/apple-touch-icon-180x180.png' | relative_url }}">
 <link rel="manifest" href="{{ '/images/manifest.json' | relative_url }}">
-<meta name="theme-color" content="#0c0a10">
+<meta name="theme-color" content="#f8f6fc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c0a10" media="(prefers-color-scheme: dark)">
 
 <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
 {%- assign scripts = page.scripts | default: layout.scripts %}

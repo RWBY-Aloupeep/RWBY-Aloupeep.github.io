@@ -59,7 +59,7 @@ images/            照片、网站图标、社交分享预览图（og.jpg）
 .github/workflows/ 自动检查（见下）
 ```
 
-配色在 `_sass/_tokens.scss` 里统一定义：默认是紫黑色的深色主题，另有一套浅色，访客可以用页头右上角的按钮切换。字体在 `_sass/_fonts.scss` 里声明，文件放在 `assets/fonts/`，不从 Google Fonts 加载（Google Fonts 在中国大陆无法访问）。
+配色在 `_sass/_tokens.scss` 里统一定义，紫黑色的深色和浅紫色的浅色各一套。网站跟随访客系统（浏览器）的深浅色设置自动切换；访客用页头右上角的按钮手动选过之后，就一直用他选的那套。字体在 `_sass/_fonts.scss` 里声明，文件放在 `assets/fonts/`，不从 Google Fonts 加载（Google Fonts 在中国大陆无法访问）。
 
 ## 自动检查
 
