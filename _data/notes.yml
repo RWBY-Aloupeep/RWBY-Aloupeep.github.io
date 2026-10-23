@@ -1,15 +1,12 @@
 # Lecture notes listed in the Study chapter, grouped by topic.
 # To add a note: upload the PDF to /files/ and add an entry under a topic.
-- topic: "Simulation & Graphics"
+# On wide screens the topics sit two to a row, in this order.
+- topic: "Mathematics & Analysis"
   notes:
-    - title: "Fluid Dynamics"
-      file: "Fluid-Dynamics.pdf"
-    - title: "Dynamical Systems and Chaos"
-      file: "Dynamical-Systems-And-Chaos.pdf"
-    - title: "Introduction to Computer Animation"
-      file: "Introduction-To-Computer-Animation.pdf"
     - title: "Vector Calculus and Complex Variables"
       file: "Vector-Calculus-And-Complex-Variables.pdf"
+    - title: "Dynamical Systems and Chaos"
+      file: "Dynamical-Systems-And-Chaos.pdf"
 
 - topic: "Computation & Optimization"
   notes:
@@ -19,3 +16,13 @@
       file: "Scientific-Computing.pdf"
     - title: "Data-Driven Optimization"
       file: "Data-Driven-Optimization.pdf"
+
+- topic: "Physics & Simulation"
+  notes:
+    - title: "Fluid Dynamics"
+      file: "Fluid-Dynamics.pdf"
+
+- topic: "Graphics & Robotics"
+  notes:
+    - title: "Introduction to Computer Animation"
+      file: "Introduction-To-Computer-Animation.pdf"
