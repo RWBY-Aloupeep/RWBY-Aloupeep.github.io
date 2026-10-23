@@ -5,7 +5,7 @@
 <ul class="cards">
   {%- for item in include.items %}
   <li class="card">
-    <h2 class="card__title">{{ item.name }}</h2>
+    <h3 class="card__title">{{ item.name }}</h3>
     <p class="card__text">{{ item.text | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
   </li>
   {%- endfor %}

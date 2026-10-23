@@ -5,16 +5,16 @@ scripts:
   - /assets/js/stars.js
 ---
 {%- comment -%}
-  Home page: a short hero, the prologue, then one card per numbered chapter
-  showing what is inside it (from _includes/previews/), a strip for each
-  unnumbered chapter (the epilogue), and the motto.
+  The whole site on one page: a short hero, the prologue, then every chapter
+  in _chapters/ in `order`, each with its label ("Chapter I" from `numeral`,
+  or `label`), title and epigraph beside its content, and the motto.
 
   The stars (assets/js/stars.js) drift behind the whole page. They steer around
   the text marked data-stars-avoid, the text that sits on the bare background;
   cards and the portrait simply hide them as they pass behind.
 {%- endcomment -%}
 {%- assign author = site.author -%}
-{%- assign chapters = site.data.navigation.chapters -%}
+{%- assign chapters = site.chapters | sort: "order" -%}
 
 <canvas class="stars" aria-hidden="true" data-stars></canvas>
 
@@ -46,36 +46,22 @@ scripts:
     </div>
   </section>
 
-  <section class="chapters" aria-label="Chapters">
-    {%- for chapter in chapters %}
-    {%- if chapter.numeral %}
-    <article class="chapter-card">
-      <header>
-        <p class="eyebrow">Chapter {{ chapter.numeral }}</p>
-        <h2 class="chapter-card__title">{{ chapter.title }}</h2>
-      </header>
-      <div class="chapter-card__body">
-        {%- if chapter.preview %}
-        {%- capture preview %}previews/{{ chapter.preview }}.html{% endcapture %}
-        {% include {{ preview }} chapter=chapter %}
-        {%- else %}
-        <p>{{ chapter.summary }}</p>
-        {%- endif %}
-      </div>
-      <a class="chapter-card__more" href="{{ chapter.url | relative_url }}">Read the chapter<span class="visually-hidden">: {{ chapter.title }}</span> {% include icon.html name="arrow-right" %}</a>
-    </article>
-    {%- endif %}
-    {%- endfor %}
-  </section>
-
   {%- for chapter in chapters %}
-  {%- if chapter.label %}
-  <a class="chapter-strip" href="{{ chapter.url | relative_url }}">
-    <span class="chapter-strip__label">{{ chapter.label }}</span>
-    <span class="chapter-strip__title">{{ chapter.title }}</span>
-    <span class="chapter-strip__summary">{{ chapter.summary }} {% include icon.html name="arrow-right" %}</span>
-  </a>
-  {%- endif %}
+  <section class="chapter" id="{{ chapter.slug }}" aria-labelledby="{{ chapter.slug }}-title" data-chapter>
+    <header class="chapter__header" data-stars-avoid>
+      <p class="eyebrow">{% if chapter.numeral %}Chapter {{ chapter.numeral }}{% else %}{{ chapter.label }}{% endif %}</p>
+      <h2 class="chapter__title" id="{{ chapter.slug }}-title">{{ chapter.title }}</h2>
+      {%- if chapter.epigraph %}
+      <figure class="epigraph">
+        <blockquote><p>{{ chapter.epigraph.quote }}</p></blockquote>
+        <figcaption>{{ chapter.epigraph.author }}</figcaption>
+      </figure>
+      {%- endif %}
+    </header>
+    <div class="chapter__body prose" data-stars-avoid>
+      {{ chapter.content }}
+    </div>
+  </section>
   {%- endfor %}
 
   {%- if author.motto %}

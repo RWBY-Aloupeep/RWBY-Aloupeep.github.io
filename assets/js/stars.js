@@ -151,9 +151,9 @@
   };
 
   const spawn = () => {
-    // About one star per 140,000 px² of page, so a long page gets more.
+    // About one star per 120,000 px² of page, so a long page gets more.
     const narrow = width < 640;
-    const count = Math.min(Math.max(Math.round((width * height) / 140000), 6), 18);
+    const count = Math.min(Math.max(Math.round((width * height) / 120000), 6), 28);
     stars = [];
     for (let i = 0; i < count; i += 1) {
       const r = narrow ? 7 + Math.random() * 4 : 10 + Math.random() * 6;
