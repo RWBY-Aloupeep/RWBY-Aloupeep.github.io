@@ -2,7 +2,7 @@
 # running; restart the server after editing it.
 
 title       : "Diwen (Steven) Xu"
-description : "Computational mathematics student at the University of Washington, working on physics-based and differentiable simulation."
+description : "Computational mathematics student at the University of Washington, working on physics-based simulation."
 tagline     : "Computational Mathematics · Physics-Based Simulation"
 url         : "https://rwby-aloupeep.github.io"
 baseurl     : ""
