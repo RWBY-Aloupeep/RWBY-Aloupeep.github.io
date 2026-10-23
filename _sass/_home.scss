@@ -1,5 +1,16 @@
-// Home page (_layouts/home.html): hero, prologue, chapter cards, epilogue
-// strip, motto.
+// Home page (_layouts/home.html): stars, hero, prologue, chapter cards,
+// epilogue strip, motto.
+
+// The stars' canvas covers the viewport behind everything: below the page
+// content (so cards and photos hide the stars) but above the page background.
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 
 .hero {
   position: relative;
@@ -13,14 +24,6 @@
   border-bottom: 1px solid var(--line);
   background: radial-gradient(55% 60% at 50% 50%, var(--hero-glow), transparent 75%);
   text-align: center;
-}
-
-.hero__stars {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
 }
 
 .hero__mark,

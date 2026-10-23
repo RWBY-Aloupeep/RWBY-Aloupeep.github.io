@@ -5,15 +5,20 @@ scripts:
   - /assets/js/stars.js
 ---
 {%- comment -%}
-  Home page: a short hero with the stars, the prologue, then one card per
-  numbered chapter showing what is inside it (from _includes/previews/), a
-  strip for each unnumbered chapter (the epilogue), and the motto.
+  Home page: a short hero, the prologue, then one card per numbered chapter
+  showing what is inside it (from _includes/previews/), a strip for each
+  unnumbered chapter (the epilogue), and the motto.
+
+  The stars (assets/js/stars.js) drift behind the whole page. They steer around
+  the text marked data-stars-avoid, the text that sits on the bare background;
+  cards and the portrait simply hide them as they pass behind.
 {%- endcomment -%}
 {%- assign author = site.author -%}
 {%- assign chapters = site.data.navigation.chapters -%}
 
-<section class="hero" data-hero>
-  <canvas class="hero__stars" aria-hidden="true" data-stars></canvas>
+<canvas class="stars" aria-hidden="true" data-stars></canvas>
+
+<section class="hero">
   <div class="hero__text" data-stars-avoid>
     <p class="hero__mark" aria-hidden="true">《 <span class="hero__cursor">|</span> 》</p>
     <h1 class="hero__title">{{ page.hero.title }}</h1>
@@ -30,7 +35,7 @@ scripts:
       </picture>
     </figure>
 
-    <div class="prologue__body">
+    <div class="prologue__body" data-stars-avoid>
       <p class="eyebrow">Prologue</p>
       <h2 class="prologue__title" id="prologue-title">Hi, I’m {{ author.short_name }}.</h2>
       <p class="prologue__name">{{ author.name }} <span class="prologue__native" lang="zh-Hans">{{ author.native_name }}</span></p>
@@ -74,7 +79,7 @@ scripts:
   {%- endfor %}
 
   {%- if author.motto %}
-  <p class="motto">
+  <p class="motto" data-stars-avoid>
     {%- for line in author.motto %}
     <span class="motto__line">{{ line }}</span>
     {%- endfor %}
