@@ -58,12 +58,12 @@
   }
 }
 
-// Contact links: row (prologue), cards (Contact chapter).
+// Contact links (the prologue): icon + label in the accent color.
 
 .contact {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0 1.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -73,78 +73,22 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  color: var(--text);
+  min-height: 2.75rem;
+  color: var(--accent);
   font-family: var(--font-ui);
   font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
-  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
-}
+  transition: color 0.2s;
 
-.contact--row {
-  gap: 0 1.5rem;
-
-  .contact__link {
-    min-height: 2.75rem;
-    color: var(--accent);
-
-    &:hover {
-      color: var(--text);
-    }
+  &:hover {
+    color: var(--text);
   }
 
   .icon {
     width: 1rem;
     height: 1rem;
   }
-}
-
-// Each card as wide as its handle needs (the email is the longest), sharing
-// one row when they fit and stacking when they do not.
-.contact--cards {
-  gap: 0.75rem;
-
-  li {
-    flex: 1 1 auto;
-  }
-
-  .contact__link {
-    @include surface;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 0.1rem 1rem;
-    height: 100%;
-    padding: 1.25rem;
-
-    &:hover {
-      @include surface-hover;
-    }
-  }
-
-  .icon {
-    grid-row: span 2;
-    width: 2.75rem;
-    height: 2.75rem;
-    padding: 0.7rem;
-    border-radius: 999px;
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
-
-  .contact__label {
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 600;
-    line-height: 1.2;
-  }
-}
-
-.contact__handle {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  font-weight: 400;
-  overflow-wrap: anywhere;
 }
 
 // Timeline (education, honors, experience).

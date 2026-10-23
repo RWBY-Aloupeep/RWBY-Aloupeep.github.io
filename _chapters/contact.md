@@ -1,10 +1,9 @@
 ---
 order: 5
-label: Say hello
+label: Postscript
 title: Contact
 ---
 
-Questions, collaborations, or opportunities — feel free to reach out.
+{%- assign author = site.author %}
+Feel free to say hello: [{{ author.email }}](mailto:{{ author.email }}) · [GitHub](https://github.com/{{ author.github }}){:target="_blank" rel="noopener"} · [LinkedIn](https://www.linkedin.com/in/{{ author.linkedin }}){:target="_blank" rel="noopener"}
 {: .lead}
-
-{% include contact-links.html style="cards" %}
