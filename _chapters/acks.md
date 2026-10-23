@@ -1,6 +1,5 @@
 ---
 order: 4
-label: Epilogue
 title: Acknowledgments
 nav: Acks
 ---

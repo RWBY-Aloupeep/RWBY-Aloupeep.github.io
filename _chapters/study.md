@@ -20,6 +20,4 @@ epigraph:
 
 ### Notes
 
-Lecture notes I have written along the way.
-
 {% include notes.html %}

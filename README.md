@@ -4,7 +4,7 @@ https://rwby-aloupeep.github.io
 
 用 Jekyll 写的个人主页，由 GitHub Pages 直接构建，推送到 `master` 后几分钟内自动上线。不依赖任何第三方主题，也不加载任何外部资源（字体都放在仓库里）。
 
-整个网站就是一页：开场、序章（Prologue）之后，各章（Study、Research、Life、Acknowledgments、Contact）依次排下来，顶部菜单点哪章就滚到哪章。旧网址 `/study/`、`/research/`、`/life/`、`/acks/`、`/contact/`、`/cv/`、`/resume/`、`/about/` 都会自动跳到这一页的对应位置。
+整个网站就是一页：开场和自我介绍之后，各章（Study、Research、Life、Acknowledgments、Contact）依次排下来，顶部菜单点哪章就滚到哪章。旧网址 `/study/`、`/research/`、`/life/`、`/acks/`、`/contact/`、`/cv/`、`/resume/`、`/about/` 都会自动跳到这一页的对应位置。
 
 仓库需要保持 **public**：免费账号的私有仓库不能发布 GitHub Pages，改成 private 时网站会被自动下线；再改回 public 后，要到 Settings → Pages 把 Source 重新设为 “Deploy from a branch”、分支 `master`、目录 `/ (root)`，网站才会重新上线。
 
@@ -12,7 +12,7 @@ https://rwby-aloupeep.github.io
 
 | 想改什么 | 改哪里 |
 | --- | --- |
-| 姓名、邮箱、GitHub、LinkedIn、座右铭 | `_config.yml` 里的 `author`（改了 GitHub 或 LinkedIn，同一文件的 `social.links` 也要跟着改） |
+| 姓名、邮箱、GitHub、LinkedIn | `_config.yml` 里的 `author`（改了 GitHub 或 LinkedIn，同一文件的 `social.links` 也要跟着改） |
 | 首页自我介绍 | `_pages/home.md` 的正文 |
 | 首页开场文字（Welcome to my story.） | `_pages/home.md` 的 `hero` |
 | 某一章的内容 | `_chapters/` 里对应的文件（study、research、life、acks、contact） |
