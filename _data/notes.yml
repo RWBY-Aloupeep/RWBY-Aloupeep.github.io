@@ -1,27 +1,21 @@
-# Lecture notes listed on the Study page.
+# Lecture notes listed in the Study chapter, grouped by topic.
 # To add a note: upload the PDF to /files/ and add an entry under a topic.
-- topic: "Physics-Based Simulation"
+- topic: "Simulation & Graphics"
   notes:
     - title: "Fluid Dynamics"
       file: "Fluid-Dynamics.pdf"
-
-- topic: "Scientific Computing"
-  notes:
-    - title: "Scientific Computing"
-      file: "Scientific-Computing.pdf"
-    - title: "Numerical Analysis"
-      file: "Numerical-Analysis.pdf"
-    - title: "Data-Driven Optimization"
-      file: "Data-Driven-Optimization.pdf"
-
-- topic: "Visual Computing"
-  notes:
-    - title: "Introduction to Computer Animation"
-      file: "Introduction-To-Computer-Animation.pdf"
-
-- topic: "Others"
-  notes:
-    - title: "Vector Calculus and Complex Variables"
-      file: "Vector-Calculus-And-Complex-Variables.pdf"
     - title: "Dynamical Systems and Chaos"
       file: "Dynamical-Systems-And-Chaos.pdf"
+    - title: "Introduction to Computer Animation"
+      file: "Introduction-To-Computer-Animation.pdf"
+    - title: "Vector Calculus and Complex Variables"
+      file: "Vector-Calculus-And-Complex-Variables.pdf"
+
+- topic: "Computation & Optimization"
+  notes:
+    - title: "Numerical Analysis"
+      file: "Numerical-Analysis.pdf"
+    - title: "Scientific Computing"
+      file: "Scientific-Computing.pdf"
+    - title: "Data-Driven Optimization"
+      file: "Data-Driven-Optimization.pdf"
