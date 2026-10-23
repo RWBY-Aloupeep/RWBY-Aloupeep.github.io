@@ -7,7 +7,7 @@ scripts:
 {%- comment -%}
   The whole site on one page: a short hero, the prologue, then every chapter
   in _chapters/ in `order`, each with its label ("Chapter I" from `numeral`,
-  or `label`), title and epigraph beside its content, and the motto.
+  or `label`, if any), title and epigraph beside its content.
 
   The stars (assets/js/stars.js) drift behind the whole page. They steer around
   the text marked data-stars-avoid, the text that sits on the bare background;
@@ -36,7 +36,6 @@ scripts:
     </figure>
 
     <div class="prologue__body" data-stars-avoid>
-      <p class="eyebrow">Prologue</p>
       <h2 class="prologue__title" id="prologue-title">Hi, I’m {{ author.short_name }}.</h2>
       <p class="prologue__name">{{ author.name }} <span class="prologue__native" lang="zh-Hans">{{ author.native_name }}</span></p>
       <div class="prologue__bio prose">
@@ -49,7 +48,11 @@ scripts:
   {%- for chapter in chapters %}
   <section class="chapter" id="{{ chapter.slug }}" aria-labelledby="{{ chapter.slug }}-title" data-chapter>
     <header class="chapter__header" data-stars-avoid>
-      <p class="eyebrow">{% if chapter.numeral %}Chapter {{ chapter.numeral }}{% else %}{{ chapter.label }}{% endif %}</p>
+      {%- if chapter.numeral %}
+      <p class="eyebrow">Chapter {{ chapter.numeral }}</p>
+      {%- elsif chapter.label %}
+      <p class="eyebrow">{{ chapter.label }}</p>
+      {%- endif %}
       <h2 class="chapter__title" id="{{ chapter.slug }}-title">{{ chapter.title }}</h2>
       {%- if chapter.epigraph %}
       <figure class="epigraph">
@@ -63,12 +66,4 @@ scripts:
     </div>
   </section>
   {%- endfor %}
-
-  {%- if author.motto %}
-  <p class="motto" data-stars-avoid>
-    {%- for line in author.motto %}
-    <span class="motto__line">{{ line }}</span>
-    {%- endfor %}
-  </p>
-  {%- endif %}
 </div>

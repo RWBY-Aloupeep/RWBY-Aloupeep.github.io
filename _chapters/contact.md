@@ -1,6 +1,5 @@
 ---
 order: 5
-label: Postscript
 title: Contact
 ---
 

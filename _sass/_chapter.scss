@@ -23,6 +23,11 @@
   font-weight: 500;
   line-height: 1.05;
   letter-spacing: -0.015em;
+
+  // Without a label above it (Contact), it lines up with the content.
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 .chapter__body {
