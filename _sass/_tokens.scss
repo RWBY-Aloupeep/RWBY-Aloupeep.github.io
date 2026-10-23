@@ -17,12 +17,13 @@ $bp-lg: 880px;
   --text-faint: #857d98;
   --line: #241f2e;
   --accent: #b69cff;
+  --gold: #dcb76e; // the quotes and the stars
   --accent-line: rgba(182, 156, 255, 0.4);
   --accent-soft: rgba(182, 156, 255, 0.1);
   --hero-glow: rgba(126, 104, 196, 0.22);
-  --star-core: #f6f3ff;
-  --star-edge: #9d93c4;
-  --star-glow: rgba(196, 177, 255, 0.8);
+  --star-core: #fff8e8;
+  --star-edge: #d4a94f;
+  --star-glow: rgba(232, 190, 110, 0.75);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
@@ -37,12 +38,13 @@ $bp-lg: 880px;
   --text-faint: #8a8398;
   --line: #e5e0ef;
   --accent: #6d4bd8;
+  --gold: #8a6312; // darker, to keep its contrast on the light ground
   --accent-line: rgba(109, 75, 216, 0.35);
   --accent-soft: rgba(109, 75, 216, 0.08);
   --hero-glow: rgba(150, 120, 230, 0.2);
-  --star-core: #ffffff;
-  --star-edge: #b3a2e6;
-  --star-glow: rgba(109, 75, 216, 0.35);
+  --star-core: #fffaf0;
+  --star-edge: #c99a3c;
+  --star-glow: rgba(176, 128, 40, 0.4);
   --shadow: 0 1px 2px rgba(28, 24, 38, 0.04), 0 10px 30px rgba(28, 24, 38, 0.08);
 }
 
