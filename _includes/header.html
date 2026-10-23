@@ -1,4 +1,8 @@
-{%- assign nav = site.data.navigation -%}
+{%- comment -%}
+  The menu links to the chapters on the home page, in their `order`, labelled
+  with `nav` (defaults to the title). site.js marks the one in view.
+{%- endcomment -%}
+{%- assign chapters = site.chapters | sort: "order" -%}
 <header class="site-header">
   <div class="site-header__inner wrap wrap--wide">
     <a class="brand" href="{{ '/' | relative_url }}"{% if page.url == "/" %} aria-current="page"{% endif %}>{{ site.author.name }}</a>
@@ -10,11 +14,8 @@
         <span class="visually-hidden">Menu</span>
       </button>
       <ul class="site-nav__list" id="site-menu">
-        {%- for item in nav.chapters %}
-        <li><a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.nav | default: item.title }}</a></li>
-        {%- endfor %}
-        {%- for item in nav.links %}
-        <li><a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a></li>
+        {%- for chapter in chapters %}
+        <li><a href="{{ '/' | relative_url }}#{{ chapter.slug }}" data-nav-section="{{ chapter.slug }}">{{ chapter.nav | default: chapter.title }}</a></li>
         {%- endfor %}
       </ul>
     </nav>

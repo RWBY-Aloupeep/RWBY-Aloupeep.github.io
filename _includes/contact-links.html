@@ -1,14 +1,10 @@
 {%- comment -%}
-  Contact links built from `author` in _config.yml. A link is left out when
-  its field is empty.
-  style="icons" — icon-only row (footer)
-  style="row"   — icon + label links (home page)
-  style="cards" — large cards with handles (contact page)
+  A row of icon + label contact links (the prologue), built from `author` in
+  _config.yml. A link is left out when its field is empty.
 {%- endcomment -%}
 {%- assign author = site.author -%}
-{%- assign style = include.style | default: "row" -%}
 {%- assign services = "email,github,linkedin" | split: "," -%}
-<ul class="contact contact--{{ style }}">
+<ul class="contact">
   {%- for service in services %}
   {%- assign id = author[service] -%}
   {%- if id == nil or id == "" %}{% continue %}{% endif -%}
@@ -17,23 +13,19 @@
     {%- assign label = "Email" -%}
     {%- assign icon = "mail" -%}
     {%- assign href = "mailto:" | append: id -%}
-    {%- assign handle = id -%}
   {%- when "github" -%}
     {%- assign label = "GitHub" -%}
     {%- assign icon = "github" -%}
     {%- assign href = "https://github.com/" | append: id -%}
-    {%- assign handle = "@" | append: id -%}
   {%- when "linkedin" -%}
     {%- assign label = "LinkedIn" -%}
     {%- assign icon = "linkedin" -%}
     {%- assign href = "https://www.linkedin.com/in/" | append: id -%}
-    {%- assign handle = "in/" | append: id -%}
   {%- endcase %}
   <li>
     <a class="contact__link" href="{{ href }}"{% unless service == "email" %} target="_blank" rel="noopener"{% endunless %}>
       {% include icon.html name=icon %}
-      {%- if style == "icons" %}<span class="visually-hidden">{{ label }}</span>{% else %}<span class="contact__label">{{ label }}</span>{% endif %}
-      {%- if style == "cards" %}<span class="contact__handle">{{ handle }}</span>{% endif %}
+      <span class="contact__label">{{ label }}</span>
     </a>
   </li>
   {%- endfor %}

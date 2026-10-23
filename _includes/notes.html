@@ -1,24 +1,16 @@
 {%- comment -%}
-  Lecture notes grouped by topic, from _data/notes.yml.
+  Lecture notes from _data/notes.yml, one per line: title, topic, PDF link.
 {%- endcomment -%}
-<div class="notes">
+<ul class="note-list">
   {%- for group in site.data.notes %}
-  <section class="notes__group">
-    <h3 class="notes__topic">{{ group.topic }}</h3>
-    <ul class="notes__list">
-      {%- for note in group.notes %}
-      <li>
-        <a class="note-card" href="{{ '/files/' | append: note.file | relative_url }}" target="_blank" rel="noopener">
-          <span class="note-card__icon">{% include icon.html name="file" %}</span>
-          <span class="note-card__text">
-            <span class="note-card__title">{{ note.title }}</span>
-            <span class="note-card__meta">PDF<span class="visually-hidden">, opens in a new tab</span></span>
-          </span>
-          <span class="note-card__arrow">{% include icon.html name="external" %}</span>
-        </a>
-      </li>
-      {%- endfor %}
-    </ul>
-  </section>
+  {%- for note in group.notes %}
+  <li>
+    <a class="note-link" href="{{ '/files/' | append: note.file | relative_url }}" target="_blank" rel="noopener">
+      <span class="note-link__title">{{ note.title }}</span>
+      <span class="note-link__topic">{{ group.topic }}</span>
+      <span class="note-link__meta">PDF {% include icon.html name="external" %}<span class="visually-hidden">, opens in a new tab</span></span>
+    </a>
+  </li>
   {%- endfor %}
-</div>
+  {%- endfor %}
+</ul>

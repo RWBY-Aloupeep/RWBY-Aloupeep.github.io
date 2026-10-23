@@ -1,24 +1,10 @@
 ---
-title: Study
+# The Study chapter now lives on the home page (_chapters/study.md);
+# this keeps the old address working.
 permalink: /study/
 redirect_from:
   - /cv/
   - /resume/
-epigraph:
-  quote: "All men by nature desire to know."
-  author: Aristotle
+redirect_to: /#study
+sitemap: false
 ---
-
-## Background
-
-{% include timeline.html items=site.data.education %}
-
-## Honors
-
-{% include timeline.html items=site.data.honors %}
-
-## Notes
-
-Lecture notes I have written along the way.
-
-{% include notes.html %}

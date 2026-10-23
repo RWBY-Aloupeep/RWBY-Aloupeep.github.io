@@ -51,6 +51,12 @@ sass:
 include:
   - _pages
 
+# The chapters of the home page, one file each in _chapters/. They have no
+# pages of their own: the home layout shows them all, one after another.
+collections:
+  chapters:
+    output: false
+
 exclude:
   - .devcontainer
   - Dockerfile
@@ -64,8 +70,12 @@ defaults:
   - scope:
       path: ""
     values:
-      layout: page
       image: /images/og.jpg # link preview (Open Graph / Twitter card)
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
 
 plugins:
   - jekyll-redirect-from

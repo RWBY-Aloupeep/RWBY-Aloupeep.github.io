@@ -4,6 +4,8 @@ https://rwby-aloupeep.github.io
 
 用 Jekyll 写的个人主页，由 GitHub Pages 直接构建，推送到 `master` 后几分钟内自动上线。不依赖任何第三方主题，也不加载任何外部资源（字体都放在仓库里）。
 
+整个网站就是一页：开场、序章（Prologue）之后，各章（Study、Research、Life、Acknowledgments、Contact）依次排下来，顶部菜单点哪章就滚到哪章。旧网址 `/study/`、`/research/`、`/life/`、`/acks/`、`/contact/`、`/cv/`、`/resume/`、`/about/` 都会自动跳到这一页的对应位置。
+
 仓库需要保持 **public**：免费账号的私有仓库不能发布 GitHub Pages，改成 private 时网站会被自动下线；再改回 public 后，要到 Settings → Pages 把 Source 重新设为 “Deploy from a branch”、分支 `master`、目录 `/ (root)`，网站才会重新上线。
 
 ## 常见修改
@@ -13,13 +15,13 @@ https://rwby-aloupeep.github.io
 | 姓名、邮箱、GitHub、LinkedIn、座右铭 | `_config.yml` 里的 `author`（改了 GitHub 或 LinkedIn，同一文件的 `social.links` 也要跟着改） |
 | 首页自我介绍 | `_pages/home.md` 的正文 |
 | 首页开场文字（Welcome to my story.） | `_pages/home.md` 的 `hero` |
-| 导航菜单、首页的章节卡片、章节顺序 | `_data/navigation.yml` |
-| 首页章节卡片里列出的内容 | `_includes/previews/` 里对应章节的文件（数据仍来自 `_data/` 和各页面） |
+| 某一章的内容 | `_chapters/` 里对应的文件（study、research、life、acks、contact） |
+| 章节顺序、菜单里的名字 | 各章文件开头的 `order`（排序）和 `nav`（菜单里的短名，默认用 `title`） |
 | 教育经历 / 荣誉 | `_data/education.yml` / `_data/honors.yml` |
 | 研究经历 | `_data/experience.yml` |
-| 研究方向标签 | `_pages/research.md` 的 `topics` |
-| 兴趣爱好卡片 | `_pages/life.md` 的 `interests`（`brief` 是首页卡片上的简短版） |
-| 章节题词（引言） | 各页面 front matter 里的 `epigraph` |
+| 研究方向标签 | `_chapters/research.md` 的 `topics` |
+| 兴趣爱好卡片 | `_chapters/life.md` 的 `interests` |
+| 章节题词（引言） | 各章文件开头的 `epigraph` |
 
 ### 添加一份新笔记
 
@@ -35,8 +37,20 @@ https://rwby-aloupeep.github.io
 
 ### 添加一个新章节
 
-1. 在 `_pages/` 新建 Markdown 文件，写好 `title`、`permalink`，可选 `epigraph`。
-2. 在 `_data/navigation.yml` 的 `chapters` 里按顺序加一项。带编号的章节写 `numeral`（页面上显示为 “Chapter IV”），不编号的（如序章、尾声）写 `label`（例如 `"Interlude"`）。菜单、首页和上一章 / 下一章链接会自动更新。带编号的章节在首页显示为卡片，默认显示 `summary`；想在卡片里列出具体内容，就在 `_includes/previews/` 里加一个文件，并在这一项里写 `preview: 文件名`（不带 `.html`）。不编号的章节在卡片下方显示为一条横栏。
+在 `_chapters/` 新建一个 Markdown 文件，例如 `_chapters/projects.md`：
+
+```yaml
+---
+order: 3.5        # 排在第几：这里是 Research（2）和 Life（3）之后
+numeral: "IV"     # 带编号的章节显示为 “Chapter IV”；不编号的写 label: "Interlude"
+title: Projects
+epigraph:         # 可选
+  quote: "…"
+  author: "…"
+---
+```
+
+下面写正文（Markdown，小标题用 `###`）。它会按 `order` 出现在首页，菜单里也会自动多一项，地址是 `/#projects`（取自文件名）。编号要自己改，后面各章的 `numeral` 记得顺延。
 
 ### 换照片
 
@@ -46,20 +60,21 @@ https://rwby-aloupeep.github.io
 
 ```
 _config.yml        站点设置和个人信息
-_data/             导航、经历、笔记等数据
-_pages/            各个页面（home、study、research、life、acks、contact、404）
-_layouts/          default（外框）、home（首页）、page（章节页）
-_includes/         页头、页脚、时间线、笔记卡片、图标等组件；previews/ 是首页章节卡片的内容
+_chapters/         各章的内容，首页按 order 依次显示
+_data/             经历、荣誉、笔记等数据
+_pages/            home（首页的开场和自我介绍）、404，以及把旧网址跳到首页对应章节的跳转页
+_layouts/          default（外框）、home（首页）、page（404 页）
+_includes/         页头、页脚、时间线、笔记列表、卡片、图标等组件
 _sass/             样式：tokens（配色、字体）、base、layout、components、chapter、home
 assets/css/        样式入口 main.scss
 assets/fonts/      网页字体 Cormorant Garamond、Source Serif 4（及其 OFL 许可证）
-assets/js/         site.js（主题切换、手机菜单）、stars.js（首页星星动画）
+assets/js/         site.js（主题切换、手机菜单、菜单高亮当前章节）、stars.js（首页星星动画）
 files/             笔记 PDF
 images/            照片、网站图标、社交分享预览图（og.jpg）
 .github/workflows/ 自动检查（见下）
 ```
 
-配色在 `_sass/_tokens.scss` 里统一定义：默认是紫黑色的深色主题，另有一套浅色，访客可以用页头右上角的按钮切换。字体在 `_sass/_fonts.scss` 里声明，文件放在 `assets/fonts/`，不从 Google Fonts 加载（Google Fonts 在中国大陆无法访问）。
+配色在 `_sass/_tokens.scss` 里统一定义，紫黑色的深色和浅紫色的浅色各一套。网站跟随访客系统（浏览器）的深浅色设置自动切换；访客用页头右上角的按钮手动选过之后，就一直用他选的那套。字体在 `_sass/_fonts.scss` 里声明，文件放在 `assets/fonts/`，不从 Google Fonts 加载（Google Fonts 在中国大陆无法访问）。
 
 ## 自动检查
 

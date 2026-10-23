@@ -1,33 +1,37 @@
-// Stars floating behind the home page hero: a tiny 2D physics simulation with
-// elastic collisions, pointer repulsion, and no-fly zones around the elements
-// marked [data-stars-avoid] (the hero text).
+// Stars drifting behind the whole home page: a tiny 2D physics simulation with
+// elastic collisions and pointer repulsion. The stars live in page coordinates
+// and scroll with the content. They steer around the text that sits on the
+// page background (elements marked [data-stars-avoid]) and pass behind cards
+// and photos, which hide them, so they never cover any text.
+// The canvas is fixed to the viewport and only draws the stars in view.
 // Colors come from the --star-* custom properties, so they follow the theme.
 (() => {
-  const hero = document.querySelector("[data-hero]");
-  const canvas = hero && hero.querySelector("[data-stars]");
+  const canvas = document.querySelector("[data-stars]");
   if (!canvas || !canvas.getContext) {
     return;
   }
 
   const ctx = canvas.getContext("2d");
-  const avoided = hero.querySelectorAll("[data-stars-avoid]");
+  const avoided = document.querySelectorAll("[data-stars-avoid]");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const CRUISE_SPEED = 0.35; // px per frame the stars settle back to
   const DAMPING = 0.97; // how quickly extra speed bleeds off
   const POINTER_RADIUS = 70;
   const POINTER_FORCE = 0.6;
-  const ZONE_PADDING = 28;
+  const GLOW = 18; // shadow blur, also how far off-screen a star still shows
 
-  let width = 0;
+  let viewWidth = 0; // the canvas, i.e. the viewport
+  let viewHeight = 0;
+  let width = 0; // the page, where the stars roam
   let height = 0;
+  let zonePadding = 0;
   let stars = [];
   let palette = null;
   let zones = [];
   let frame = 0;
   let lastTime = 0;
-  let onScreen = true;
-  const pointer = { x: -1e4, y: -1e4 };
+  const pointer = { x: -1e4, y: -1e4 }; // in viewport coordinates
 
   const readPalette = () => {
     const style = getComputedStyle(document.documentElement);
@@ -38,23 +42,55 @@
     };
   };
 
+  // The box around an element's visible text and icons, in page coordinates:
+  // the union of its line boxes, so a short line does not claim the full width
+  // of its paragraph.
+  const textBox = (el) => {
+    const range = document.createRange();
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
+    const box = { left: Infinity, top: Infinity, right: -Infinity, bottom: -Infinity };
+    const add = (rect) => {
+      if (rect.width && rect.height) {
+        box.left = Math.min(box.left, rect.left);
+        box.top = Math.min(box.top, rect.top);
+        box.right = Math.max(box.right, rect.right);
+        box.bottom = Math.max(box.bottom, rect.bottom);
+      }
+    };
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        if (node.textContent.trim() && !node.parentElement.closest(".visually-hidden")) {
+          range.selectNodeContents(node);
+          Array.from(range.getClientRects()).forEach(add);
+        }
+      } else if (node.matches("svg, img")) {
+        add(node.getBoundingClientRect());
+      }
+    }
+    if (box.left === Infinity) {
+      return null;
+    }
+    return {
+      left: box.left + window.scrollX - zonePadding,
+      right: box.right + window.scrollX + zonePadding,
+      top: box.top + window.scrollY - zonePadding,
+      bottom: box.bottom + window.scrollY + zonePadding,
+    };
+  };
+
   const measure = () => {
-    const rect = hero.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    width = rect.width;
-    height = rect.height;
-    canvas.width = Math.round(width * ratio);
-    canvas.height = Math.round(height * ratio);
+    viewWidth = rect.width;
+    viewHeight = rect.height;
+    canvas.width = Math.round(viewWidth * ratio);
+    canvas.height = Math.round(viewHeight * ratio);
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-    // Offsets (the hero is their offset parent) rather than bounding boxes,
-    // so the entrance animation's slide does not shift the zones.
-    zones = Array.from(avoided, (el) => ({
-      left: el.offsetLeft - ZONE_PADDING,
-      right: el.offsetLeft + el.offsetWidth + ZONE_PADDING,
-      top: el.offsetTop - ZONE_PADDING,
-      bottom: el.offsetTop + el.offsetHeight + ZONE_PADDING,
-    }));
+    width = document.documentElement.clientWidth;
+    height = document.documentElement.scrollHeight;
+    zonePadding = width < 640 ? 10 : 22;
+    zones = Array.from(avoided, textBox).filter(Boolean);
   };
 
   const zoneAt = (x, y, r) =>
@@ -67,7 +103,7 @@
     );
 
   // Push a star out through the nearest side of the zone it is in and point it
-  // away. Sides too close to the hero's edge for the star to fit are skipped,
+  // away. Sides too close to the page's edge for the star to fit are skipped,
   // or the wall bounce would push it straight back in.
   const leaveZones = (star) => {
     const zone = zoneAt(star.x, star.y, star.r);
@@ -102,13 +138,26 @@
     }
   };
 
+  // Keep a star on the page, bouncing it off the edges.
+  const contain = (star) => {
+    if (star.x < star.r || star.x > width - star.r) {
+      star.vx = star.x < star.r ? Math.abs(star.vx) : -Math.abs(star.vx);
+      star.x = Math.min(Math.max(star.x, star.r), width - star.r);
+    }
+    if (star.y < star.r || star.y > height - star.r) {
+      star.vy = star.y < star.r ? Math.abs(star.vy) : -Math.abs(star.vy);
+      star.y = Math.min(Math.max(star.y, star.r), height - star.r);
+    }
+  };
+
   const spawn = () => {
-    // The hero is a short band, so only a few, smaller stars.
-    const count = width < 640 ? 4 : 7;
+    // About one star per 120,000 px² of page, so a long page gets more.
+    const narrow = width < 640;
+    const count = Math.min(Math.max(Math.round((width * height) / 120000), 6), 28);
     stars = [];
     for (let i = 0; i < count; i += 1) {
-      const r = (width < 640 ? 8 : 10) + Math.random() * 6;
-      // Alternate sides so the stars frame the text instead of clumping.
+      const r = narrow ? 7 + Math.random() * 4 : 10 + Math.random() * 6;
+      // Alternate sides so the stars spread out instead of clumping.
       const leftSide = i % 2 === 0;
       const minX = leftSide ? r : width / 2 + r;
       const maxX = leftSide ? width / 2 - r : width - r;
@@ -134,11 +183,11 @@
     }
   };
 
-  const drawStar = (star) => {
+  const drawStar = (star, x, y) => {
     const outer = star.r;
     const inner = star.r * 0.5;
     ctx.save();
-    ctx.translate(star.x, star.y);
+    ctx.translate(x, y);
     ctx.rotate(star.rotation);
     ctx.beginPath();
     for (let i = 0; i < 10; i += 1) {
@@ -151,7 +200,7 @@
     gradient.addColorStop(0, palette.core);
     gradient.addColorStop(1, palette.edge);
     ctx.fillStyle = gradient;
-    ctx.shadowBlur = 18;
+    ctx.shadowBlur = GLOW;
     ctx.shadowColor = palette.glow;
     ctx.fill();
     ctx.restore();
@@ -185,9 +234,11 @@
   };
 
   const step = (dt) => {
+    const pointerX = pointer.x + window.scrollX;
+    const pointerY = pointer.y + window.scrollY;
     for (const star of stars) {
-      const dx = star.x - pointer.x;
-      const dy = star.y - pointer.y;
+      const dx = star.x - pointerX;
+      const dy = star.y - pointerY;
       const dist = Math.hypot(dx, dy);
       const reach = POINTER_RADIUS + star.r;
       if (dist > 0 && dist < reach) {
@@ -208,15 +259,7 @@
       star.y += star.vy * dt;
       star.rotation += star.spin * dt;
 
-      if (star.x < star.r || star.x > width - star.r) {
-        star.vx = star.x < star.r ? Math.abs(star.vx) : -Math.abs(star.vx);
-        star.x = Math.min(Math.max(star.x, star.r), width - star.r);
-      }
-      if (star.y < star.r || star.y > height - star.r) {
-        star.vy = star.y < star.r ? Math.abs(star.vy) : -Math.abs(star.vy);
-        star.y = Math.min(Math.max(star.y, star.r), height - star.r);
-      }
-
+      contain(star);
       leaveZones(star);
     }
 
@@ -227,9 +270,19 @@
     }
   };
 
+  // Draw only the stars inside (or glowing into) the viewport.
   const draw = () => {
-    ctx.clearRect(0, 0, width, height);
-    stars.forEach(drawStar);
+    ctx.clearRect(0, 0, viewWidth, viewHeight);
+    const offsetX = window.scrollX;
+    const offsetY = window.scrollY;
+    for (const star of stars) {
+      const x = star.x - offsetX;
+      const y = star.y - offsetY;
+      const reach = star.r + GLOW;
+      if (y > -reach && y < viewHeight + reach && x > -reach && x < viewWidth + reach) {
+        drawStar(star, x, y);
+      }
+    }
   };
 
   const tick = (time) => {
@@ -241,7 +294,7 @@
     frame = requestAnimationFrame(tick);
   };
 
-  const shouldAnimate = () => onScreen && !document.hidden && !reducedMotion.matches;
+  const shouldAnimate = () => !document.hidden && !reducedMotion.matches;
 
   const sync = () => {
     if (shouldAnimate() && !frame) {
@@ -256,55 +309,68 @@
     }
   };
 
-  const reset = () => {
-    measure();
-    spawn();
-    draw();
+  // Re-measure after anything that moves the text: a resize, fonts loading,
+  // the hero's entrance animation finishing. Respawn on big width changes
+  // (e.g. rotating a phone); otherwise keep the scene and nudge stars back out
+  // of the text.
+  let measureFrame = 0;
+  const remeasure = () => {
+    cancelAnimationFrame(measureFrame);
+    measureFrame = requestAnimationFrame(() => {
+      const oldWidth = width;
+      measure();
+      if (Math.abs(width - oldWidth) > 120) {
+        spawn();
+      } else {
+        stars.forEach((star) => {
+          contain(star);
+          leaveZones(star);
+        });
+      }
+      if (!frame) {
+        draw();
+      }
+    });
   };
 
   readPalette();
-  reset();
+  measure();
+  spawn();
   sync();
 
-  let resizeFrame = 0;
-  window.addEventListener("resize", () => {
-    cancelAnimationFrame(resizeFrame);
-    resizeFrame = requestAnimationFrame(() => {
-      const oldWidth = width;
-      measure();
-      // Respawn on big layout changes (e.g. rotation); otherwise keep the scene.
-      if (Math.abs(width - oldWidth) > 120) {
-        spawn();
-      }
-      draw();
-    });
-  });
-
-  // Fonts change the text box size once they load.
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(() => {
-      measure();
-      stars.forEach(leaveZones);
-      draw();
-    });
+  window.addEventListener("resize", remeasure);
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(remeasure).observe(document.body);
   }
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(remeasure);
+  }
+  document.addEventListener("animationend", remeasure);
 
-  hero.addEventListener("pointermove", (event) => {
-    const rect = hero.getBoundingClientRect();
-    pointer.x = event.clientX - rect.left;
-    pointer.y = event.clientY - rect.top;
-  });
-  hero.addEventListener("pointerleave", () => {
+  // Without animation the stars stand still, but they still scroll.
+  window.addEventListener("scroll", () => {
+    if (!frame) {
+      draw();
+    }
+  }, { passive: true });
+
+  const forgetPointer = () => {
     pointer.x = -1e4;
     pointer.y = -1e4;
+  };
+  window.addEventListener("pointermove", (event) => {
+    pointer.x = event.clientX;
+    pointer.y = event.clientY;
+  }, { passive: true });
+  document.documentElement.addEventListener("pointerleave", forgetPointer);
+  // A finger lifting (or starting to scroll) should not keep pushing stars away.
+  window.addEventListener("pointerup", (event) => {
+    if (event.pointerType !== "mouse") {
+      forgetPointer();
+    }
   });
+  window.addEventListener("pointercancel", forgetPointer);
 
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver((entries) => {
-      onScreen = entries[0].isIntersecting;
-      sync();
-    }).observe(hero);
-  }
   document.addEventListener("visibilitychange", sync);
   reducedMotion.addEventListener("change", sync);
 

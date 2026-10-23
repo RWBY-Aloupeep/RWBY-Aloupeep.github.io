@@ -58,12 +58,12 @@
   }
 }
 
-// Contact links: icons (footer), row (home), cards (contact page).
+// Contact links (the prologue): icon + label in the accent color.
 
 .contact {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0 1.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -73,95 +73,22 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  color: var(--text);
+  min-height: 2.75rem;
+  color: var(--accent);
   font-family: var(--font-ui);
   font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
-  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
-}
+  transition: color 0.2s;
 
-.contact--icons {
-  gap: 0.15rem;
-
-  .contact__link {
-    justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 999px;
-    color: var(--text-muted);
-
-    &:hover {
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-  }
-
-  .icon {
-    width: 1.1rem;
-    height: 1.1rem;
-  }
-}
-
-.contact--row {
-  gap: 0 1.5rem;
-
-  .contact__link {
-    min-height: 2.75rem;
-    color: var(--accent);
-
-    &:hover {
-      color: var(--text);
-    }
+  &:hover {
+    color: var(--text);
   }
 
   .icon {
     width: 1rem;
     height: 1rem;
   }
-}
-
-.contact--cards {
-  display: grid;
-  gap: 0.75rem;
-
-  .contact__link {
-    @include surface;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 0.1rem 1rem;
-    height: 100%;
-    padding: 1.25rem;
-
-    &:hover {
-      @include surface-hover;
-    }
-  }
-
-  .icon {
-    grid-row: span 2;
-    width: 2.75rem;
-    height: 2.75rem;
-    padding: 0.7rem;
-    border-radius: 999px;
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
-
-  .contact__label {
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 600;
-    line-height: 1.2;
-  }
-}
-
-.contact__handle {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  font-weight: 400;
-  overflow-wrap: anywhere;
 }
 
 // Timeline (education, honors, experience).
@@ -232,84 +159,73 @@
   font-style: italic;
 }
 
-// Lecture notes.
+// Lecture notes: one row per note.
 
-.notes {
-  display: grid;
-  gap: 2rem;
-}
-
-.notes__topic {
-  @include label;
-  margin-bottom: 0.75rem;
-}
-
-.notes__list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-  gap: 0.75rem;
+.note-list {
   margin: 0;
   padding: 0;
+  border-top: 1px solid var(--line);
   list-style: none;
 }
 
-.note-card {
-  @include surface;
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  height: 100%;
-  padding: 0.9rem 1rem;
+.note-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: baseline;
+  gap: 0.1rem 1.25rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  text-decoration: none;
 
-  &:hover {
-    @include surface-hover;
+  @media (max-width: $bp-sm - 1px) {
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 }
 
-.note-card__icon {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 10px;
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.note-card__text {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.note-card__title {
+.note-link__title {
   font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.25;
+  transition: color 0.2s;
+
+  .note-link:hover & {
+    color: var(--accent);
+  }
 }
 
-.note-card__meta {
+.note-link__topic {
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+
+  @media (max-width: $bp-sm - 1px) {
+    grid-row: 2;
+    grid-column: 1;
+  }
+}
+
+.note-link__meta {
   @include label;
-  margin-top: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   font-size: 0.68rem;
   letter-spacing: 0.12em;
-}
-
-.note-card__arrow {
-  color: var(--text-faint);
-  transition: color 0.2s, transform 0.25s var(--ease);
 
   .icon {
-    width: 1rem;
-    height: 1rem;
+    width: 0.95rem;
+    height: 0.95rem;
+    transition: transform 0.25s var(--ease);
   }
 
-  .note-card:hover & {
+  .note-link:hover & {
     color: var(--accent);
-    transform: translate(2px, -2px);
+
+    .icon {
+      transform: translate(2px, -2px);
+    }
   }
 }
 
@@ -337,8 +253,8 @@
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 0.75rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -347,14 +263,10 @@
 .card {
   @include surface;
   padding: 1.25rem 1.4rem;
-
-  &:first-child {
-    grid-column: 1 / -1;
-  }
 }
 
 .card__title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 
   &::after {
     content: "";
@@ -369,65 +281,4 @@
 .card__text {
   margin-top: 0.75rem;
   color: var(--text-muted);
-}
-
-// Previous / next chapter.
-
-.chapter-nav {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-top: clamp(2.5rem, 6vw, 3.5rem);
-}
-
-.chapter-nav__link {
-  @include surface;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 1.25rem 1.4rem;
-
-  &:hover {
-    @include surface-hover;
-  }
-}
-
-.chapter-nav__link--next {
-  grid-column: 2;
-  align-items: flex-end;
-  text-align: right;
-}
-
-.chapter-nav__dir {
-  @include label;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-
-  .icon {
-    width: 1rem;
-    height: 1rem;
-  }
-}
-
-.chapter-nav__title {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.2;
-  transition: color 0.2s;
-
-  .chapter-nav__link:hover & {
-    color: var(--accent);
-  }
-}
-
-@media (max-width: $bp-sm - 1px) {
-  .chapter-nav {
-    grid-template-columns: 1fr;
-  }
-
-  .chapter-nav__link--next {
-    grid-column: auto;
-  }
 }
