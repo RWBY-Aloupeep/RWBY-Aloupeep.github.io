@@ -58,7 +58,7 @@
   }
 }
 
-// Contact links: icons (footer), row (home), cards (contact page).
+// Contact links: row (prologue), cards (Contact chapter).
 
 .contact {
   display: flex;
@@ -79,28 +79,6 @@
   font-weight: 500;
   text-decoration: none;
   transition: color 0.2s, border-color 0.2s, background-color 0.2s;
-}
-
-.contact--icons {
-  gap: 0.15rem;
-
-  .contact__link {
-    justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 999px;
-    color: var(--text-muted);
-
-    &:hover {
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-  }
-
-  .icon {
-    width: 1.1rem;
-    height: 1.1rem;
-  }
 }
 
 .contact--row {

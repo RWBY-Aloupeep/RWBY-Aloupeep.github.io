@@ -181,21 +181,29 @@
   font-size: 0.85rem;
 }
 
+// One centered line, under the centered motto. Contact links live in the
+// prologue and the Contact chapter.
 .site-footer__inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem 1.5rem;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+  text-align: center;
 }
 
-// On narrow screens the line breaks at the separator, never inside a phrase.
 .site-footer__copy > span {
   white-space: nowrap;
 }
 
 .site-footer__sep {
   margin: 0 0.4em;
+}
+
+// On phones: two centered lines instead of one with the dot.
+@media (max-width: $bp-sm - 1px) {
+  .site-footer__copy > span {
+    display: block;
+  }
+
+  .site-footer__copy > .site-footer__sep {
+    display: none;
+  }
 }

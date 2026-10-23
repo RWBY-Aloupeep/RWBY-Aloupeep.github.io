@@ -1,9 +1,8 @@
 {%- comment -%}
   Contact links built from `author` in _config.yml. A link is left out when
   its field is empty.
-  style="icons" — icon-only row (footer)
-  style="row"   — icon + label links (home page)
-  style="cards" — large cards with handles (contact page)
+  style="row"   — icon + label links (prologue)
+  style="cards" — large cards with handles (Contact chapter)
 {%- endcomment -%}
 {%- assign author = site.author -%}
 {%- assign style = include.style | default: "row" -%}
@@ -32,7 +31,7 @@
   <li>
     <a class="contact__link" href="{{ href }}"{% unless service == "email" %} target="_blank" rel="noopener"{% endunless %}>
       {% include icon.html name=icon %}
-      {%- if style == "icons" %}<span class="visually-hidden">{{ label }}</span>{% else %}<span class="contact__label">{{ label }}</span>{% endif %}
+      <span class="contact__label">{{ label }}</span>
       {%- if style == "cards" %}<span class="contact__handle">{{ handle }}</span>{% endif %}
     </a>
   </li>
