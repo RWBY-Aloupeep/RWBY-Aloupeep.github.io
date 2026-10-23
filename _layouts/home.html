@@ -37,7 +37,7 @@ scripts:
 
     <div class="prologue__body" data-stars-avoid>
       <h2 class="prologue__title" id="prologue-title">Hi, I’m {{ author.short_name }}.</h2>
-      <p class="prologue__name">{{ author.name }} <span class="prologue__native" lang="zh-Hans">{{ author.native_name }}</span></p>
+      <p class="prologue__name">{{ author.full_name | default: author.name }} <span class="prologue__native" lang="zh-Hans">{{ author.native_name }}</span></p>
       <div class="prologue__bio prose">
         {{ content }}
       </div>

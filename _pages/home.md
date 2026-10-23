@@ -9,4 +9,4 @@ hero:
   subtitle: "Enjoy~"
 ---
 
-Driven by curiosity about the physical world, I study computational mathematics at the [University of Washington](https://amath.washington.edu/){:target="_blank" rel="noopener"}. My research focuses on physics-based simulation, and differentiable simulation in particular.
+Driven by curiosity about the physical world, I study computational mathematics at the [University of Washington](https://amath.washington.edu/){:target="_blank" rel="noopener"}. My research focuses on physics-based simulation.

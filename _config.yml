@@ -2,7 +2,7 @@
 # running; restart the server after editing it.
 
 title       : "Diwen (Steven) Xu"
-description : "Computational mathematics student at the University of Washington, working on physics-based and differentiable simulation."
+description : "Computational mathematics student at the University of Washington, working on physics-based simulation."
 tagline     : "Computational Mathematics · Physics-Based Simulation"
 url         : "https://rwby-aloupeep.github.io"
 baseurl     : ""
@@ -15,7 +15,8 @@ theme: null
 # Who the site is about. Used in the header, home page, Contact chapter,
 # footer, and search/social metadata.
 author:
-  name        : "Diwen (Steven) Xu"
+  name        : "Diwen (Steven) Xu"   # header, footer, page titles
+  full_name   : "Diwen Xu"            # under "Hi, I'm …" on the home page
   short_name  : "Steven"
   native_name : "许迪文"
   email       : "rwbyaloupeep@gmail.com"
