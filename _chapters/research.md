@@ -10,8 +10,7 @@ topics:
   - Graphics
   - Robotics
   - AI
-  - CAD
-  - CAE
+  - CAD/CAE
 ---
 
 My research centers on **high-fidelity and differentiable multi-physics simulation** as a computational foundation for physically interactive systems, spanning graphics and robotics.
