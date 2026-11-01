@@ -2,93 +2,95 @@
 
 https://rwby-aloupeep.github.io
 
-用 Jekyll 写的个人主页，由 GitHub Pages 直接构建，推送到 `master` 后几分钟内自动上线。不依赖任何第三方主题，也不加载任何外部资源（字体都放在仓库里）。
+A personal homepage written in Jekyll and built directly by GitHub Pages. Changes go live a few minutes after they are pushed to `master`. It uses no third-party theme and loads no external resources (the fonts live in the repository).
 
-整个网站就是一页：开场和自我介绍之后，各章（Study、Research、Life、Acknowledgments、Contact）依次排下来，顶部菜单点哪章就滚到哪章。旧网址 `/study/`、`/research/`、`/life/`、`/acks/`、`/contact/`、`/cv/`、`/resume/`、`/about/` 都会自动跳到这一页的对应位置。
+The whole site is a single page: after the opening and the introduction, the chapters (Study, Research, Life, Acknowledgments, Contact) follow one after another, and clicking a chapter in the top menu scrolls to it. The old addresses `/study/`, `/research/`, `/life/`, `/acks/`, `/contact/`, `/cv/`, `/resume/` and `/about/` all redirect to the matching place on this page.
 
-仓库需要保持 **public**：免费账号的私有仓库不能发布 GitHub Pages，改成 private 时网站会被自动下线；再改回 public 后，要到 Settings → Pages 把 Source 重新设为 “Deploy from a branch”、分支 `master`、目录 `/ (root)`，网站才会重新上线。
+The repository must stay **public**: GitHub Pages cannot publish from a private repository on a free account, so making it private takes the site offline. After making it public again, go to Settings → Pages and set Source back to “Deploy from a branch”, branch `master`, folder `/ (root)`; only then does the site come back online.
 
-## 常见修改
+## Common edits
 
-| 想改什么 | 改哪里 |
+| What to change | Where |
 | --- | --- |
-| 姓名、邮箱、GitHub、LinkedIn | `_config.yml` 里的 `author`（改了 GitHub 或 LinkedIn，同一文件的 `social.links` 也要跟着改） |
-| 首页自我介绍 | `_pages/home.md` 的正文 |
-| 首页开场文字（Welcome to my story.） | `_pages/home.md` 的 `hero` |
-| 某一章的内容 | `_chapters/` 里对应的文件（study、research、life、acks、contact） |
-| 章节顺序、菜单里的名字 | 各章文件开头的 `order`（排序）和 `nav`（菜单里的短名，默认用 `title`） |
-| 教育经历 / 荣誉 | `_data/education.yml` / `_data/honors.yml` |
-| 研究经历 | `_data/experience.yml` |
-| 研究方向标签 | `_chapters/research.md` 的 `topics` |
-| 兴趣爱好卡片 | `_chapters/life.md` 的 `interests` |
-| 章节题词（引言） | 各章文件开头的 `epigraph` |
+| Name, email, GitHub, LinkedIn | `author` in `_config.yml` (if you change GitHub or LinkedIn, update `social.links` in the same file too) |
+| Home page introduction | The body of `_pages/home.md` |
+| Home page opening text (Welcome to my story.) | `hero` in `_pages/home.md` |
+| The content of a chapter | The matching file in `_chapters/` (study, research, life, acks, contact) |
+| Chapter order, names in the menu | `order` (position) and `nav` (short name in the menu; defaults to `title`) at the top of each chapter file |
+| Education / honors | `_data/education.yml` / `_data/honors.yml` |
+| Research experience | `_data/experience.yml` |
+| Research interest tags | `topics` in `_chapters/research.md` |
+| Hobby cards | `interests` in `_chapters/life.md` |
+| Chapter epigraphs (quotes) | `epigraph` at the top of each chapter file |
 
-### 添加一份新笔记
+In the timeline files (`education.yml`, `honors.yml`, `experience.yml`), `where` and `note` may contain Markdown links such as `[Prof. Bo Zhu](https://…)`; they open in a new tab.
 
-1. 把 PDF 上传到 `files/`，例如 `files/Linear-Algebra.pdf`。
-2. 在 `_data/notes.yml` 对应的主题下加两行：
+### Add a new note
+
+1. Upload the PDF to `files/`, for example `files/Linear-Algebra.pdf`.
+2. Add two lines under the matching topic in `_data/notes.yml`:
 
    ```yaml
        - title: "Linear Algebra"
          file: "Linear-Algebra.pdf"
    ```
 
-   新主题就新增一个 `- topic:` 块。
+   For a new topic, add a new `- topic:` block.
 
-### 添加一个新章节
+### Add a new chapter
 
-在 `_chapters/` 新建一个 Markdown 文件，例如 `_chapters/projects.md`：
+Create a Markdown file in `_chapters/`, for example `_chapters/projects.md`:
 
 ```yaml
 ---
-order: 3.5        # 排在第几：这里是 Research（2）和 Life（3）之后
-numeral: "IV"     # 带编号的章节显示为 “Chapter IV”；不编号的写 label: "Interlude"
+order: 3.5        # Position: here, after Research (2) and Life (3)
+numeral: "IV"     # A numbered chapter shows as “Chapter IV”; for an unnumbered one write label: "Interlude"
 title: Projects
-epigraph:         # 可选
+epigraph:         # Optional
   quote: "…"
   author: "…"
 ---
 ```
 
-下面写正文（Markdown，小标题用 `###`）。它会按 `order` 出现在首页，菜单里也会自动多一项，地址是 `/#projects`（取自文件名）。编号要自己改，后面各章的 `numeral` 记得顺延。
+Write the body below it (Markdown, with `###` for subheadings). It appears on the home page according to its `order`, the menu gains an entry for it automatically, and its address is `/#projects` (taken from the file name). Numerals are not updated for you: remember to shift the `numeral` of the chapters after it.
 
-### 换照片
+### Replace photos
 
-照片放在 `images/`，每张都有 JPEG 和 WebP 两种格式、两种尺寸（例如头像 `avatar.jpg` 960px 宽、`avatar-480.jpg` 480px 宽，WebP 同理）。请先缩小再上传，不要直接传相机原图（原来的原图有 29 MB）。
+Photos live in `images/`. Each one comes in JPEG and WebP, at two sizes (for example the avatar is `avatar.jpg` at 960px wide and `avatar-480.jpg` at 480px wide, and the same for WebP). Shrink photos before uploading them rather than uploading camera originals (one earlier original was 29 MB).
 
-## 目录结构
+## Layout
 
 ```
-_config.yml        站点设置和个人信息
-_chapters/         各章的内容，首页按 order 依次显示
-_data/             经历、荣誉、笔记等数据
-_pages/            home（首页的开场和自我介绍）、404，以及把旧网址跳到首页对应章节的跳转页
-_layouts/          default（外框）、home（首页）、page（404 页）
-_includes/         页头、页脚、时间线、笔记列表、卡片、图标等组件
-_sass/             样式：tokens（配色、字体）、base、layout、components、chapter、home
-assets/css/        样式入口 main.scss
-assets/fonts/      网页字体 Cormorant Garamond、Source Serif 4（及其 OFL 许可证）
-assets/js/         site.js（主题切换、手机菜单、菜单高亮当前章节）、stars.js（首页星星动画）
-files/             笔记 PDF
-images/            照片、网站图标、社交分享预览图（og.jpg）
-.github/workflows/ 自动检查（见下）
+_config.yml        Site settings and personal details
+_chapters/         The content of each chapter, shown on the home page in order
+_data/             Experience, honors, notes and other data
+_pages/            home (the opening and introduction), 404, and redirect pages from old addresses to chapters
+_layouts/          default (the frame), home (the home page), page (the 404 page)
+_includes/         Components: header, footer, timeline, note list, cards, icons and more
+_sass/             Styles: tokens (colors, fonts), base, layout, components, chapter, home
+assets/css/        Style entry point main.scss
+assets/fonts/      Web fonts Cormorant Garamond and Source Serif 4 (with their OFL licenses)
+assets/js/         site.js (theme toggle, mobile menu, highlighting the current chapter in the menu), stars.js (star animation on the home page)
+files/             Note PDFs
+images/            Photos, site icons, social preview image (og.jpg)
+.github/workflows/ Automated check (see below)
 ```
 
-配色在 `_sass/_tokens.scss` 里统一定义，紫黑色的深色和浅紫色的浅色各一套。网站跟随访客系统（浏览器）的深浅色设置自动切换；访客用页头右上角的按钮手动选过之后，就一直用他选的那套。字体在 `_sass/_fonts.scss` 里声明，文件放在 `assets/fonts/`，不从 Google Fonts 加载（Google Fonts 在中国大陆无法访问）。
+Colors are defined in one place, `_sass/_tokens.scss`: a violet-black dark theme and a light violet theme. The site follows the visitor's system (browser) light or dark setting; once visitors pick one with the button at the top right of the header, the site keeps using their choice. Fonts are declared in `_sass/_fonts.scss` and their files live in `assets/fonts/`; they are not loaded from Google Fonts, which is unreachable from mainland China.
 
-## 自动检查
+## Automated check
 
-每次推送到任何分支，GitHub Actions 都会用和 GitHub Pages 相同的组件构建一遍网站，并检查所有站内链接、图片和脚本是否都指向存在的文件（例如笔记 PDF 的文件名写错）。结果在仓库的 Actions 页面里的 “Check site”；出错时 GitHub 会发邮件提醒。这一步只做检查，不影响网站发布。
+On every push to any branch, GitHub Actions builds the site with the same components as GitHub Pages and checks that every internal link, image and script points to a file that exists (catching, for example, a misspelled note PDF file name). The result is under “Check site” on the repository's Actions page, and GitHub sends an email when it fails. This step only checks; it does not affect publishing.
 
-## 本地预览
+## Local preview
 
-需要 Ruby 3.x：
+Requires Ruby 3.x:
 
 ```sh
 bundle install
 bundle exec jekyll serve
 ```
 
-然后打开 http://localhost:4000 。如果构建时报 `invalid byte sequence in US-ASCII`，在命令前加 `LANG=C.UTF-8`。
+Then open http://localhost:4000. If the build fails with `invalid byte sequence in US-ASCII`, put `LANG=C.UTF-8` in front of the command.
 
-也可以不装 Ruby，用 Docker：在仓库目录运行 `docker compose up`，同样打开 http://localhost:4000 ；或者在 VS Code 里用 “Reopen in Container” 打开 Dev Container。
+You can also skip installing Ruby and use Docker: run `docker compose up` in the repository folder and open http://localhost:4000 as well, or open the Dev Container in VS Code with “Reopen in Container”.
