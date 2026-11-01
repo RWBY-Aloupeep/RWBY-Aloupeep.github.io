@@ -1,6 +1,7 @@
 {%- comment -%}
   Vertical timeline. Usage: {% include timeline.html items=site.data.education %}
-  Each item has `year`, `title`, and optional `where` and `note`.
+  Each item has `year`, `title`, and optional `where` and `note`. `where` and
+  `note` may use Markdown, such as [links](https://example.com).
 {%- endcomment -%}
 <ol class="timeline">
   {%- for item in include.items %}
@@ -8,10 +9,10 @@
     <p class="timeline__year">{{ item.year }}</p>
     <h4 class="timeline__title">{{ item.title }}</h4>
     {%- if item.where %}
-    <p class="timeline__where">{{ item.where }}</p>
+    <p class="timeline__where">{% include inline-markdown.html text=item.where %}</p>
     {%- endif %}
     {%- if item.note %}
-    <p class="timeline__note">{{ item.note }}</p>
+    <p class="timeline__note">{% include inline-markdown.html text=item.note %}</p>
     {%- endif %}
   </li>
   {%- endfor %}

@@ -1,0 +1,7 @@
+{%- comment -%}
+  One line of Markdown without the surrounding paragraph, for short text such
+  as a timeline's `where` and `note`. External links open in a new tab, like
+  the other external links on the site.
+  Usage: {% include inline-markdown.html text=item.note %}
+{%- endcomment -%}
+{{- include.text | markdownify | remove: "<p>" | remove: "</p>" | strip | replace: '<a href="http', '<a target="_blank" rel="noopener" href="http' -}}

@@ -13,7 +13,7 @@ topics:
   - AI
 ---
 
-My research centers on **high-fidelity and differentiable multi-physics simulation** as a computational foundation for physically interactive systems, spanning graphics and robotics.
+My research centers on **physics-based simulation that bridges the virtual and physical worlds**: developing accurate and efficient multi-physics solvers, reconstructing real-world dynamics from observations (real-to-sim), and transferring simulation-driven designs to physical systems (sim-to-real).
 {: .lead}
 
 Guided by Feynman’s words, my long-term goal is to build next-generation physics engines — systems that deepen our understanding of the physical world and serve as digital twins that enable reliable prediction and informed decision-making.

@@ -1,9 +1,21 @@
 # Shown on the Research page, newest first.
+# `where` and `note` may use Markdown links: [text](https://…).
+- year: "2026–Present"
+  title: "Research Collaborator"
+  where: "Georgia Tech · Supervised by [Prof. Bo Zhu](https://faculty.cc.gatech.edu/~bozhu/)"
+  note: "Circulation Attribution for Fire Whirls Using GPU Impulse Flow Maps"
+
+- year: "2026–Present"
+  title: "Research Collaborator"
+  where: "Tsinghua University · Supervised by [Prof. Tao Du](https://people.iiis.tsinghua.edu.cn/~taodu/)"
+  note: "Generative Design of Passive Fliers under Chaotic Falling Dynamics"
+
 - year: "2025"
   title: "Community Contributor"
-  where: "Physics-Based Simulation Online Book"
+  where: "[Physics-Based Simulation Online Book](https://phys-sim-book.github.io/)"
+  note: "Improved the lecture on general slip Dirichlet boundary conditions"
 
 - year: "2024"
   title: "Research Assistant"
-  where: "CUHK-SZ"
-  note: "Supervised by Dr. Xiaoguang Han"
+  where: "CUHK-SZ · Supervised by [Prof. Xiaoguang Han](https://gaplab.cuhk.edu.cn/pages/people)"
+  note: "Character Segmentation and Tracking Dataset for Animation and Motion Prediction"
