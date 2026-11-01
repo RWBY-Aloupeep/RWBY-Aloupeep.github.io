@@ -1,9 +1,20 @@
 # Shown on the Research page, newest first.
+# `where` and `note` may use Markdown links: [text](https://…).
+- year: "2026–Present"
+  title: "Research Collaborator"
+  where: "GaTech"
+  note: "Supervised by [Prof. Bo Zhu](https://faculty.cc.gatech.edu/~bozhu/)"
+
+- year: "2026–Present"
+  title: "Research Collaborator"
+  where: "THU"
+  note: "Supervised by [Prof. Tao Du](https://people.iiis.tsinghua.edu.cn/~taodu/)"
+
 - year: "2025"
   title: "Community Contributor"
-  where: "Physics-Based Simulation Online Book"
+  where: "[Physics-Based Simulation Online Book](https://phys-sim-book.github.io/)"
 
 - year: "2024"
   title: "Research Assistant"
   where: "CUHK-SZ"
-  note: "Supervised by Dr. Xiaoguang Han"
+  note: "Supervised by [Prof. Xiaoguang Han](https://gaplab.cuhk.edu.cn/pages/people)"
