@@ -4,11 +4,11 @@
 // A chapter: its label, title and epigraph in a column on the left with the
 // content beside it on wide screens; stacked on narrow ones.
 .chapter {
+  position: relative;
   display: grid;
   gap: 1.5rem 3rem;
-  margin-top: clamp(2.5rem, 6vw, 3.5rem);
+  margin-top: clamp(3rem, 7vw, 4.5rem);
   padding-top: clamp(2.5rem, 6vw, 3.5rem);
-  border-top: 1px solid var(--line);
 
   @media (min-width: $bp-lg) {
     grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
@@ -24,10 +24,42 @@
   line-height: 1.05;
   letter-spacing: -0.015em;
 
-  // Without a label above it (Contact), it lines up with the content.
+  // Without a label above it, it lines up with the content.
   &:first-child {
     margin-top: 0;
   }
+}
+
+// No divider between chapters: space, and a soft glow centred on each
+// chapter's title, and on the prologue's at the top of the page. The title is
+// only as wide as its text, so the glow sits on the words themselves; the glow
+// sits below the text and over the stars.
+.chapter > .chapter__header > .chapter__title,
+.prologue__title {
+  position: relative;
+  width: fit-content;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    width: 28rem;
+    height: 16rem;
+    background: radial-gradient(closest-side, var(--title-glow), transparent);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: opacity 1.8s var(--ease), transform 2.2s var(--ease);
+  }
+}
+
+// Arriving (reveal.js): the glow opens slowly as the chapter scrolls into
+// view, and closes again once it is back below.
+.reveal-on .chapter[data-reveal-glow]:not(.is-revealed) .chapter__title::before,
+.reveal-on .prologue[data-reveal-glow]:not(.is-revealed) .prologue__title::before {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
 }
 
 .chapter__body {
@@ -36,6 +68,45 @@
   // Keep running text to a comfortable line length in the wide column.
   > p {
     max-width: 44rem;
+  }
+}
+
+// A chapter with several epigraphs (Experience) keeps its label and title in the
+// left column but sets the epigraphs in the content column, above the content,
+// so they can line up with it: on Experience, Aristotle with the schools, Feynman
+// with what hangs off them.
+.chapter--epigraphs {
+  @media (min-width: $bp-lg) {
+    .chapter__header {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+      grid-template-rows: auto 1fr;
+      column-gap: 3rem;
+    }
+
+    .chapter__epigraphs {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+
+      > :first-child {
+        margin-top: 0;
+      }
+    }
+
+    .chapter__body {
+      grid-column: 2;
+    }
+  }
+}
+
+.chapter__epigraphs {
+  .epigraph {
+    margin-left: var(--stage-x, 0);
+  }
+
+  .epigraph--indent {
+    margin-left: var(--branch-x, 2rem);
   }
 }
 

@@ -4,7 +4,7 @@ https://rwby-aloupeep.github.io
 
 A personal homepage written in Jekyll and built directly by GitHub Pages. Changes go live a few minutes after they are pushed to `master`. It uses no third-party theme and loads no external resources (the fonts live in the repository).
 
-The whole site is a single page: after the opening and the introduction, the chapters (Study, Research, Life, Acknowledgments, Contact) follow one after another, and clicking a chapter in the top menu scrolls to it. The old addresses `/study/`, `/research/`, `/life/`, `/acks/`, `/contact/`, `/cv/`, `/resume/` and `/about/` all redirect to the matching place on this page.
+The whole site is a single page: after the introduction, the chapters (Experience, Notes, Life, Acknowledgments, Contact) follow one after another, and clicking a chapter in the top menu scrolls to it. The old addresses `/study/`, `/research/`, `/life/`, `/acks/`, `/contact/`, `/cv/`, `/resume/` and `/about/` all redirect to the matching place on this page (`/study/`, `/research/`, `/cv/` and `/resume/` go to Experience).
 
 The repository must stay **public**: GitHub Pages cannot publish from a private repository on a free account, so making it private takes the site offline. After making it public again, go to Settings → Pages and set Source back to “Deploy from a branch”, branch `master`, folder `/ (root)`; only then does the site come back online.
 
@@ -14,16 +14,31 @@ The repository must stay **public**: GitHub Pages cannot publish from a private 
 | --- | --- |
 | Name, email, GitHub, LinkedIn | `author` in `_config.yml` (if you change GitHub or LinkedIn, update `social.links` in the same file too) |
 | Home page introduction | The body of `_pages/home.md` |
-| Home page opening text (Welcome to my story.) | `hero` in `_pages/home.md` |
-| The content of a chapter | The matching file in `_chapters/` (study, research, life, acks, contact) |
+| Research interest tags | `topics` in `_pages/home.md` |
+| The welcome line under the portrait (Welcome to my story. Enjoy~) | `welcome` in `_pages/home.md` |
+| The content of a chapter | The matching file in `_chapters/` (experience, notes, life, acks, contact) |
 | Chapter order, names in the menu | `order` (position) and `nav` (short name in the menu; defaults to `title`) at the top of each chapter file |
-| Education / honors | `_data/education.yml` / `_data/honors.yml` |
-| Research experience | `_data/experience.yml` |
-| Research interest tags | `topics` in `_chapters/research.md` |
+| Schools, research, projects, honors, motivations | `_data/path.yml` (see below) |
 | Hobby cards | `interests` in `_chapters/life.md` |
-| Chapter epigraphs (quotes) | `epigraph` at the top of each chapter file |
+| Chapter epigraphs (quotes) | `epigraph` at the top of each chapter file (`epigraphs`, a list, in `_chapters/experience.md`) |
 
-In the timeline files (`education.yml`, `honors.yml`, `experience.yml`), `where` and `note` may contain Markdown links such as `[Prof. Bo Zhu](https://…)`; they open in a new tab.
+### The Experience timeline
+
+`_data/path.yml` is one timeline, newest first. Each top-level entry is a place you belonged to, a school now and a company later; it sits on the line. Under it, `items` lists what you did while you were there (research, projects, short programs), newest first; these hang off the line, indented. Honors from a school go in its `honors`.
+
+```yaml
+- year: "2025–2027"
+  org: "[University of Washington, Seattle](https://amath.washington.edu/)"
+  title: "Master of Science in Computational and Applied Mathematics"
+  why: [Curiosity about the physical world]   # optional: a few keywords
+  items:
+    - year: "2026–Present"
+      title: "Research Collaborator"
+      where: "GaTech · Supervised by [Prof.&nbsp;Bo&nbsp;Zhu](https://…)"
+      why: [Next-generation physics engines, Digital twins]
+```
+
+`why` is the motivation, shown as small gold tags: a list of keywords, or one short phrase; leave it out when there is none. An entry whose `year` contains “Present” twinkles. As visitors scroll down, the timeline lights up from the top, node by node, and goes out again as they scroll back up (`assets/js/path.js`); pointing at a school dims the other schools. `org`, `title`, `where` and `note` may contain Markdown links such as `[Prof. Bo Zhu](https://…)`; they open in a new tab.
 
 ### Add a new note
 
@@ -43,8 +58,8 @@ Create a Markdown file in `_chapters/`, for example `_chapters/projects.md`:
 
 ```yaml
 ---
-order: 3.5        # Position: here, after Research (2) and Life (3)
-numeral: "IV"     # A numbered chapter shows as “Chapter IV”; for an unnumbered one write label: "Interlude"
+order: 2.5        # Position: here, after Notes (2) and before Life (3)
+label: "…"        # Optional: a small line above the title
 title: Projects
 epigraph:         # Optional
   quote: "…"
@@ -52,7 +67,7 @@ epigraph:         # Optional
 ---
 ```
 
-Write the body below it (Markdown, with `###` for subheadings). It appears on the home page according to its `order`, the menu gains an entry for it automatically, and its address is `/#projects` (taken from the file name). Numerals are not updated for you: remember to shift the `numeral` of the chapters after it.
+Write the body below it (Markdown, with `###` for subheadings). It appears on the home page according to its `order`, the menu gains an entry for it automatically, and its address is `/#projects` (taken from the file name).
 
 ### Replace photos
 
@@ -63,14 +78,14 @@ Photos live in `images/`. Each one comes in JPEG and WebP, at two sizes (for exa
 ```
 _config.yml        Site settings and personal details
 _chapters/         The content of each chapter, shown on the home page in order
-_data/             Experience, honors, notes and other data
+_data/             The Experience timeline (path.yml) and the lecture notes (notes.yml)
 _pages/            home (the opening and introduction), 404, and redirect pages from old addresses to chapters
 _layouts/          default (the frame), home (the home page), page (the 404 page)
-_includes/         Components: header, footer, timeline, note list, cards, icons and more
+_includes/         Components: header, footer, Experience timeline, note list, cards, icons and more
 _sass/             Styles: tokens (colors, fonts), base, layout, components, chapter, home
 assets/css/        Style entry point main.scss
 assets/fonts/      Web fonts Cormorant Garamond and Source Serif 4 (with their OFL licenses)
-assets/js/         site.js (theme toggle, mobile menu, highlighting the current chapter in the menu), stars.js (star animation on the home page)
+assets/js/         site.js (theme toggle, mobile menu, highlighting the current chapter in the menu), stars.js (star animation on the home page), path.js (lights the Experience timeline up and down with scrolling), reveal.js (each section rises in as it scrolls into view, and a soft glow opens behind each chapter's title)
 files/             Note PDFs
 images/            Photos, site icons, social preview image (og.jpg)
 .github/workflows/ Automated check (see below)
@@ -84,7 +99,7 @@ On every push to any branch, GitHub Actions builds the site with the same compon
 
 ## Local preview
 
-Requires Ruby 3.x:
+Requires Ruby 3.x (3.3, like the automated check; Ruby 4 is too new for the Jekyll that GitHub Pages uses):
 
 ```sh
 bundle install

@@ -1,0 +1,39 @@
+{%- comment -%}
+  The Experience timeline, newest first. Usage: {% include path.html items=site.data.path %}
+  Each top-level entry (a school, later a company) sits on the line; its
+  `items` hang off the line, indented. See _data/path.yml for the fields.
+
+  The classes tell the line where to start (is-start, the first node), where
+  to stop (is-end, the last node) and where a stage ends (is-last, which
+  leaves room before the next one).
+{%- endcomment -%}
+<ol class="path">
+  {%- for stage in include.items %}
+  {%- assign stage_last = forloop.last -%}
+  {%- assign has_branches = false -%}
+  {%- if stage.items and stage.items.size > 0 -%}{%- assign has_branches = true -%}{%- endif -%}
+  {%- capture classes -%}
+    path__entry path__entry--stage
+    {%- if forloop.first %} is-start{% endif -%}
+    {%- unless has_branches -%}{%- if stage_last %} is-end{% else %} is-last{% endif -%}{%- endunless -%}
+    {%- if stage.year contains "Present" %} is-ongoing{% endif -%}
+  {%- endcapture %}
+  <li class="path__stage">
+    {% include path-entry.html entry=stage classes=classes tag="h3" head=stage.org detail=stage.title %}
+    {%- if has_branches %}
+    <ol class="path__branches">
+      {%- for item in stage.items %}
+      {%- capture classes -%}
+        path__entry path__entry--branch
+        {%- if forloop.last -%}{%- if stage_last %} is-end{% else %} is-last{% endif -%}{%- endif -%}
+        {%- if item.year contains "Present" %} is-ongoing{% endif -%}
+      {%- endcapture %}
+      <li>
+        {% include path-entry.html entry=item classes=classes tag="h4" head=item.title detail=item.where %}
+      </li>
+      {%- endfor %}
+    </ol>
+    {%- endif %}
+  </li>
+  {%- endfor %}
+</ol>

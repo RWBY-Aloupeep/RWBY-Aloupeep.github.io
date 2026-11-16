@@ -3,40 +3,48 @@ layout: default
 body_class: is-home
 scripts:
   - /assets/js/stars.js
+  - /assets/js/path.js
+  - /assets/js/reveal.js
 ---
 {%- comment -%}
-  The whole site on one page: a short hero, the prologue, then every chapter
-  in _chapters/ in `order`, each with its label ("Chapter I" from `numeral`,
-  or `label`, if any), title and epigraph beside its content.
+  The whole site on one page: the prologue (the portrait, with the welcome
+  line under it like an inscription, and the introduction), then every chapter
+  in _chapters/ in `order`, each with its title (and `label` above it, if
+  any) and epigraph beside its content. A chapter with
+  several `epigraphs` (Experience) sets them in the content column instead, above
+  its content.
 
   The stars (assets/js/stars.js) drift behind the whole page. They steer around
   the text marked data-stars-avoid, the text that sits on the bare background;
   cards and the portrait simply hide them as they pass behind.
+
+  Each section arrives as it scrolls into view (assets/js/reveal.js): elements
+  marked data-reveal rise and fade in after their --reveal-delay, and the
+  prologue and each chapter (data-reveal-glow) open a soft glow centred on
+  their title.
 {%- endcomment -%}
 {%- assign author = site.author -%}
 {%- assign chapters = site.chapters | sort: "order" -%}
 
 <canvas class="stars" aria-hidden="true" data-stars></canvas>
 
-<section class="hero">
-  <div class="hero__text" data-stars-avoid>
-    <p class="hero__mark" aria-hidden="true">《 <span class="hero__cursor">|</span> 》</p>
-    <h1 class="hero__title">{{ page.hero.title }}</h1>
-    <p class="hero__sub">{{ page.hero.subtitle }}</p>
-  </div>
-</section>
-
 <div class="home wrap wrap--wide">
-  <section class="prologue" id="prologue" aria-labelledby="prologue-title">
-    <figure class="prologue__portrait">
+  <section class="prologue" id="prologue" aria-labelledby="prologue-title" data-reveal-glow>
+    <figure class="prologue__portrait" data-reveal style="--reveal-delay: 100ms">
       <picture>
         <source type="image/webp" srcset="{{ '/images/avatar-480.webp' | relative_url }} 480w, {{ '/images/avatar.webp' | relative_url }} 960w" sizes="10.5rem">
         <img src="{{ '/images/avatar-480.jpg' | relative_url }}" srcset="{{ '/images/avatar-480.jpg' | relative_url }} 480w, {{ '/images/avatar.jpg' | relative_url }} 960w" sizes="10.5rem" width="960" height="1454" alt="Portrait of {{ author.short_name }}">
       </picture>
+      {%- if page.welcome %}
+      <figcaption class="prologue__welcome" data-stars-avoid>
+        <span class="prologue__welcome-title">{{ page.welcome.title }}</span>
+        <span class="prologue__welcome-sub">{{ page.welcome.subtitle }}<span class="prologue__cursor" aria-hidden="true">|</span></span>
+      </figcaption>
+      {%- endif %}
     </figure>
 
-    <div class="prologue__body" data-stars-avoid>
-      <h2 class="prologue__title" id="prologue-title">Hi, I’m {{ author.short_name }}.</h2>
+    <div class="prologue__body" data-stars-avoid data-reveal style="--reveal-delay: 300ms">
+      <h1 class="prologue__title" id="prologue-title">Hi, I’m {{ author.short_name }}.</h1>
       <p class="prologue__name">{{ author.full_name | default: author.name }} <span class="prologue__native" lang="zh-Hans">{{ author.native_name }}</span></p>
       <div class="prologue__bio prose">
         {{ content }}
@@ -46,22 +54,31 @@ scripts:
   </section>
 
   {%- for chapter in chapters %}
-  <section class="chapter" id="{{ chapter.slug }}" aria-labelledby="{{ chapter.slug }}-title" data-chapter>
+  <section class="chapter chapter--{{ chapter.slug }}{% if chapter.epigraphs %} chapter--epigraphs{% endif %}" id="{{ chapter.slug }}" aria-labelledby="{{ chapter.slug }}-title" data-chapter data-reveal-glow>
     <header class="chapter__header" data-stars-avoid>
-      {%- if chapter.numeral %}
-      <p class="eyebrow">Chapter {{ chapter.numeral }}</p>
-      {%- elsif chapter.label %}
-      <p class="eyebrow">{{ chapter.label }}</p>
+      {%- if chapter.label %}
+      <p class="eyebrow" data-reveal style="--reveal-delay: 150ms">{{ chapter.label }}</p>
       {%- endif %}
-      <h2 class="chapter__title" id="{{ chapter.slug }}-title">{{ chapter.title }}</h2>
+      <h2 class="chapter__title" id="{{ chapter.slug }}-title" data-reveal style="--reveal-delay: 200ms">{{ chapter.title }}</h2>
       {%- if chapter.epigraph %}
-      <figure class="epigraph">
+      <figure class="epigraph" data-reveal style="--reveal-delay: 400ms">
         <blockquote><p>{{ chapter.epigraph.quote }}</p></blockquote>
         <figcaption>{{ chapter.epigraph.author }}</figcaption>
       </figure>
       {%- endif %}
+      {%- if chapter.epigraphs %}
+      <div class="chapter__epigraphs">
+        {%- for epigraph in chapter.epigraphs %}
+        <figure class="epigraph{% if epigraph.indent %} epigraph--indent{% endif %}" data-reveal style="--reveal-delay: {{ forloop.index0 | times: 180 | plus: 400 }}ms">
+          <blockquote><p>{{ epigraph.quote }}</p></blockquote>
+          <figcaption>{{ epigraph.author }}</figcaption>
+        </figure>
+        {%- endfor %}
+      </div>
+      {%- endif %}
     </header>
-    <div class="chapter__body prose" data-stars-avoid>
+    {%- comment %} A body whose own pieces arrive one by one (cards, notes) is not revealed as a whole. {% endcomment %}
+    <div class="chapter__body prose" data-stars-avoid{% unless chapter.content contains "data-reveal" %} data-reveal style="--reveal-delay: 450ms"{% endunless %}>
       {{ chapter.content }}
     </div>
   </section>

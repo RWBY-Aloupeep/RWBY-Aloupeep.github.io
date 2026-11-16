@@ -1,6 +1,5 @@
 ---
 order: 3
-numeral: "III"
 title: Life
 epigraph:
   quote: "Happiness is the meaning and the purpose of life, the whole aim and end of human existence."
