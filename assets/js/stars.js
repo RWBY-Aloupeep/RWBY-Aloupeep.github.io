@@ -83,8 +83,15 @@
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
     viewWidth = rect.width;
     viewHeight = rect.height;
-    canvas.width = Math.round(viewWidth * ratio);
-    canvas.height = Math.round(viewHeight * ratio);
+    // Setting a canvas's size wipes it, so leave it alone unless it changed:
+    // re-measuring is frequent (every entrance animation on the page ends with
+    // one), and a wiped frame shows as the stars flashing.
+    const canvasWidth = Math.round(viewWidth * ratio);
+    const canvasHeight = Math.round(viewHeight * ratio);
+    if (canvas.width !== canvasWidth || canvas.height !== canvasHeight) {
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+    }
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
     width = document.documentElement.clientWidth;
@@ -310,7 +317,7 @@
   };
 
   // Re-measure after anything that moves the text: a resize, fonts loading,
-  // the hero's entrance animation finishing. Respawn on big width changes
+  // an entrance animation finishing (a section's, as it scrolls in). Respawn on big width changes
   // (e.g. rotating a phone); otherwise keep the scene and nudge stars back out
   // of the text.
   let measureFrame = 0;
@@ -327,9 +334,9 @@
           leaveZones(star);
         });
       }
-      if (!frame) {
-        draw();
-      }
+      // Redraw at once, even mid-animation: a resized canvas is blank until
+      // the next frame otherwise.
+      draw();
     });
   };
 

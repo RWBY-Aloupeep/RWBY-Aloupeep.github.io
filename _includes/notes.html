@@ -4,7 +4,7 @@
 {%- endcomment -%}
 <div class="notes">
   {%- for group in site.data.notes %}
-  <section class="notes__group">
+  <section class="notes__group" data-reveal style="--reveal-delay: {{ forloop.index0 | times: 110 | plus: 400 }}ms">
     <h4 class="notes__topic">{{ group.topic }}</h4>
     <ul class="note-list">
       {%- for note in group.notes %}

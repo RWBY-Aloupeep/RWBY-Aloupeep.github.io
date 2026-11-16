@@ -1,0 +1,62 @@
+# The Experience chapter: one timeline, newest first.
+#
+# Each top-level entry is a place I belonged to: a school now, a company later.
+# It sits flush with the timeline. `items` are what I did while I was there
+# (research, projects, short programs), newest first, indented under it.
+#
+# Fields:
+#   year    shown in the left margin
+#   org     the place (top-level entries) or title (items); Markdown links work
+#   title   the degree or role
+#   where   for items: where it happened, who supervised it
+#   note    one short line in italics
+#   honors  top-level only: a list of `title` + `year`, shown on one line
+#   why     the motivation: a few keywords, as a list ([curiosity, craft]) or
+#           as one short phrase. Leave it out when there is none.
+#
+# `&nbsp;` keeps a name on one line; links open in a new tab.
+
+- year: "2025–2027"
+  org: "[University of Washington, Seattle](https://amath.washington.edu/)"
+  title: "Master of Science in Computational and Applied Mathematics"
+  why: ["Curiosity about the physical world"]
+  items:
+    - year: "2026–Present"
+      title: "Research Collaborator"
+      where: "GaTech · Supervised by [Prof.&nbsp;Bo&nbsp;Zhu](https://faculty.cc.gatech.edu/~bozhu/)"
+      why: ["Next-generation physics engines", "Digital twins"]
+
+    - year: "2026–Present"
+      title: "Research Collaborator"
+      where: "THU · Supervised by [Prof.&nbsp;Tao&nbsp;Du](https://people.iiis.tsinghua.edu.cn/~taodu/)"
+      why: ["Next-generation physics engines", "Digital twins"]
+
+    - year: "2026"
+      title: "Regional Finalist"
+      where: "WeChat Mini Program Development Competition"
+      note: "123 of 3,600+ entries"
+
+- year: "2021–2025"
+  org: "[Chinese University of Hong Kong, Shenzhen](https://sse.cuhk.edu.cn/en)"
+  title: "Bachelor of Science in Mathematics and Applied Mathematics"
+  honors:
+    - title: "Bowen Scholarship"
+      year: "2021–2024"
+    - title: "School of Science and Engineering Dean’s List"
+      year: "2022–23, 2023–24"
+  items:
+    - year: "2025"
+      title: "Community Contributor"
+      where: "[Physics-Based Simulation Online Book](https://phys-sim-book.github.io/)"
+
+    - year: "2024"
+      title: "Research Assistant"
+      where: "CUHK-SZ · Supervised by [Prof.&nbsp;Xiaoguang&nbsp;Han](https://gaplab.cuhk.edu.cn/pages/people)"
+
+    - year: "2023"
+      title: "Summer School"
+      where: "[University of Cambridge, Pembroke College](https://www.pem.cam.ac.uk/international-programmes/pembroke-cambridge-summer-programme)"
+
+- year: "2015–2021"
+  org: "Earlier schooling"
+  title: "Changzhou Beijiao H.S., 2021 · Changzhou Foreign Languages M.S., 2018 · Changzhou Xiheng Street E.S., 2015"

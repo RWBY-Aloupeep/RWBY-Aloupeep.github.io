@@ -1,5 +1,6 @@
-// Home page (_layouts/home.html): stars, hero, prologue. The chapters after
-// the prologue are styled in _chapter.scss.
+// Home page (_layouts/home.html): stars, prologue. The chapters after the
+// prologue are styled in _chapter.scss (with the glow behind the prologue's
+// title, which it shares with theirs).
 
 // The stars' canvas covers the viewport behind everything: below the page
 // content (so cards and photos hide the stars) but above the page background.
@@ -12,83 +13,6 @@
   pointer-events: none;
 }
 
-.hero {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  place-items: center;
-  // Tall enough on a phone to leave the stars a band above and below the text.
-  min-height: clamp(19rem, 42vh, 22rem);
-  padding: 3rem var(--gutter);
-  overflow: hidden;
-  border-bottom: 1px solid var(--line);
-  background: radial-gradient(55% 60% at 50% 50%, var(--hero-glow), transparent 75%);
-  text-align: center;
-}
-
-.hero__mark,
-.hero__title,
-.hero__sub {
-  animation: hero-rise 1s var(--ease) both;
-}
-
-.hero__mark {
-  color: var(--text-muted);
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
-  letter-spacing: 0.08em;
-  animation-delay: 0.1s;
-}
-
-.hero__cursor {
-  display: inline-block;
-  min-width: 0.5ch;
-  color: var(--accent);
-  animation: hero-cursor 2.4s ease-in-out infinite;
-}
-
-.hero__title {
-  margin-top: 0.6rem;
-  font-size: clamp(2.4rem, 6vw, 3.75rem);
-  font-style: italic;
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.015em;
-  animation-delay: 0.25s;
-}
-
-.hero__sub {
-  margin-top: 0.5rem;
-  color: var(--text-muted);
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
-  font-style: italic;
-  animation-delay: 0.45s;
-}
-
-@keyframes hero-rise {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes hero-cursor {
-  0%,
-  100% {
-    opacity: 0.15;
-  }
-
-  50% {
-    opacity: 0.9;
-  }
-}
-
 // Prologue: a small arched portrait beside the introduction.
 
 .prologue {
@@ -96,7 +20,8 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 1.5rem 2.5rem;
-  padding-top: clamp(2.5rem, 6vw, 3.5rem);
+  // The top of the page: room for the stars, and for the title's glow.
+  padding-top: clamp(3rem, 7vw, 4.5rem);
 }
 
 .prologue__portrait {
@@ -116,6 +41,49 @@
 .prologue__body {
   flex: 1 1 26rem;
   min-width: 0;
+}
+
+// The welcome line under the portrait, like the inscription in a book;
+// "Enjoy~" ends on a blinking cursor: the story is still being written.
+.prologue__welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  margin-top: 0.9rem;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-style: italic;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.prologue__welcome-title {
+  color: var(--text);
+  font-size: 1.15rem;
+}
+
+.prologue__welcome-sub {
+  font-size: 1rem;
+}
+
+.prologue__cursor {
+  display: inline-block;
+  margin-left: 0.1em;
+  color: var(--accent);
+  font-style: normal;
+  animation: prologue-cursor 2.4s ease-in-out infinite;
+}
+
+@keyframes prologue-cursor {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
 }
 
 .prologue__title {
@@ -140,6 +108,36 @@
   margin-top: 0.85rem;
 }
 
+// The research interests, under the introduction (.tags resets its margin).
+.prologue__bio .tags {
+  margin-top: 1rem;
+}
+
 .prologue .contact {
   margin-top: 0.75rem;
+}
+
+// Sections arriving (assets/js/reveal.js). With .reveal-on (head.html), an
+// element marked data-reveal waits hidden until it scrolls into view, then
+// rises and fades in after its --reveal-delay. `backwards` holds it hidden
+// through the delay and hands it back to its own styles afterwards, so hover
+// effects (cards) still work. Without .reveal-on everything simply shows.
+.reveal-on [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+}
+
+.reveal-on [data-reveal].is-revealed {
+  animation: reveal-in 0.9s var(--ease) var(--reveal-delay, 0ms) backwards;
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }

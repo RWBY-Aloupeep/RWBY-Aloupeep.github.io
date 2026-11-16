@@ -92,72 +92,273 @@
   }
 }
 
-// Timeline (education, honors, experience).
+// The Experience timeline (_includes/path.html): one path, newest first. The places I
+// belonged to (schools, later companies) sit on the line as bright nodes; what
+// I did there hangs off the line, indented, on small rings. Ongoing entries
+// twinkle. On wide screens the years hang in the margin left of the line.
+//
+// path.js lights the timeline as it is read: it adds .is-armed to the list,
+// which dims every node and leaves only a faint track, then .is-lit to each
+// entry in turn, which lights its node and draws its stretch of line (the
+// trace); scrolling back up takes .is-lit off again and the trace retracts.
+// Without the script nothing is armed and everything is lit.
 
-.timeline {
+.path,
+.path__branches {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.timeline__item {
-  position: relative;
-  padding: 0 0 1.25rem 1.75rem;
+// The geometry, shared with the Experience chapter's epigraphs (_chapter.scss),
+// which line up with the stages and the branches.
+.path,
+.chapter--experience {
+  --axis: 0.45rem; // the line, from the entries' left edge
+  --stage-x: 1.75rem; // where a stage's text starts
+  --branch-node: 2.75rem; // a branch's node, on its elbow
+  --branch-x: 4rem; // where a branch's text starts
+  --node-y: 2rem; // the nodes, from the top of the entry: under the year
 
-  &:last-child {
-    padding-bottom: 0;
+  @media (min-width: $bp-lg) {
+    --node-y: 0.72rem; // the first line of the title: the year is in the margin
   }
+}
 
-  // Dot
+.path__entry {
+  position: relative;
+  padding: 0 0 1.1rem var(--stage-x);
+
+  // The line runs through every entry, from the first node to the last.
   &::before {
     content: "";
     position: absolute;
-    top: 0.45rem;
-    left: 0;
-    width: 0.65rem;
-    height: 0.65rem;
-    border: 1.5px solid var(--accent);
-    border-radius: 50%;
-    background: var(--bg);
+    top: 0;
+    bottom: 0;
+    left: calc(var(--axis) - 0.5px);
+    width: 1px;
+    background: var(--accent-line);
+
+    .is-armed & {
+      background: var(--line);
+    }
   }
 
-  &:first-child::before {
+  &.is-start::before,
+  &.is-start > .path__trace {
+    top: var(--node-y);
+  }
+
+  &.is-end {
+    padding-bottom: 0;
+
+    &::before,
+    > .path__trace {
+      bottom: auto;
+      height: var(--node-y);
+    }
+  }
+
+  &.is-start.is-end::before,
+  &.is-start.is-end > .path__trace {
+    display: none;
+  }
+
+  // The last entry of a stage leaves room before the next one.
+  &.is-last {
+    padding-bottom: 2.25rem;
+  }
+}
+
+.path__entry--branch {
+  padding-left: var(--branch-x);
+
+  // The elbow from the line out to the branch's node.
+  &::after {
+    content: "";
+    position: absolute;
+    top: var(--node-y);
+    left: var(--axis);
+    width: calc(var(--branch-node) - var(--axis));
+    height: 1px;
+    background: var(--accent-line);
+    transition: background-color 0.5s var(--light-delay, 0ms);
+
+    .is-armed & {
+      background: var(--line);
+    }
+  }
+
+  .is-armed &.is-lit::after {
+    background: var(--accent);
+  }
+}
+
+// The lit stretch of line, drawn downwards when its entry lights up.
+.path__trace {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--axis) - 0.5px);
+  width: 1px;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--star-glow);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.9s var(--ease) var(--light-delay, 0ms);
+
+  .is-armed & {
+    display: block;
+  }
+
+  .is-lit > & {
+    transform: none;
+  }
+}
+
+.path__node {
+  position: absolute;
+  top: var(--node-y);
+  left: var(--axis);
+  z-index: 1;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--bg), 0 0 14px 1px var(--star-glow);
+  transform: translate(-50%, -50%);
+  transition: opacity 0.6s var(--light-delay, 0ms), box-shadow 0.3s, transform 0.3s var(--ease);
+
+  .is-armed .path__entry:not(.is-lit) > & {
+    opacity: 0.25;
+    box-shadow: 0 0 0 4px var(--bg);
+    animation: none;
+  }
+
+  .path__entry--branch > & {
+    left: var(--branch-node);
+    width: 0.55rem;
+    height: 0.55rem;
+    border: 1.5px solid var(--accent);
+    background: var(--bg);
+    box-shadow: 0 0 0 3px var(--bg);
+  }
+
+  .path__entry--branch.is-ongoing > & {
     background: var(--accent);
   }
 
-  // Line down to the next dot
-  &:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    top: 1.35rem;
-    bottom: -0.2rem;
-    left: calc(0.325rem - 0.5px);
-    width: 1px;
-    background: var(--line);
+  .is-ongoing > & {
+    animation: path-twinkle 3s ease-in-out infinite;
+  }
+
+  .path__entry:hover > & {
+    transform: translate(-50%, -50%) scale(1.3);
+    box-shadow: 0 0 0 4px var(--bg), 0 0 18px 4px var(--star-glow);
   }
 }
 
-.timeline__year {
+@keyframes path-twinkle {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px var(--bg), 0 0 6px 0 var(--star-glow);
+  }
+
+  50% {
+    box-shadow: 0 0 0 3px var(--bg), 0 0 16px 4px var(--star-glow);
+  }
+}
+
+.path__year {
   @include label;
   letter-spacing: 0.08em;
   font-variant-numeric: tabular-nums;
+
+  .path__entry--stage > & {
+    color: var(--text);
+  }
+
+  @media (min-width: $bp-lg) {
+    position: absolute;
+    top: var(--node-y);
+    right: calc(100% + 1.25rem);
+    white-space: nowrap;
+    transform: translateY(-50%);
+  }
 }
 
-.timeline__title {
+.path__title {
   margin-top: 0.15rem;
   font-size: 1.25rem;
+
+  @media (min-width: $bp-lg) {
+    margin-top: 0;
+  }
+
+  // A linked school reads as a name, not as a link, until it is pointed at.
+  a:not([class]) {
+    color: inherit;
+  }
 }
 
-.timeline__where {
+.path__where {
   margin-top: 0.15rem;
   color: var(--text-muted);
 }
 
-.timeline__note {
-  margin-top: 0.1rem;
+.path__honors,
+.path__note {
+  margin-top: 0.15rem;
   color: var(--text-muted);
   font-size: 0.95rem;
   font-style: italic;
+}
+
+.path__honor-year {
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+// The motivation: a few keywords, each a small gold tag.
+.path__why {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.path__why-tag {
+  padding: 0.12rem 0.7rem 0.15rem;
+  border: 1px solid color-mix(in srgb, var(--gold) 50%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--gold) 9%, transparent);
+  color: var(--gold);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+
+  &::before {
+    content: "\2726";
+    margin-right: 0.4em;
+    font-size: 0.85em;
+  }
+}
+
+// Pointing at a stage (a school and what hangs off it) dims the others.
+.path__stage {
+  transition: opacity 0.35s var(--ease);
+}
+
+@media (hover: hover) {
+  .path:has(.path__stage:hover) .path__stage:not(:hover) {
+    opacity: 0.3;
+  }
 }
 
 // Lecture notes: grouped by topic, one row per note. On wide screens the
