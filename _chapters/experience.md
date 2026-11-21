@@ -1,14 +1,12 @@
 ---
 order: 1
 title: Experience
-# Two epigraphs, set like the timeline below them: Aristotle flush with the
-# schools (where I learn), Feynman indented with what I made there.
+# A list, so the epigraph is set in the content column, flush with the
+# schools on the timeline below it, clear of the years in the margin.
+# (Feynman's words are quoted in the introduction, _pages/home.md.)
 epigraphs:
   - quote: "All men by nature desire to know."
     author: Aristotle
-  - quote: "What I cannot create, I do not understand."
-    author: Richard Feynman
-    indent: true
 ---
 
 {% include path.html items=site.data.path %}

@@ -85,7 +85,7 @@ _includes/         Components: header, footer, Experience timeline, note list, c
 _sass/             Styles: tokens (colors, fonts), base, layout, components, chapter, home
 assets/css/        Style entry point main.scss
 assets/fonts/      Web fonts Cormorant Garamond and Source Serif 4 (with their OFL licenses)
-assets/js/         site.js (theme toggle, mobile menu, highlighting the current chapter in the menu), stars.js (star animation on the home page), path.js (lights the Experience timeline up and down with scrolling), reveal.js (each section rises in as it scrolls into view, and a soft glow opens behind each chapter's title)
+assets/js/         site.js (theme toggle, mobile menu, highlighting the current chapter in the menu), stars.js (star animation on the home page), path.js (lights the Experience timeline up and down with scrolling)
 files/             Note PDFs
 images/            Photos, site icons, social preview image (og.jpg)
 .github/workflows/ Automated check (see below)

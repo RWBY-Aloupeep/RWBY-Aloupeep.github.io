@@ -317,9 +317,9 @@
   };
 
   // Re-measure after anything that moves the text: a resize, fonts loading,
-  // an entrance animation finishing (a section's, as it scrolls in). Respawn on big width changes
-  // (e.g. rotating a phone); otherwise keep the scene and nudge stars back out
-  // of the text.
+  // an entrance animation finishing (the prologue's on load, a chapter's as it
+  // scrolls in). Respawn on big width changes (e.g. rotating a phone);
+  // otherwise keep the scene and nudge stars back out of the text.
   let measureFrame = 0;
   const remeasure = () => {
     cancelAnimationFrame(measureFrame);

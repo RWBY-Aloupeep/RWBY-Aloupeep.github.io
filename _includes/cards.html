@@ -4,7 +4,7 @@
 {%- endcomment -%}
 <ul class="cards">
   {%- for item in include.items %}
-  <li class="card" data-reveal style="--reveal-delay: {{ forloop.index0 | times: 90 | plus: 400 }}ms">
+  <li class="card" data-reveal>
     <h3 class="card__title">{{ item.name }}</h3>
     <p class="card__text">{{ item.text | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
   </li>
