@@ -33,7 +33,8 @@
 // No divider between chapters: space, and a soft glow centred on each
 // chapter's title, and on the prologue's at the top of the page. The title is
 // only as wide as its text, so the glow sits on the words themselves; the glow
-// sits below the text and over the stars.
+// sits below the text and over the stars. It opens as the title arrives
+// (_home.scss).
 .chapter > .chapter__header > .chapter__title,
 .prologue__title {
   position: relative;
@@ -50,16 +51,7 @@
     background: radial-gradient(closest-side, var(--title-glow), transparent);
     pointer-events: none;
     transform: translate(-50%, -50%);
-    transition: opacity 1.8s var(--ease), transform 2.2s var(--ease);
   }
-}
-
-// Arriving (reveal.js): the glow opens slowly as the chapter scrolls into
-// view, and closes again once it is back below.
-.reveal-on .chapter[data-reveal-glow]:not(.is-revealed) .chapter__title::before,
-.reveal-on .prologue[data-reveal-glow]:not(.is-revealed) .prologue__title::before {
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.7);
 }
 
 .chapter__body {
@@ -71,10 +63,10 @@
   }
 }
 
-// A chapter with several epigraphs (Experience) keeps its label and title in the
-// left column but sets the epigraphs in the content column, above the content,
-// so they can line up with it: on Experience, Aristotle with the schools, Feynman
-// with what hangs off them.
+// A chapter with a list of `epigraphs` (Experience) keeps its label and title
+// in the left column but sets the epigraphs in the content column, above the
+// content, so they line up with it (on Experience, Aristotle with the schools)
+// and stay clear of the timeline's years in the margin.
 .chapter--epigraphs {
   @media (min-width: $bp-lg) {
     .chapter__header {
@@ -100,14 +92,8 @@
   }
 }
 
-.chapter__epigraphs {
-  .epigraph {
-    margin-left: var(--stage-x, 0);
-  }
-
-  .epigraph--indent {
-    margin-left: var(--branch-x, 2rem);
-  }
+.chapter__epigraphs .epigraph {
+  margin-left: var(--stage-x, 0);
 }
 
 // Standalone page.

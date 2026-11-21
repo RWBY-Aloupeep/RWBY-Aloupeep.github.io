@@ -13,19 +13,6 @@
       : window.matchMedia("(prefers-color-scheme: dark)").matches;
     root.setAttribute("data-theme", dark ? "dark" : "light");
     root.className = root.className.replace(/\bno-js\b/, "js");
-
-    // Sections that fade in as they scroll into view (reveal.js) start hidden,
-    // so hide them before first paint, unless the visitor prefers less
-    // motion. Should reveal.js not run, show everything after all.
-    if ("IntersectionObserver" in window &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      root.classList.add("reveal-on");
-      setTimeout(function () {
-        if (!root.classList.contains("reveal-ready")) {
-          root.classList.remove("reveal-on");
-        }
-      }, 3000);
-    }
   })();
 </script>
 

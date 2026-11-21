@@ -13,7 +13,10 @@
   pointer-events: none;
 }
 
-// Prologue: a small arched portrait beside the introduction.
+// Prologue: a small arched portrait beside the introduction. On wide screens
+// it sits on the chapters' grid (_chapter.scss): the portrait centred in the
+// titles' column, the introduction in the content column, its lines running
+// the column's full width, as far right as the timeline below.
 
 .prologue {
   display: flex;
@@ -22,11 +25,22 @@
   gap: 1.5rem 2.5rem;
   // The top of the page: room for the stars, and for the title's glow.
   padding-top: clamp(3rem, 7vw, 4.5rem);
+
+  @media (min-width: $bp-lg) {
+    display: grid;
+    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+    gap: 3rem;
+  }
 }
 
 .prologue__portrait {
   flex: none;
   width: 10.5rem;
+
+  @media (min-width: $bp-lg) {
+    width: 12rem;
+    justify-self: center;
+  }
 
   img {
     width: 100%;
@@ -106,6 +120,26 @@
 .prologue__bio {
   max-width: 40em;
   margin-top: 0.85rem;
+
+  @media (min-width: $bp-lg) {
+    max-width: none;
+  }
+
+  // The key terms (real-to-sim, …) never break at their hyphens.
+  strong {
+    white-space: nowrap;
+  }
+}
+
+// Feynman's words, quoted in the introduction: set like the epigraphs, a
+// little larger, since the display face runs small beside the body's.
+.prologue__quote {
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 1.2em;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1;
 }
 
 // The research interests, under the introduction (.tags resets its margin).
@@ -117,17 +151,44 @@
   margin-top: 0.75rem;
 }
 
-// Sections arriving (assets/js/reveal.js). With .reveal-on (head.html), an
-// element marked data-reveal waits hidden until it scrolls into view, then
-// rises and fades in after its --reveal-delay. `backwards` holds it hidden
-// through the delay and hands it back to its own styles afterwards, so hover
-// effects (cards) still work. Without .reveal-on everything simply shows.
-.reveal-on [data-reveal]:not(.is-revealed) {
-  opacity: 0;
-}
+// Arriving, for visitors who allow motion.
+//
+// The prologue, on load: the portrait, then the introduction (each after its
+// --reveal-delay), rise and fade in, and the glow opens behind the title.
+//
+// The chapters, as they scroll in: each piece marked data-reveal rises and
+// fades in over the first few lines of its way up from the bottom of the
+// window, and each title's glow opens with it. They follow the scroll
+// position, not a clock, so however fast the page is scrolled nothing waits
+// to appear, and scrolling back up plays them backwards. Where the browser
+// cannot tie animations to scrolling, the chapters simply show.
+//
+// Fill `backwards` only: past its range an animation lets go and the element
+// is back on its own styles, so hover effects (cards) still work.
+@media (prefers-reduced-motion: no-preference) {
+  .prologue [data-reveal] {
+    animation: reveal-in 0.9s var(--ease) var(--reveal-delay, 0ms) backwards;
+  }
 
-.reveal-on [data-reveal].is-revealed {
-  animation: reveal-in 0.9s var(--ease) var(--reveal-delay, 0ms) backwards;
+  .prologue__title::before {
+    animation: glow-open 1.8s var(--ease) 0.3s backwards;
+  }
+
+  @supports (animation-timeline: view()) {
+    .chapter [data-reveal] {
+      animation: reveal-in linear backwards;
+      animation-timeline: view();
+      animation-range: cover 0% cover 8rem;
+    }
+
+    .chapter > .chapter__header > .chapter__title::before {
+      animation: glow-open linear backwards;
+      animation-timeline: view();
+      // Short enough to open fully on the last chapter, which reaches only a
+      // little way up the window before the page ends.
+      animation-range: cover 0% cover 10rem;
+    }
+  }
 }
 
 @keyframes reveal-in {
@@ -135,9 +196,11 @@
     opacity: 0;
     transform: translateY(18px);
   }
+}
 
-  to {
-    opacity: 1;
-    transform: none;
+@keyframes glow-open {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
   }
 }
