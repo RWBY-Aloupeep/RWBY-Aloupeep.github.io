@@ -315,6 +315,7 @@
 .path__where {
   margin-top: 0.15rem;
   color: var(--text-muted);
+  text-wrap: pretty;
 }
 
 .path__honors {
@@ -342,6 +343,14 @@
   color: var(--text-faint);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+// A part of a detail or of the honors (_includes/path-entry.html) moves to
+// the next line whole ("Changzhou Xiheng Street E.S., 2015", not "Changzhou /
+// Xiheng Street …"). Only a part longer than the whole line, on a phone, wraps
+// inside itself.
+.path__part {
+  display: inline-block;
 }
 
 // The motivation: a few keywords, each a small gold tag.
@@ -375,7 +384,8 @@
 
 // Lecture notes: grouped by topic, one row per note, the topics side by side
 // in the order of _data/notes.yml: two to a row on medium screens, as many as
-// fit (all four, across a wide chapter) on wide ones.
+// fit (all four, across a wide chapter) once each column has room for a title
+// in two lines; narrower, four columns would break titles into three.
 
 .notes {
   display: grid;
@@ -386,7 +396,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  @media (min-width: $bp-lg) {
+  @media (min-width: $bp-xl) {
     grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
   }
 }
@@ -417,11 +427,14 @@
   text-decoration: none;
 }
 
+// A title that takes two lines never leaves one word alone on the second
+// ("Dynamical Systems / and Chaos", not "Dynamical Systems and / Chaos").
 .note-link__title {
   font-family: var(--font-display);
   font-size: 1.15rem;
   font-weight: 600;
   line-height: 1.25;
+  text-wrap: pretty;
   transition: color 0.2s;
 
   .note-link:hover & {
@@ -474,7 +487,9 @@
 
 // Text cards (Life).
 
-// As many to a row as fit (all five, across a wide chapter).
+// All in one row on wide screens (five, across a wide chapter); three to a
+// row on medium ones, where five would not fit and a sixth would wrap alone;
+// as many as fit on phones.
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
@@ -482,6 +497,16 @@
   margin: 0;
   padding: 0;
   list-style: none;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (min-width: $bp-xl) {
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    grid-template-columns: none;
+  }
 }
 
 .card {
@@ -502,9 +527,13 @@
   }
 }
 
+// The few lines of a card are evened out, so none ends on a lone word
+// ("Descartes.", "butterfly."): `pretty` lets those through in a column this
+// narrow.
 .card__text {
   margin-top: 0.6rem;
   color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.55;
+  text-wrap: balance;
 }

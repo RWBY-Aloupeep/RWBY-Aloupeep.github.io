@@ -30,6 +30,9 @@ body {
 main {
   flex: 1;
   outline: none;
+  // The glow behind a title (_chapter.scss) is wider than a phone; cut it at
+  // the edge of the window rather than let it widen the page.
+  overflow-x: clip;
 }
 
 img,

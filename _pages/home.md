@@ -21,6 +21,6 @@ Driven by curiosity about the physical world, I study computational mathematics 
 
 My research centers on **physics-based simulation** that bridges the virtual and physical worlds: developing accurate and efficient multi-physics solvers, reconstructing real-world dynamics from observations (**real-to-sim**), and transferring simulation-driven designs to physical systems (**sim-to-real**).
 
-Guided by Richard Feynman’s words, <span class="prologue__quote">“What I cannot create, I do not understand,”</span> my long-term goal is to build next-generation physics engines — systems that deepen our understanding of the physical world and serve as digital twins that enable reliable prediction and informed decision-making.
+Guided by Richard Feynman’s words, <span class="prologue__quote">“What I cannot create, I do not understand,”</span> my long-term goal is to build next-generation physics engines&nbsp;— systems that deepen our understanding of the physical world and serve as digital twins that enable reliable prediction and informed&nbsp;decision-making.
 
 {% include tags.html items=page.topics %}

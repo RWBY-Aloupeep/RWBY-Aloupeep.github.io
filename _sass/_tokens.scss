@@ -5,6 +5,7 @@
 $bp-sm: 520px;
 $bp-md: 760px;
 $bp-lg: 880px;
+$bp-xl: 1120px; // room for the four note topics and the five Life cards in one row
 
 // Dark: near-black with a violet accent.
 @mixin dark-theme {
