@@ -1,5 +1,5 @@
 // Theme toggle, mobile menu, header border on scroll, the current chapter in
-// the menu, and the email link that copies the address.
+// the menu, the quote window, and the email link that copies the address.
 // The initial theme is set inline in <head> (_includes/head.html).
 (() => {
   const root = document.documentElement;
@@ -139,6 +139,56 @@
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
   }
+
+  // The quote window at the top right of the introduction
+  // (_includes/quote-window.html). With a mouse it takes the wheel only once
+  // the pointer has been moved onto it, not when the page slides it under a
+  // resting pointer, and any scroll of the page hands the wheel back
+  // (.is-engaged, _components.scss). The gold mark follows its scroll. A quote
+  // too long for it is set a size or two smaller, until it clears the faded
+  // edges: measured in its own typeface, once the fonts have arrived.
+
+  document.querySelectorAll("[data-quote-window]").forEach((win) => {
+    const scroller = win.querySelector(".quote-window__scroller");
+    let pageScrolledAt = -Infinity;
+
+    win.addEventListener("pointermove", (event) => {
+      if (event.pointerType === "mouse" && performance.now() - pageScrolledAt > 300) {
+        win.classList.add("is-engaged");
+      }
+    });
+    win.addEventListener("pointerleave", () => win.classList.remove("is-engaged"));
+    window.addEventListener("scroll", () => {
+      pageScrolledAt = performance.now();
+      win.classList.remove("is-engaged");
+    }, { passive: true });
+
+    const mark = () => {
+      const max = scroller.scrollHeight - scroller.clientHeight;
+      win.style.setProperty("--progress", max > 0 ? scroller.scrollTop / max : 0);
+    };
+    mark();
+    scroller.addEventListener("scroll", mark, { passive: true });
+
+    const fit = () => {
+      const fade = parseFloat(getComputedStyle(win).getPropertyValue("--fade")) *
+        parseFloat(getComputedStyle(root).fontSize);
+      scroller.querySelectorAll(".quote-window__item").forEach((item) => {
+        const quote = item.querySelector("blockquote");
+        const figure = item.querySelector("figure");
+        quote.style.fontSize = "";
+        let size = parseFloat(getComputedStyle(quote).fontSize);
+        while (figure.offsetHeight > item.clientHeight - 2 * fade && size > 15) {
+          size -= 0.8;
+          quote.style.fontSize = `${size}px`;
+        }
+      });
+    };
+    const fitOnceFontsArrive = () => (document.fonts ? document.fonts.ready : Promise.resolve()).then(fit);
+    fitOnceFontsArrive();
+    window.addEventListener("load", fitOnceFontsArrive);
+    window.addEventListener("resize", fit);
+  });
 
   // The email link in the prologue's contact links: a plain click copies the
   // address rather than opening the mail app, and the link says so for a

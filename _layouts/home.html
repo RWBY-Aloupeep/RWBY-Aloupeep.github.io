@@ -9,8 +9,10 @@ scripts:
   The whole site on one page, set like a book.
 
   The prologue: the arched portrait in the rail, with the welcome line under it
-  like an inscription; the introduction beside it; and under both, the facts
-  (research interests, contact), labels in the rail and values beside them.
+  like an inscription; beside it, the greeting and the full name, the quote
+  window across from them (_data/quotes.yml), and the introduction under
+  both; and under all of it, the facts (research interests, contact), labels
+  in the rail and values beside them.
 
   Then every chapter in _chapters/ in `order`: its title in the rail, its
   epigraph and content beside it. A chapter with `matter: back`
@@ -48,11 +50,16 @@ scripts:
     </figure>
 
     <div class="prologue__body" data-stars-avoid data-reveal style="--reveal-delay: 250ms">
-      <h1 class="prologue__title" id="prologue-title">Hi, I’m {{ author.short_name }}.</h1>
-      <p class="prologue__name">{{ author.full_name | default: author.name }} <span class="prologue__native" lang="zh-Hans">{{ author.native_name }}</span></p>
+      <hgroup class="prologue__head">
+        <h1 class="prologue__title" id="prologue-title">Hi, I’m {{ author.short_name }}.</h1>
+        <p class="prologue__name">{{ author.full_name | default: author.name }} <span class="prologue__native" lang="zh-Hans">{{ author.native_name }}</span></p>
+      </hgroup>
       <div class="prologue__bio prose">
         {{ content }}
       </div>
+      {%- if site.data.quotes %}
+      {% include quote-window.html items=site.data.quotes %}
+      {%- endif %}
     </div>
 
     <dl class="facts" data-stars-avoid data-reveal style="--reveal-delay: 400ms">

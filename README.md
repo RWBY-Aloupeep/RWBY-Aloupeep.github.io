@@ -4,7 +4,7 @@ https://rwby-aloupeep.github.io
 
 A personal homepage written in Jekyll and built directly by GitHub Pages. Changes go live a few minutes after they are pushed to `master`. It uses no third-party theme and loads no external resources (the fonts live in the repository).
 
-The whole site is a single page: after the introduction, the chapters (Experience, Notes, Life, Acknowledgments) follow one after another, and clicking a chapter in the top menu scrolls to it. Under the introduction, the Interests and Contact rows list the research interests and the contact links; clicking Email there copies the address instead of opening a mail app. The old addresses `/study/`, `/research/`, `/life/`, `/acks/`, `/contact/`, `/cv/`, `/resume/` and `/about/` all redirect to the matching place on this page (`/study/`, `/research/`, `/cv/` and `/resume/` go to Experience, `/contact/` to the Contact row).
+The whole site is a single page: after the introduction, the chapters (Experience, Notes, Life, Acknowledgments) follow one after another, and clicking a chapter in the top menu scrolls to it. Across from the greeting, a small gold-framed window shows one quote at a time; scrolling it, with the pointer on it, brings in the others. Under the introduction, the Interests and Contact rows list the research interests and the contact links; clicking Email there copies the address instead of opening a mail app. The old addresses `/study/`, `/research/`, `/life/`, `/acks/`, `/contact/`, `/cv/`, `/resume/` and `/about/` all redirect to the matching place on this page (`/study/`, `/research/`, `/cv/` and `/resume/` go to Experience, `/contact/` to the Contact row).
 
 The repository must stay **public**: GitHub Pages cannot publish from a private repository on a free account, so making it private takes the site offline. After making it public again, go to Settings → Pages and set Source back to “Deploy from a branch”, branch `master`, folder `/ (root)`; only then does the site come back online.
 
@@ -15,6 +15,7 @@ The repository must stay **public**: GitHub Pages cannot publish from a private 
 | Name, email, GitHub, LinkedIn | `author` in `_config.yml` (if you change GitHub or LinkedIn, update `social.links` in the same file too) |
 | Home page introduction | The body of `_pages/home.md` |
 | Research interests (the Interests row under the introduction) | `topics` in `_pages/home.md` |
+| The quotes in the window across from the greeting, and the one it opens on | `_data/quotes.yml` (see below) |
 | The welcome line under the portrait (Welcome to my story. Enjoy~) | `welcome` in `_pages/home.md` |
 | The content of a chapter | The matching file in `_chapters/` (experience, notes, life, acks) |
 | Chapter order, names in the menu | `order` (position) and `nav` (short name in the menu; defaults to `title`) at the top of each chapter file |
@@ -39,6 +40,18 @@ The repository must stay **public**: GitHub Pages cannot publish from a private 
 ```
 
 `why` is the motivation, shown as small gold tags: a list of keywords, or one short phrase; leave it out when there is none. An entry whose `year` contains “Present” twinkles. As visitors scroll down, the timeline lights up from the top, node by node, and goes out again as they scroll back up (`assets/js/path.js`). `org`, `title`, `where` and `note` may contain Markdown links such as `[Prof. Bo Zhu](https://…)`; they open in a new tab. A `title` or `where` made of several parts separated by ` · ` (like `GaTech · Supervised by …`) wraps between the parts, never inside one.
+
+### The quote window
+
+`_data/quotes.yml` holds the quotes of the small window across from the greeting. It shows one at a time and opens on the quote marked `default: true`; scrolling it brings in the others, in the file's order from there, coming back round to the top.
+
+```yaml
+- quote: "The first principle is that you must not fool yourself — and you are the easiest person to fool."
+  author: Richard Feynman
+  default: true   # the one the window opens on
+```
+
+Write the quote without quotation marks. The window holds two lines (some 100 characters); a longer quote is set a little smaller to fit, so keep them short. With a mouse, the window only takes the scroll wheel once the pointer has been moved onto it, so scrolling the page past it never gets stuck. Below 1120px wide there is no room beside the greeting, and the window follows the introduction instead.
 
 ### Add a new note
 
@@ -79,14 +92,14 @@ Photos live in `images/`. Each one comes in JPEG and WebP, at two sizes (for exa
 ```
 _config.yml        Site settings and personal details
 _chapters/         The content of each chapter, shown on the home page in order
-_data/             The Experience timeline (path.yml) and the lecture notes (notes.yml)
+_data/             The Experience timeline (path.yml), the lecture notes (notes.yml) and the quote window (quotes.yml)
 _pages/            home (the opening and introduction), 404, and redirect pages from old addresses to chapters
 _layouts/          default (the frame), home (the home page), page (the 404 page)
 _includes/         Components: header, footer, Experience timeline, note list, cards, icons and more
 _sass/             Styles: tokens (colors, fonts), base, layout, components, chapter, home
 assets/css/        Style entry point main.scss
 assets/fonts/      Web fonts Cormorant Garamond and Source Serif 4 (with their OFL licenses)
-assets/js/         site.js (theme toggle, mobile menu, highlighting the current chapter in the menu, copying the email address), stars.js (star animation on the home page), path.js (lights the Experience timeline up and down with scrolling)
+assets/js/         site.js (theme toggle, mobile menu, highlighting the current chapter in the menu, the quote window, copying the email address), stars.js (star animation on the home page), path.js (lights the Experience timeline up and down with scrolling)
 files/             Note PDFs
 images/            Photos, site icons, social preview image (og.jpg)
 .github/workflows/ Automated check (see below)

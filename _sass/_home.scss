@@ -12,11 +12,14 @@
   pointer-events: none;
 }
 
-// Prologue: the arched portrait in the rail, the introduction beside it, and
-// under both, the facts (interests, contact), set like a table: labels in the
-// rail, values in the content column, hairlines between the rows.
+// Prologue: the arched portrait in the rail; beside it, the greeting and the
+// full name, the quote window across from them on the same top line, and the
+// introduction under both; and under all of it, the facts (interests,
+// contact), set like a table: labels in the rail, values in the content
+// column, hairlines between the rows.
 
 .prologue {
+  --greeting-size: clamp(2.5rem, 4.6vw, 3.75rem);
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -111,27 +114,68 @@
 .prologue__body {
   flex: 1 1 26rem;
   min-width: 0;
+
+  // The greeting and the name on the left, the quote window on the right,
+  // the introduction under both. Narrower, the window follows the
+  // introduction.
+  @media (min-width: $bp-xl) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 23rem;
+    grid-template-areas:
+      "head window"
+      "bio bio";
+    column-gap: 2.5rem;
+    align-items: start;
+  }
+}
+
+.prologue__head {
+  grid-area: head;
 }
 
 .prologue__title {
-  font-size: clamp(2.75rem, 5.2vw, 4.25rem);
+  font-size: var(--greeting-size);
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.02em;
 }
 
+// The full name under the greeting, in the greeting's typeface, the Chinese
+// name beside it.
 .prologue__name {
-  @include label;
-  margin-top: 1rem;
-  letter-spacing: 0.16em;
+  margin-top: 1.1rem;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 1.875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
 }
 
 .prologue__native {
-  margin-left: 0.5em;
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  letter-spacing: 0.08em;
+  margin-left: 0.4em;
+  font-size: 0.8em;
+  letter-spacing: 0.12em;
+}
+
+// The quote window (_includes/quote-window.html), across from the greeting
+// and the name and exactly as tall: its gold line starts level with the tops
+// of the greeting's capitals (0.19 of its size below the top of its line),
+// and its card ends level with the foot of the Chinese name. It takes its
+// height from them, not from its quotes. Narrower, it follows the
+// introduction.
+.prologue .quote-window {
+  grid-area: window;
+  max-width: 24rem;
+  margin: 2.25rem 0 0 0.75rem;
+
+  @media (min-width: $bp-xl) {
+    --window-h: 100%;
+    align-self: stretch;
+    contain: size;
+    max-width: none;
+    margin: calc(var(--greeting-size) * 0.19 + 0.75rem) 0 0.3rem;
+  }
 }
 
 // The introduction: a size up from running text on wide screens, in lines of
@@ -139,6 +183,7 @@
 // paragraph ending on a word or two. Re-check the ends of the paragraphs after
 // rewriting them.
 .prologue__bio {
+  grid-area: bio;
   max-width: 40em;
   margin-top: 1.75rem;
   line-height: 1.72;
