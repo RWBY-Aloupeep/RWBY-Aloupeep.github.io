@@ -1,6 +1,8 @@
 ---
 order: 3
 title: Life
+# The cards run across the full width, under the title.
+wide: true
 epigraph:
   quote: "Happiness is the meaning and the purpose of life, the whole aim and end of human existence."
   author: Aristotle
