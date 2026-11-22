@@ -12,12 +12,17 @@
 // leaving the title alone in an empty column. Its epigraph follows the title
 // straight away rather than waiting for the 17rem column, and runs to the
 // right edge, so a long quote (Life) takes one line instead of three.
+//
+// Spacing: about 6rem from one chapter to the next, and 2.5rem between a
+// chapter's head (its title, and the quote beside it) and what follows under
+// it (the timeline, the notes, the cards), so a title sits clearly with its
+// own content.
 .chapter {
   position: relative;
   display: grid;
-  gap: 1.25rem 3rem;
+  gap: clamp(1.5rem, 3vw, 2.5rem) 3rem;
   max-width: var(--home-measure);
-  margin-top: clamp(2rem, 4vw, 2.75rem);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
   padding-top: clamp(1.5rem, 3vw, 2rem);
 
   @media (min-width: $bp-lg) {
@@ -96,10 +101,10 @@
   }
 }
 
-// The epigraph, at the head of the content, with room before it. On
-// Experience it lines up with the schools on the timeline (--stage-x).
+// The epigraph, at the head of the content. On Experience it lines up with
+// the schools on the timeline (--stage-x).
 .chapter__epigraph {
-  margin: 0 0 0.5rem var(--stage-x, 0);
+  margin: 0 0 0 var(--stage-x, 0);
 }
 
 // Standalone page.
