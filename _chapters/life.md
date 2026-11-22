@@ -10,7 +10,7 @@ interests:
   - name: Philosophy
     text: "Philosophy is really important to me, especially philosophers like Aristotle and Descartes."
   - name: Music
-    text: "I love music, especially post-rock and light music. Ed Sheeran is my favorite artist."
+    text: "I love music, especially post-rock and light music. Ed&nbsp;Sheeran is my favorite artist."
   - name: Sports
     text: "I love swimming, including freestyle, breaststroke, backstroke, and butterfly."
   - name: Anime

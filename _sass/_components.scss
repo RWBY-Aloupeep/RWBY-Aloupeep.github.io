@@ -28,9 +28,12 @@
 // Epigraph: at the head of a chapter's content (_chapter.scss), or under the
 // title of a standalone page. The opening quotation mark hangs in the margin,
 // so the words themselves line up with what is below them; the lines are
-// balanced so a long quote breaks evenly.
+// balanced so a long quote breaks evenly. The figure is only as wide as the
+// quote, and the attribution sits flush right under its end, like a
+// signature.
 
 .epigraph {
+  width: fit-content;
   max-width: 34rem;
   margin-top: 1.25rem;
 
@@ -60,8 +63,12 @@
 
   figcaption {
     @include label;
+    // Tracking adds room after the last letter too; give it back, so the
+    // name ends right under the closing quotation mark.
+    margin-right: -0.14em;
     margin-top: 0.85rem;
     letter-spacing: 0.14em;
+    text-align: right;
 
     &::before {
       content: "\2014\00a0";
@@ -135,9 +142,12 @@
   }
 }
 
+// Spacing: what was done at one place sits a step apart, entry from entry;
+// a new place (the next school) starts about twice as far down, so each
+// school reads as one group with what hangs off it.
 .path__entry {
   position: relative;
-  padding: 0 0 0.85rem var(--stage-x);
+  padding: 0 0 clamp(1.1rem, 2vw, 1.5rem) var(--stage-x);
 
   // The line runs through every entry, from the first node to the last.
   &::before {
@@ -176,7 +186,7 @@
 
   // The last entry of a stage leaves room before the next one.
   &.is-last {
-    padding-bottom: 1.6rem;
+    padding-bottom: clamp(2rem, 3.5vw, 2.75rem);
   }
 }
 
@@ -358,7 +368,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  margin: 0.35rem 0 0;
+  margin: 0.55rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -383,13 +393,12 @@
 }
 
 // Lecture notes: grouped by topic, one row per note, the topics side by side
-// in the order of _data/notes.yml: two to a row on medium screens, as many as
-// fit (all four, across a wide chapter) once each column has room for a title
-// in two lines; narrower, four columns would break titles into three.
+// in the order of _data/notes.yml: all four in a row on wide screens, two to
+// a row below $bp-xl, where four columns would break titles into three lines.
 
 .notes {
   display: grid;
-  gap: 1.5rem 2.5rem;
+  gap: 2rem 2.5rem;
   align-items: start;
 
   @media (min-width: $bp-md) {
@@ -404,7 +413,7 @@
 // On one line, so the lists under them start level side by side.
 .notes__topic {
   @include label;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.6rem;
   letter-spacing: 0.1em;
   white-space: nowrap;
 }
@@ -421,7 +430,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
   gap: 1rem;
-  padding: 0.6rem 0;
+  padding: 0.75rem 0;
   border-bottom: 1px solid var(--line);
   color: var(--text);
   text-decoration: none;
@@ -487,19 +496,20 @@
 
 // Text cards (Life).
 
-// All in one row on wide screens (five, across a wide chapter); three to a
-// row on medium ones, where five would not fit and a sixth would wrap alone;
-// as many as fit on phones.
+// All in one row on wide screens (five, across a wide chapter). Below $bp-xl,
+// where five would be too narrow, three to a row, ending in a full row: when
+// the last row holds two cards they share it, and a last card alone takes the
+// whole row. As many to a row as fit on phones.
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-  gap: 0.75rem;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
 
   @media (min-width: $bp-md) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   @media (min-width: $bp-xl) {
@@ -511,7 +521,20 @@
 
 .card {
   @include surface;
-  padding: 1.1rem 1.2rem;
+  padding: 1.25rem 1.25rem 1.35rem;
+
+  @media (min-width: $bp-md) and (max-width: $bp-xl - 1px) {
+    grid-column: span 2;
+
+    &:nth-child(3n + 1):nth-last-child(2),
+    &:nth-child(3n + 1):nth-last-child(2) + & {
+      grid-column: span 3;
+    }
+
+    &:nth-child(3n + 1):last-child {
+      grid-column: 1 / -1;
+    }
+  }
 }
 
 .card__title {
