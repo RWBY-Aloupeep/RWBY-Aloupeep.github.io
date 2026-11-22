@@ -137,7 +137,7 @@
 
 .path__entry {
   position: relative;
-  padding: 0 0 1.1rem var(--stage-x);
+  padding: 0 0 0.85rem var(--stage-x);
 
   // The line runs through every entry, from the first node to the last.
   &::before {
@@ -176,7 +176,7 @@
 
   // The last entry of a stage leaves room before the next one.
   &.is-last {
-    padding-bottom: 2.25rem;
+    padding-bottom: 1.6rem;
   }
 }
 
@@ -349,7 +349,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  margin: 0.5rem 0 0;
+  margin: 0.35rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -384,8 +384,9 @@
   }
 }
 
-// Lecture notes: grouped by topic, one row per note. On wide screens the
-// topics sit two to a row, in the order of _data/notes.yml.
+// Lecture notes: grouped by topic, one row per note, the topics side by side
+// in the order of _data/notes.yml: two to a row on medium screens, as many as
+// fit (all four, across a wide chapter) on wide ones.
 
 .notes {
   display: grid;
@@ -395,11 +396,18 @@
   @media (min-width: $bp-md) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  @media (min-width: $bp-lg) {
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  }
 }
 
+// On one line, so the lists under them start level side by side.
 .notes__topic {
   @include label;
   margin-bottom: 0.4rem;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
 }
 
 .note-list {
@@ -477,9 +485,10 @@
 
 // Text cards (Life).
 
+// As many to a row as fit (all five, across a wide chapter).
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
   gap: 0.75rem;
   margin: 0;
   padding: 0;
@@ -488,7 +497,7 @@
 
 .card {
   @include surface;
-  padding: 1.25rem 1.4rem;
+  padding: 1.1rem 1.2rem;
 }
 
 .card__title {
@@ -505,6 +514,8 @@
 }
 
 .card__text {
-  margin-top: 0.75rem;
+  margin-top: 0.6rem;
   color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
 }

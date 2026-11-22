@@ -10,7 +10,8 @@ scripts:
   line under it like an inscription, and the introduction), then every chapter
   in _chapters/ in `order`, each with its title (and `label` above it, if
   any) beside its content, and its epigraph, if any, at the head of the
-  content.
+  content. A `wide` chapter (Notes, Life) sets its content under the title
+  instead, across the full width.
 
   The stars (assets/js/stars.js) drift behind the whole page. They steer around
   the text marked data-stars-avoid, the text that sits on the bare background;
@@ -51,7 +52,7 @@ scripts:
   </section>
 
   {%- for chapter in chapters %}
-  <section class="chapter chapter--{{ chapter.slug }}" id="{{ chapter.slug }}" aria-labelledby="{{ chapter.slug }}-title" data-chapter>
+  <section class="chapter chapter--{{ chapter.slug }}{% if chapter.wide %} chapter--wide{% endif %}" id="{{ chapter.slug }}" aria-labelledby="{{ chapter.slug }}-title" data-chapter>
     <header class="chapter__header" data-stars-avoid>
       {%- if chapter.label %}
       <p class="eyebrow" data-reveal>{{ chapter.label }}</p>

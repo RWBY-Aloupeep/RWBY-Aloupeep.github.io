@@ -19,7 +19,7 @@
 - year: "2025–2027"
   org: "[University of Washington, Seattle](https://amath.washington.edu/)"
   title: "Master of Science in Computational and Applied Mathematics"
-  why: ["Curiosity about the physical world"]
+  why: ["Physics-informed machine learning", "Optimization"]
   items:
     - year: "2026–Present"
       title: "Research Collaborator"
@@ -39,6 +39,7 @@
 - year: "2021–2025"
   org: "[Chinese University of Hong Kong, Shenzhen](https://sse.cuhk.edu.cn/en)"
   title: "Bachelor of Science in Mathematics and Applied Mathematics"
+  why: ["Scientific computing", "Numerical analysis"]
   honors:
     - title: "Bowen Scholarship"
       year: "2021–2024"
@@ -58,6 +59,7 @@
     - year: "2023"
       title: "Summer School"
       where: "[University of Cambridge, Pembroke College](https://www.pem.cam.ac.uk/international-programmes/pembroke-cambridge-summer-programme)"
+      why: ["Neuroscience", "Sustainability"]
 
 - year: "2015–2021"
   org: "Earlier schooling"

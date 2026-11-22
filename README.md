@@ -30,7 +30,7 @@ The repository must stay **public**: GitHub Pages cannot publish from a private 
 - year: "2025–2027"
   org: "[University of Washington, Seattle](https://amath.washington.edu/)"
   title: "Master of Science in Computational and Applied Mathematics"
-  why: [Curiosity about the physical world]   # optional: a few keywords
+  why: [Physics-informed machine learning, Optimization]   # optional: a few keywords
   items:
     - year: "2026–Present"
       title: "Research Collaborator"
@@ -61,6 +61,7 @@ Create a Markdown file in `_chapters/`, for example `_chapters/projects.md`:
 order: 2.5        # Position: here, after Notes (2) and before Life (3)
 label: "…"        # Optional: a small line above the title
 title: Projects
+wide: true        # Optional: the content goes under the title, across the full width, instead of beside it
 epigraph:         # Optional
   quote: "…"
   author: "…"
