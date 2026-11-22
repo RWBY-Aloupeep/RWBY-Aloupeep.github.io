@@ -1,6 +1,7 @@
 # Lecture notes listed in the Study chapter, grouped by topic.
 # To add a note: upload the PDF to /files/ and add an entry under a topic.
-# On wide screens the topics sit two to a row, in this order.
+# The topics sit side by side in this order: all four in a row on wide
+# screens, two to a row on narrower ones.
 - topic: "Mathematics & Analysis"
   notes:
     - title: "Vector Calculus and Complex Variables"

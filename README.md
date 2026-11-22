@@ -38,7 +38,7 @@ The repository must stay **public**: GitHub Pages cannot publish from a private 
       why: [Fluid simulation, Flow map]
 ```
 
-`why` is the motivation, shown as small gold tags: a list of keywords, or one short phrase; leave it out when there is none. An entry whose `year` contains “Present” twinkles. As visitors scroll down, the timeline lights up from the top, node by node, and goes out again as they scroll back up (`assets/js/path.js`); pointing at a school dims the other schools. `org`, `title`, `where` and `note` may contain Markdown links such as `[Prof. Bo Zhu](https://…)`; they open in a new tab.
+`why` is the motivation, shown as small gold tags: a list of keywords, or one short phrase; leave it out when there is none. An entry whose `year` contains “Present” twinkles. As visitors scroll down, the timeline lights up from the top, node by node, and goes out again as they scroll back up (`assets/js/path.js`). `org`, `title`, `where` and `note` may contain Markdown links such as `[Prof. Bo Zhu](https://…)`; they open in a new tab. A `title` or `where` made of several parts separated by ` · ` (like `GaTech · Supervised by …`) wraps between the parts, never inside one.
 
 ### Add a new note
 

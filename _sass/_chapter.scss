@@ -2,9 +2,10 @@
 // layout (_layouts/page.html, used by the 404 page).
 
 // A chapter: its label and title in a column on the left, and beside them its
-// epigraph, if any, at the head of the content, the quote's first line on the
-// title's baseline. Stacked on narrow screens. Like the prologue, it stops
-// short of the right edge (--home-measure).
+// epigraph, if any, at the head of the content. Whatever comes first beside
+// the title (the quote, or the text of a chapter without one: Acks, Contact)
+// starts on the title's baseline. Stacked on narrow screens. Like the
+// prologue, it stops short of the right edge (--home-measure).
 //
 // A wide chapter (`wide: true`: Notes, Life) puts its content under the
 // title, across both columns: a grid of items fills the width rather than
@@ -23,7 +24,8 @@
     grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
 
     .chapter__header,
-    .chapter__epigraph {
+    .chapter__epigraph,
+    .chapter__body {
       align-self: baseline;
     }
 
