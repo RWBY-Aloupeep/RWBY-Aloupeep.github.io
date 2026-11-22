@@ -373,17 +373,6 @@
   }
 }
 
-// Pointing at a stage (a school and what hangs off it) dims the others.
-.path__stage {
-  transition: opacity 0.35s var(--ease);
-}
-
-@media (hover: hover) {
-  .path:has(.path__stage:hover) .path__stage:not(:hover) {
-    opacity: 0.3;
-  }
-}
-
 // Lecture notes: grouped by topic, one row per note, the topics side by side
 // in the order of _data/notes.yml: two to a row on medium screens, as many as
 // fit (all four, across a wide chapter) on wide ones.
