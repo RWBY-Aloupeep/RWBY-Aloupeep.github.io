@@ -174,7 +174,7 @@ a {
   }
 
   // Sections inside a chapter (Markdown `###`), with a short accent rule.
-  // Headings with a class belong to a component (cards) and style themselves.
+  // Headings with a class belong to a component and style themselves.
   h3:not([class]) {
     font-size: 1.35rem;
 

@@ -1,0 +1,13 @@
+{%- comment -%}
+  A list of named entries, one row each: the name, then the text beside it.
+  Usage: {% include rows.html items=page.interests %}
+  Each item has a `name` and a `text` (Markdown allowed).
+{%- endcomment -%}
+<dl class="rows">
+  {%- for item in include.items %}
+  <div class="rows__item" data-reveal>
+    <dt class="rows__name">{{ item.name }}</dt>
+    <dd class="rows__text">{{ item.text | markdownify | remove: "<p>" | remove: "</p>" | strip }}</dd>
+  </div>
+  {%- endfor %}
+</dl>

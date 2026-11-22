@@ -19,7 +19,7 @@ The repository must stay **public**: GitHub Pages cannot publish from a private 
 | The content of a chapter | The matching file in `_chapters/` (experience, notes, life, acks, contact) |
 | Chapter order, names in the menu | `order` (position) and `nav` (short name in the menu; defaults to `title`) at the top of each chapter file |
 | Schools, research, projects, honors, motivations | `_data/path.yml` (see below) |
-| Hobby cards | `interests` in `_chapters/life.md` |
+| Hobbies (Life) | `interests` in `_chapters/life.md` |
 | Chapter epigraphs (quotes, shown at the head of the chapter's content) | `epigraph` at the top of each chapter file |
 
 ### The Experience timeline
@@ -82,7 +82,7 @@ _chapters/         The content of each chapter, shown on the home page in order
 _data/             The Experience timeline (path.yml) and the lecture notes (notes.yml)
 _pages/            home (the opening and introduction), 404, and redirect pages from old addresses to chapters
 _layouts/          default (the frame), home (the home page), page (the 404 page)
-_includes/         Components: header, footer, Experience timeline, note list, cards, icons and more
+_includes/         Components: header, footer, Experience timeline, note list, Life rows, icons and more
 _sass/             Styles: tokens (colors, fonts), base, layout, components, chapter, home
 assets/css/        Style entry point main.scss
 assets/fonts/      Web fonts Cormorant Garamond and Source Serif 4 (with their OFL licenses)

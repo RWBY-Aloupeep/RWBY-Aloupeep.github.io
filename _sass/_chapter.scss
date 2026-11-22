@@ -7,19 +7,21 @@
 // short of the right edge (--home-measure).
 //
 // A wide chapter (`wide: true`: Notes, Life) puts its content under the
-// title, across both columns: a grid of items fills the width rather than
-// leaving the title alone in an empty column. Its epigraph stays beside the
-// title.
+// title, across both columns, rather than leaving the title alone in an empty
+// column: its rows line their names up under the title and their text with
+// the content column (--side-col). Its epigraph runs across the width too, on
+// one line, where beside the title a long quote would break into two short
+// lines with room on both sides.
 .chapter {
   position: relative;
   display: grid;
-  gap: 1.25rem 3rem;
+  gap: 1.25rem var(--side-gap);
   max-width: var(--home-measure);
   margin-top: clamp(2rem, 4vw, 2.75rem);
   padding-top: clamp(1.5rem, 3vw, 2rem);
 
   @media (min-width: $bp-lg) {
-    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, var(--side-col)) minmax(0, 1fr);
 
     .chapter__header,
     .chapter__epigraph {
@@ -31,8 +33,16 @@
       grid-column: 2;
     }
 
-    &.chapter--wide .chapter__body {
-      grid-column: 1 / -1;
+    &.chapter--wide {
+      .chapter__epigraph,
+      .chapter__body {
+        grid-column: 1 / -1;
+      }
+
+      .chapter__epigraph {
+        align-self: auto;
+        max-width: none;
+      }
     }
   }
 }

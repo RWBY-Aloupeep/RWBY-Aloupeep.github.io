@@ -1,19 +1,22 @@
 // Reusable pieces. Each block matches an include in _includes/.
 
-// Shared look for bordered surfaces that react on hover.
-@mixin surface {
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--bg-raised);
-  color: var(--text);
-  text-decoration: none;
-  transition: border-color 0.2s, box-shadow 0.25s, transform 0.25s var(--ease);
-}
+// A row of an index (a note topic, a Life entry): its name in the side
+// column, under the chapter title, and its content beside it, lined up with
+// the content column, between hairlines. Stacked on narrow screens.
+@mixin index-row {
+  display: grid;
+  gap: 0.2rem var(--side-gap);
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--line);
 
-@mixin surface-hover {
-  border-color: var(--accent);
-  box-shadow: var(--shadow);
-  transform: translateY(-2px);
+  &:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  @media (min-width: $bp-lg) {
+    grid-template-columns: minmax(0, var(--side-col)) minmax(0, 1fr);
+    align-items: baseline;
+  }
 }
 
 @mixin label {
@@ -384,46 +387,31 @@
   }
 }
 
-// Lecture notes: grouped by topic, one row per note, the topics side by side
-// in the order of _data/notes.yml: two to a row on medium screens, as many as
-// fit (all four, across a wide chapter) on wide ones.
+// Lecture notes: an index row per topic, in the order of _data/notes.yml,
+// its notes one after another beside it.
 
-.notes {
-  display: grid;
-  gap: 1.5rem 2.5rem;
-  align-items: start;
-
-  @media (min-width: $bp-md) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @media (min-width: $bp-lg) {
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  }
+.notes__group {
+  @include index-row;
 }
 
-// On one line, so the lists under them start level side by side.
 .notes__topic {
   @include label;
-  margin-bottom: 0.4rem;
   letter-spacing: 0.1em;
-  white-space: nowrap;
 }
 
 .note-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 2rem;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--line);
   list-style: none;
 }
 
 .note-link {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  display: inline-flex;
   align-items: baseline;
-  gap: 1rem;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid var(--line);
+  gap: 0.55rem;
   color: var(--text);
   text-decoration: none;
 }
@@ -483,39 +471,27 @@
   font-size: 0.85rem;
 }
 
-// Text cards (Life).
+// A list of named entries (Life): an index row each, the name in the display
+// face, the text beside it.
 
-// As many to a row as fit (all five, across a wide chapter).
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-  gap: 0.75rem;
+.rows {
   margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
-.card {
-  @include surface;
-  padding: 1.1rem 1.2rem;
+.rows__item {
+  @include index-row;
 }
 
-.card__title {
-  font-size: 1.4rem;
-
-  &::after {
-    content: "";
-    display: block;
-    width: 1.5rem;
-    height: 1px;
-    margin-top: 0.6rem;
-    background: var(--accent);
-  }
+.rows__name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.25;
 }
 
-.card__text {
-  margin-top: 0.6rem;
+.rows__text {
+  margin: 0;
   color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.55;
+  font-size: 1rem;
+  text-wrap: pretty;
 }
