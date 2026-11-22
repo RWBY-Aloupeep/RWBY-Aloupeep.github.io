@@ -1,7 +1,8 @@
 ---
 order: 3
 title: Life
-# The cards run across the full width, under the title.
+# Under the title, across the full width: the quote on one line, then a row
+# per interest, its name under the title.
 wide: true
 epigraph:
   quote: "Happiness is the meaning and the purpose of life, the whole aim and end of human existence."
@@ -19,4 +20,4 @@ interests:
     text: "I love games, especially Metroidvania and *Elden Ring*."
 ---
 
-{% include cards.html items=page.interests %}
+{% include rows.html items=page.interests %}
