@@ -8,8 +8,9 @@
 //
 // A wide chapter (`wide: true`: Notes, Life) puts its content under the
 // title, across both columns: a grid of items fills the width rather than
-// leaving the title alone in an empty column. Its epigraph stays beside the
-// title.
+// leaving the title alone in an empty column. Its epigraph follows the title
+// straight away rather than waiting for the 17rem column, and runs to the
+// right edge, so a long quote (Life) takes one line instead of three.
 .chapter {
   position: relative;
   display: grid;
@@ -31,10 +32,18 @@
       grid-column: 2;
     }
 
-    &.chapter--wide .chapter__body {
-      grid-column: 1 / -1;
+    &.chapter--wide {
+      grid-template-columns: auto minmax(0, 1fr);
+
+      .chapter__body {
+        grid-column: 1 / -1;
+      }
     }
   }
+}
+
+.chapter--wide .chapter__epigraph {
+  max-width: none;
 }
 
 // Sized so the longest one-word title ("Acknowledgments") fits the 17rem
