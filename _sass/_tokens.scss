@@ -58,11 +58,6 @@ $bp-lg: 880px;
   // The home page's prologue and chapters: flush left in --wrap-wide, short of
   // its right edge, which leaves room on the right.
   --home-measure: 66rem;
-  // The home page's grid on wide screens: a side column (chapter titles, the
-  // portrait, and the timeline's years, the note topics and the Life names
-  // under them) and the content beside it, past --side-gap.
-  --side-col: 17rem;
-  --side-gap: 3rem;
   --gutter: clamp(1.25rem, 5vw, 2.5rem);
   --header-h: 4rem;
   --radius: 14px;

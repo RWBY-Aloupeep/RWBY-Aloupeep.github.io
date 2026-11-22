@@ -3,7 +3,7 @@
 // title, which it shares with theirs).
 
 // The stars' canvas covers the viewport behind everything: below the page
-// content (so the portrait hides the stars) but above the page background.
+// content (so cards and photos hide the stars) but above the page background.
 .stars {
   position: fixed;
   inset: 0;
@@ -30,8 +30,8 @@
 
   @media (min-width: $bp-lg) {
     display: grid;
-    grid-template-columns: minmax(0, var(--side-col)) minmax(0, 1fr);
-    gap: var(--side-gap);
+    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+    gap: 3rem;
   }
 }
 
@@ -172,7 +172,7 @@
 // cannot tie animations to scrolling, the chapters simply show.
 //
 // Fill `backwards` only: past its range an animation lets go and the element
-// is back on its own styles, so hover effects still work.
+// is back on its own styles, so hover effects (cards) still work.
 @media (prefers-reduced-motion: no-preference) {
   .prologue [data-reveal] {
     animation: reveal-in 0.9s var(--ease) var(--reveal-delay, 0ms) backwards;

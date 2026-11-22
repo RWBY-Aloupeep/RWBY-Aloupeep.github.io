@@ -1,8 +1,7 @@
 ---
 order: 2
 title: Notes
-# Under the title, across the full width: a row per topic, the topic under
-# the title.
+# The notes run across the full width, under the title.
 wide: true
 ---
 
