@@ -4,7 +4,7 @@ https://rwby-aloupeep.github.io
 
 A personal homepage written in Jekyll and built directly by GitHub Pages. Changes go live a few minutes after they are pushed to `master`. It uses no third-party theme and loads no external resources (the fonts live in the repository).
 
-The whole site is a single page: after the introduction, the chapters (Experience, Notes, Life, Acknowledgments, Contact) follow one after another, and clicking a chapter in the top menu scrolls to it. The old addresses `/study/`, `/research/`, `/life/`, `/acks/`, `/contact/`, `/cv/`, `/resume/` and `/about/` all redirect to the matching place on this page (`/study/`, `/research/`, `/cv/` and `/resume/` go to Experience).
+The whole site is a single page: after the introduction, the chapters (Experience, Notes, Life, Acknowledgments) follow one after another, and clicking a chapter in the top menu scrolls to it. Under the introduction, the Interests and Contact rows list the research interests and the contact links; clicking Email there copies the address instead of opening a mail app. The old addresses `/study/`, `/research/`, `/life/`, `/acks/`, `/contact/`, `/cv/`, `/resume/` and `/about/` all redirect to the matching place on this page (`/study/`, `/research/`, `/cv/` and `/resume/` go to Experience, `/contact/` to the Contact row).
 
 The repository must stay **public**: GitHub Pages cannot publish from a private repository on a free account, so making it private takes the site offline. After making it public again, go to Settings → Pages and set Source back to “Deploy from a branch”, branch `master`, folder `/ (root)`; only then does the site come back online.
 
@@ -14,13 +14,13 @@ The repository must stay **public**: GitHub Pages cannot publish from a private 
 | --- | --- |
 | Name, email, GitHub, LinkedIn | `author` in `_config.yml` (if you change GitHub or LinkedIn, update `social.links` in the same file too) |
 | Home page introduction | The body of `_pages/home.md` |
-| Research interest tags | `topics` in `_pages/home.md` |
+| Research interests (the Interests row under the introduction) | `topics` in `_pages/home.md` |
 | The welcome line under the portrait (Welcome to my story. Enjoy~) | `welcome` in `_pages/home.md` |
-| The content of a chapter | The matching file in `_chapters/` (experience, notes, life, acks, contact) |
+| The content of a chapter | The matching file in `_chapters/` (experience, notes, life, acks) |
 | Chapter order, names in the menu | `order` (position) and `nav` (short name in the menu; defaults to `title`) at the top of each chapter file |
 | Schools, research, projects, honors, motivations | `_data/path.yml` (see below) |
 | Hobby cards | `interests` in `_chapters/life.md` |
-| Chapter epigraphs (quotes, shown at the head of the chapter's content) | `epigraph` at the top of each chapter file |
+| Chapter epigraphs (quotes, set flush right across from the chapter's title) | `epigraph` at the top of each chapter file |
 
 ### The Experience timeline
 
@@ -59,9 +59,9 @@ Create a Markdown file in `_chapters/`, for example `_chapters/projects.md`:
 ```yaml
 ---
 order: 2.5        # Position: here, after Notes (2) and before Life (3)
-label: "…"        # Optional: a small line above the title
 title: Projects
 wide: true        # Optional: the content goes under the title, across the full width, instead of beside it
+matter: back      # Optional: set quieter, like the back matter of a book (as Acknowledgments is)
 epigraph:         # Optional
   quote: "…"
   author: "…"
@@ -86,13 +86,13 @@ _includes/         Components: header, footer, Experience timeline, note list, c
 _sass/             Styles: tokens (colors, fonts), base, layout, components, chapter, home
 assets/css/        Style entry point main.scss
 assets/fonts/      Web fonts Cormorant Garamond and Source Serif 4 (with their OFL licenses)
-assets/js/         site.js (theme toggle, mobile menu, highlighting the current chapter in the menu), stars.js (star animation on the home page), path.js (lights the Experience timeline up and down with scrolling)
+assets/js/         site.js (theme toggle, mobile menu, highlighting the current chapter in the menu, copying the email address), stars.js (star animation on the home page), path.js (lights the Experience timeline up and down with scrolling)
 files/             Note PDFs
 images/            Photos, site icons, social preview image (og.jpg)
 .github/workflows/ Automated check (see below)
 ```
 
-Colors are defined in one place, `_sass/_tokens.scss`: a violet-black dark theme and a light violet theme. The site follows the visitor's system (browser) light or dark setting; once visitors pick one with the button at the top right of the header, the site keeps using their choice. Fonts are declared in `_sass/_fonts.scss` and their files live in `assets/fonts/`; they are not loaded from Google Fonts, which is unreachable from mainland China.
+Colors are defined in one place, `_sass/_tokens.scss`: a violet-black dark theme and a warm, paper-white light theme. The site follows the visitor's system (browser) light or dark setting; once visitors pick one with the button at the top right of the header, the site keeps using their choice. Fonts are declared in `_sass/_fonts.scss` and their files live in `assets/fonts/`; they are not loaded from Google Fonts, which is unreachable from mainland China. The small labels, years and the menu use the system's own monospace font, and the gold tags of the timeline its sans-serif, so neither needs a file.
 
 ## Automated check
 

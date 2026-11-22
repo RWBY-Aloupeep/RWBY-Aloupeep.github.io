@@ -8,7 +8,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-h) + 1rem);
+  scroll-padding-top: calc(var(--header-h) + 1.5rem);
 }
 
 body {
@@ -30,8 +30,6 @@ body {
 main {
   flex: 1;
   outline: none;
-  // The glow behind a title (_chapter.scss) is wider than a phone; cut it at
-  // the edge of the window rather than let it widen the page.
   overflow-x: clip;
 }
 
@@ -116,8 +114,8 @@ a {
   border-radius: 999px;
   background: var(--text);
   color: var(--bg);
-  font-family: var(--font-ui);
-  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
   text-decoration: none;
   transition: top 0.2s;
 
@@ -146,11 +144,7 @@ a {
 }
 
 .eyebrow {
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  @include label;
   color: var(--accent);
 }
 

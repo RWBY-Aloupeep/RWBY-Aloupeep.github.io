@@ -1,11 +1,15 @@
 {%- comment -%}
-  The menu links to the chapters on the home page, in their `order`, labelled
-  with `nav` (defaults to the title). site.js marks the one in view.
+  The star and the name, then the menu of the chapters on the home page, in
+  their `order`, labelled with `nav` (defaults to the title). site.js marks
+  the one in view. The hairline along the bottom fills as the page is read.
 {%- endcomment -%}
 {%- assign chapters = site.chapters | sort: "order" -%}
 <header class="site-header">
   <div class="site-header__inner wrap wrap--wide">
-    <a class="brand" href="{{ '/' | relative_url }}"{% if page.url == "/" %} aria-current="page"{% endif %}>{{ site.author.name }}</a>
+    <a class="brand" href="{{ '/' | relative_url }}"{% if page.url == "/" %} aria-current="page"{% endif %}>
+      {% include icon.html name="star" %}
+      <span>{{ site.author.name }}</span>
+    </a>
 
     <nav class="site-nav" aria-label="Main">
       <button class="site-nav__toggle icon-button" type="button" aria-expanded="false" aria-controls="site-menu" data-menu-toggle>
@@ -26,4 +30,5 @@
       <span class="visually-hidden">Dark theme</span>
     </button>
   </div>
+  <span class="site-header__progress" aria-hidden="true"></span>
 </header>

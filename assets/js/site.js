@@ -1,5 +1,5 @@
-// Theme toggle, mobile menu, header border on scroll, and the current
-// chapter in the menu.
+// Theme toggle, mobile menu, header border on scroll, the current chapter in
+// the menu, and the email link that copies the address.
 // The initial theme is set inline in <head> (_includes/head.html).
 (() => {
   const root = document.documentElement;
@@ -139,4 +139,64 @@
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
   }
+
+  // The email link in the prologue's contact links: a plain click copies the
+  // address rather than opening the mail app, and the link says so for a
+  // moment (.is-copied, _components.scss). Where the clipboard is out of
+  // reach, the click opens the mail app after all.
+
+  const copyByHand = (text) => new Promise((resolve, reject) => {
+    const field = document.createElement("textarea");
+    field.value = text;
+    field.setAttribute("readonly", "");
+    field.style.cssText = "position: fixed; top: 0; left: 0; opacity: 0;";
+    document.body.appendChild(field);
+    field.select();
+    let copied = false;
+    try {
+      copied = document.execCommand("copy");
+    } catch (error) {
+      copied = false;
+    }
+    field.remove();
+    if (copied) {
+      resolve();
+    } else {
+      reject();
+    }
+  });
+
+  const copy = (text) => {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(() => copyByHand(text));
+    }
+    return copyByHand(text);
+  };
+
+  document.querySelectorAll("[data-copy]").forEach((link) => {
+    const status = link.parentElement.querySelector("[data-copy-status]");
+    let timer = 0;
+    link.addEventListener("click", (event) => {
+      // A click with a modifier (a new window, say) does what it usually does.
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+      event.preventDefault();
+      copy(link.dataset.copy).then(() => {
+        link.classList.add("is-copied");
+        if (status) {
+          status.textContent = "Copied to the clipboard";
+        }
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          link.classList.remove("is-copied");
+          if (status) {
+            status.textContent = "";
+          }
+        }, 2000);
+      }, () => {
+        window.location.href = link.href;
+      });
+    });
+  });
 })();

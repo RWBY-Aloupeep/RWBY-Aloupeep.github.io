@@ -1,6 +1,5 @@
 // Home page (_layouts/home.html): stars, prologue. The chapters after the
-// prologue are styled in _chapter.scss (with the glow behind the prologue's
-// title, which it shares with theirs).
+// prologue are styled in _chapter.scss.
 
 // The stars' canvas covers the viewport behind everything: below the page
 // content (so cards and photos hide the stars) but above the page background.
@@ -13,25 +12,21 @@
   pointer-events: none;
 }
 
-// Prologue: an arched portrait beside the introduction. On wide screens it
-// sits on the chapters' grid (_chapter.scss): the portrait in the titles'
-// column, flush with the name in the header, and the introduction in the
-// content column, lined up with the chapters' content below it and stopping
-// short of the right edge.
+// Prologue: the arched portrait in the rail, the introduction beside it, and
+// under both, the facts (interests, contact), set like a table: labels in the
+// rail, values in the content column, hairlines between the rows.
 
 .prologue {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 1.5rem 2.5rem;
+  align-items: flex-start;
+  gap: 2rem 2.5rem;
   max-width: var(--home-measure);
-  // The top of the page: room for the stars, and for the title's glow.
-  padding-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding-top: clamp(2.5rem, 6vw, 4.5rem);
 
   @media (min-width: $bp-lg) {
-    display: grid;
-    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
-    gap: 3rem;
+    @include home-grid;
+    align-items: center;
   }
 }
 
@@ -40,10 +35,27 @@
   width: 10.5rem;
 
   @media (min-width: $bp-lg) {
-    width: 15rem;
+    width: 100%;
+  }
+}
+
+// A thin gold arch stands a little behind the photo, like a doorway.
+.prologue__frame {
+  position: relative;
+  margin: 0.75rem 0 0 0.75rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--gold-line);
+    border-radius: 50% 50% var(--radius) var(--radius) / 37.5% 37.5% var(--radius) var(--radius);
+    transform: translate(-0.75rem, -0.75rem);
+    pointer-events: none;
   }
 
   img {
+    position: relative;
     width: 100%;
     aspect-ratio: 3 / 4;
     object-fit: cover;
@@ -53,11 +65,6 @@
   }
 }
 
-.prologue__body {
-  flex: 1 1 26rem;
-  min-width: 0;
-}
-
 // The welcome line under the portrait, like the inscription in a book;
 // "Enjoy~" ends on a blinking cursor: the story is still being written.
 .prologue__welcome {
@@ -65,7 +72,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.15rem;
-  margin-top: 0.9rem;
+  margin: 1rem 0 0 0.75rem;
   color: var(--text-muted);
   font-family: var(--font-display);
   font-style: italic;
@@ -101,32 +108,39 @@
   }
 }
 
+.prologue__body {
+  flex: 1 1 26rem;
+  min-width: 0;
+}
+
 .prologue__title {
-  font-size: clamp(2.2rem, 4.5vw, 2.75rem);
+  font-size: clamp(2.75rem, 5.2vw, 4.25rem);
   font-weight: 500;
-  line-height: 1.05;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .prologue__name {
-  margin-top: 0.5rem;
-  color: var(--text-muted);
-  font-family: var(--font-ui);
-  font-size: 0.9rem;
-  letter-spacing: 0.02em;
+  @include label;
+  margin-top: 1rem;
+  letter-spacing: 0.16em;
 }
 
 .prologue__native {
-  margin-left: 0.3em;
+  margin-left: 0.5em;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
 }
 
-// The introduction: set apart from the name above it, with a little more
-// leading than running text. On wide screens it is set a size up, in lines of
+// The introduction: a size up from running text on wide screens, in lines of
 // 40em (720px): in this text every measure from there to about 880px leaves a
-// paragraph ending on a word or two, and wider would fill the room on the
-// right. Re-check the ends of the paragraphs after rewriting them.
+// paragraph ending on a word or two. Re-check the ends of the paragraphs after
+// rewriting them.
 .prologue__bio {
   max-width: 40em;
-  margin-top: 1.35rem;
+  margin-top: 1.75rem;
   line-height: 1.72;
 
   @media (min-width: $bp-lg) {
@@ -139,8 +153,8 @@
   }
 }
 
-// Richard Feynman's words, quoted in the introduction: set like the epigraphs, a
-// little larger, since the display face runs small beside the body's.
+// Richard Feynman's words, quoted in the introduction: set like the epigraphs,
+// a little larger, since the display face runs small beside the body's.
 .prologue__quote {
   color: var(--gold);
   font-family: var(--font-display);
@@ -150,26 +164,65 @@
   line-height: 1;
 }
 
-// The research interests, under the introduction (.tags resets its margin).
-.prologue__bio .tags {
-  margin-top: 1.5rem;
+// The facts under the introduction.
+.facts {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: clamp(1rem, 3vw, 2rem) 0 0;
+  border-top: 1px solid var(--line);
 }
 
-.prologue .contact {
-  margin-top: 1rem;
+.facts__row {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+
+  @media (min-width: $bp-lg) {
+    @include home-grid;
+    align-items: baseline;
+  }
+}
+
+.facts__label {
+  @include label;
+}
+
+.facts__value {
+  margin: 0;
+}
+
+// Research interests: words in a row, a faint dot between them. The dot ends
+// an item, so a line that wraps never starts with one.
+.facts__list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    white-space: nowrap;
+  }
+
+  li:not(:last-child)::after {
+    content: "\00b7";
+    margin: 0 0.7em;
+    color: var(--text-faint);
+  }
 }
 
 // Arriving, for visitors who allow motion.
 //
-// The prologue, on load: the portrait, then the introduction (each after its
-// --reveal-delay), rise and fade in, and the glow opens behind the title.
+// The prologue, on load: the portrait, then the introduction, then the facts
+// (each after its --reveal-delay), rise and fade in.
 //
 // The chapters, as they scroll in: each piece marked data-reveal rises and
 // fades in over the first few lines of its way up from the bottom of the
-// window, and each title's glow opens with it. They follow the scroll
-// position, not a clock, so however fast the page is scrolled nothing waits
-// to appear, and scrolling back up plays them backwards. Where the browser
-// cannot tie animations to scrolling, the chapters simply show.
+// window. They follow the scroll position, not a clock, so however fast the
+// page is scrolled nothing waits to appear, and scrolling back up plays them
+// backwards. Where the browser cannot tie animations to scrolling, the
+// chapters simply show.
 //
 // Fill `backwards` only: past its range an animation lets go and the element
 // is back on its own styles, so hover effects (cards) still work.
@@ -178,23 +231,11 @@
     animation: reveal-in 0.9s var(--ease) var(--reveal-delay, 0ms) backwards;
   }
 
-  .prologue__title::before {
-    animation: glow-open 1.8s var(--ease) 0.3s backwards;
-  }
-
   @supports (animation-timeline: view()) {
     .chapter [data-reveal] {
       animation: reveal-in linear backwards;
       animation-timeline: view();
       animation-range: cover 0% cover 8rem;
-    }
-
-    .chapter > .chapter__header > .chapter__title::before {
-      animation: glow-open linear backwards;
-      animation-timeline: view();
-      // Short enough to open fully on the last chapter, which reaches only a
-      // little way up the window before the page ends.
-      animation-range: cover 0% cover 10rem;
     }
   }
 }
@@ -203,12 +244,5 @@
   from {
     opacity: 0;
     transform: translateY(18px);
-  }
-}
-
-@keyframes glow-open {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.7);
   }
 }
