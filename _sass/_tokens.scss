@@ -55,6 +55,9 @@ $bp-lg: 880px;
   --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
   --wrap: 46rem;
   --wrap-wide: 72rem;
+  // The home page's prologue and chapters: flush left in --wrap-wide, short of
+  // its right edge, which leaves room on the right.
+  --home-measure: 66rem;
   --gutter: clamp(1.25rem, 5vw, 2.5rem);
   --header-h: 4rem;
   --radius: 14px;

@@ -1,17 +1,30 @@
 // Chapters on the home page (_layouts/home.html), and the standalone page
 // layout (_layouts/page.html, used by the 404 page).
 
-// A chapter: its label, title and epigraph in a column on the left with the
-// content beside it on wide screens; stacked on narrow ones.
+// A chapter: its label and title in a column on the left, and beside them its
+// epigraph, if any, at the head of the content, the quote's first line on the
+// title's baseline. Stacked on narrow screens. Like the prologue, it stops
+// short of the right edge (--home-measure).
 .chapter {
   position: relative;
   display: grid;
   gap: 1.5rem 3rem;
+  max-width: var(--home-measure);
   margin-top: clamp(3rem, 7vw, 4.5rem);
   padding-top: clamp(2.5rem, 6vw, 3.5rem);
 
   @media (min-width: $bp-lg) {
     grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+
+    .chapter__header,
+    .chapter__epigraph {
+      align-self: baseline;
+    }
+
+    .chapter__epigraph,
+    .chapter__body {
+      grid-column: 2;
+    }
   }
 }
 
@@ -63,37 +76,10 @@
   }
 }
 
-// A chapter with a list of `epigraphs` (Experience) keeps its label and title
-// in the left column but sets the epigraphs in the content column, above the
-// content, so they line up with it (on Experience, Aristotle with the schools)
-// and stay clear of the timeline's years in the margin.
-.chapter--epigraphs {
-  @media (min-width: $bp-lg) {
-    .chapter__header {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
-      grid-template-rows: auto 1fr;
-      column-gap: 3rem;
-    }
-
-    .chapter__epigraphs {
-      grid-column: 2;
-      grid-row: 1 / span 2;
-
-      > :first-child {
-        margin-top: 0;
-      }
-    }
-
-    .chapter__body {
-      grid-column: 2;
-    }
-  }
-}
-
-.chapter__epigraphs .epigraph {
-  margin-left: var(--stage-x, 0);
+// The epigraph, at the head of the content, with room before it. On
+// Experience it lines up with the schools on the timeline (--stage-x).
+.chapter__epigraph {
+  margin: 0 0 1rem var(--stage-x, 0);
 }
 
 // Standalone page.

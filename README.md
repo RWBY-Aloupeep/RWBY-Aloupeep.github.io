@@ -20,7 +20,7 @@ The repository must stay **public**: GitHub Pages cannot publish from a private 
 | Chapter order, names in the menu | `order` (position) and `nav` (short name in the menu; defaults to `title`) at the top of each chapter file |
 | Schools, research, projects, honors, motivations | `_data/path.yml` (see below) |
 | Hobby cards | `interests` in `_chapters/life.md` |
-| Chapter epigraphs (quotes) | `epigraph` at the top of each chapter file (`epigraphs`, a list, in `_chapters/experience.md`) |
+| Chapter epigraphs (quotes, shown at the head of the chapter's content) | `epigraph` at the top of each chapter file |
 
 ### The Experience timeline
 
@@ -35,7 +35,7 @@ The repository must stay **public**: GitHub Pages cannot publish from a private 
     - year: "2026–Present"
       title: "Research Collaborator"
       where: "GaTech · Supervised by [Prof.&nbsp;Bo&nbsp;Zhu](https://…)"
-      why: [Next-generation physics engines, Digital twins]
+      why: [Fluid simulation, Flow map]
 ```
 
 `why` is the motivation, shown as small gold tags: a list of keywords, or one short phrase; leave it out when there is none. An entry whose `year` contains “Present” twinkles. As visitors scroll down, the timeline lights up from the top, node by node, and goes out again as they scroll back up (`assets/js/path.js`); pointing at a school dims the other schools. `org`, `title`, `where` and `note` may contain Markdown links such as `[Prof. Bo Zhu](https://…)`; they open in a new tab.

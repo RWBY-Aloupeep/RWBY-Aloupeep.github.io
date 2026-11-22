@@ -13,22 +13,25 @@
   pointer-events: none;
 }
 
-// Prologue: a small arched portrait beside the introduction. On wide screens
-// the portrait lines up with the name in the header, and the introduction
-// beside it runs long lines (up to 50rem) that stop short of the right edge,
-// so the two balance across the page.
+// Prologue: an arched portrait beside the introduction. On wide screens it
+// sits on the chapters' grid (_chapter.scss): the portrait in the titles'
+// column, flush with the name in the header, and the introduction in the
+// content column, lined up with the chapters' content below it and stopping
+// short of the right edge.
 
 .prologue {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 1.5rem 2.5rem;
+  max-width: var(--home-measure);
   // The top of the page: room for the stars, and for the title's glow.
   padding-top: clamp(3rem, 7vw, 4.5rem);
 
   @media (min-width: $bp-lg) {
-    flex-wrap: nowrap;
-    gap: 3.5rem;
+    display: grid;
+    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+    gap: 3rem;
   }
 }
 
@@ -37,7 +40,7 @@
   width: 10.5rem;
 
   @media (min-width: $bp-lg) {
-    width: 12rem;
+    width: 15rem;
   }
 
   img {
@@ -53,10 +56,6 @@
 .prologue__body {
   flex: 1 1 26rem;
   min-width: 0;
-
-  @media (min-width: $bp-lg) {
-    flex: 0 1 50rem;
-  }
 }
 
 // The welcome line under the portrait, like the inscription in a book;
@@ -109,22 +108,29 @@
 }
 
 .prologue__name {
-  margin-top: 0.35rem;
+  margin-top: 0.5rem;
   color: var(--text-muted);
   font-family: var(--font-ui);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
 }
 
 .prologue__native {
   margin-left: 0.3em;
 }
 
+// The introduction: set apart from the name above it, with a little more
+// leading than running text. On wide screens it is set a size up, in lines of
+// 40em (720px): in this text every measure from there to about 880px leaves a
+// paragraph ending on a word or two, and wider would fill the room on the
+// right. Re-check the ends of the paragraphs after rewriting them.
 .prologue__bio {
   max-width: 40em;
-  margin-top: 0.85rem;
+  margin-top: 1.35rem;
+  line-height: 1.72;
 
   @media (min-width: $bp-lg) {
-    max-width: none;
+    font-size: 1.125rem;
   }
 
   // The key terms (real-to-sim, …) never break at their hyphens.
@@ -133,7 +139,7 @@
   }
 }
 
-// Feynman's words, quoted in the introduction: set like the epigraphs, a
+// Richard Feynman's words, quoted in the introduction: set like the epigraphs, a
 // little larger, since the display face runs small beside the body's.
 .prologue__quote {
   color: var(--gold);
@@ -146,11 +152,11 @@
 
 // The research interests, under the introduction (.tags resets its margin).
 .prologue__bio .tags {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .prologue .contact {
-  margin-top: 0.75rem;
+  margin-top: 1rem;
 }
 
 // Arriving, for visitors who allow motion.
