@@ -1,0 +1,20 @@
+# The quote window, at the top right of the introduction: one quote in view,
+# the others scrolled into it one at a time.
+#
+# Fields:
+#   quote    the words, without quotation marks
+#   author   the name, signed under the quote
+#   default  true on the quote the window opens on (without it, the first).
+#            From there the window goes on in this order and comes back round
+#            to the top.
+#
+# The window holds two lines (some 100 characters); a longer quote is set a
+# size or two smaller to fit, so keep them short.
+
+- quote: "Make room for being bored, and you create the mental space to wrestle with life’s deeper questions of meaning and purpose."
+  author: Arthur C. Brooks
+  default: true
+- quote: "Communication is merely an exchange of information, but connection is an exchange of our humanity."
+  author: Sean Stephenson
+- quote: "Actions are the seeds of fate. Deeds grow into destiny."
+  author: Harry S. Truman

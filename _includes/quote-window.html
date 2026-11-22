@@ -1,0 +1,32 @@
+{%- comment -%}
+  The quote window (_data/quotes.yml), at the top right of the introduction:
+  one quote in view, the others scrolled into it one at a time, each set like
+  the epigraphs. It opens on the quote marked `default: true` and goes on in
+  the file's order from there, back round to the top.
+
+  A thin gold line stands a little behind it, as behind the portrait, and a
+  gold mark on its right edge shows how far down the list the window is.
+  site.js moves the mark, gives the window the wheel only when it is pointed
+  at, and sets a quote too long for the window a size smaller.
+{%- endcomment -%}
+{%- assign quotes = include.items -%}
+{%- assign start = 0 -%}
+{%- for q in quotes -%}
+  {%- if q.default -%}{%- assign start = forloop.index0 -%}{%- break -%}{%- endif -%}
+{%- endfor -%}
+{%- assign head = quotes | slice: start, quotes.size -%}
+{%- assign tail = quotes | slice: 0, start -%}
+{%- assign ordered = head | concat: tail -%}
+<div class="quote-window" style="--count: {{ ordered.size }}" data-quote-window data-stars-avoid>
+  <div class="quote-window__scroller" tabindex="0" role="region" aria-label="Quotes">
+    {%- for q in ordered %}
+    <div class="quote-window__item">
+      <figure class="epigraph">
+        <blockquote><p>{{ q.quote }}</p></blockquote>
+        <figcaption>{{ q.author }}</figcaption>
+      </figure>
+    </div>
+    {%- endfor %}
+  </div>
+  <span class="quote-window__track" aria-hidden="true"><span class="quote-window__thumb"></span></span>
+</div>
