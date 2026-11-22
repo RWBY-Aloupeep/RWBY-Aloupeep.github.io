@@ -9,8 +9,8 @@ scripts:
   The whole site on one page: the prologue (the portrait, with the welcome
   line under it like an inscription, and the introduction), then every chapter
   in _chapters/ in `order`, each with its title (and `label` above it, if
-  any) and epigraph beside its content. A chapter with a list of `epigraphs`
-  (Experience) sets them in the content column instead, above its content.
+  any) beside its content, and its epigraph, if any, at the head of the
+  content.
 
   The stars (assets/js/stars.js) drift behind the whole page. They steer around
   the text marked data-stars-avoid, the text that sits on the bare background;
@@ -51,29 +51,19 @@ scripts:
   </section>
 
   {%- for chapter in chapters %}
-  <section class="chapter chapter--{{ chapter.slug }}{% if chapter.epigraphs %} chapter--epigraphs{% endif %}" id="{{ chapter.slug }}" aria-labelledby="{{ chapter.slug }}-title" data-chapter>
+  <section class="chapter chapter--{{ chapter.slug }}" id="{{ chapter.slug }}" aria-labelledby="{{ chapter.slug }}-title" data-chapter>
     <header class="chapter__header" data-stars-avoid>
       {%- if chapter.label %}
       <p class="eyebrow" data-reveal>{{ chapter.label }}</p>
       {%- endif %}
       <h2 class="chapter__title" id="{{ chapter.slug }}-title" data-reveal>{{ chapter.title }}</h2>
-      {%- if chapter.epigraph %}
-      <figure class="epigraph" data-reveal>
-        <blockquote><p>{{ chapter.epigraph.quote }}</p></blockquote>
-        <figcaption>{{ chapter.epigraph.author }}</figcaption>
-      </figure>
-      {%- endif %}
-      {%- if chapter.epigraphs %}
-      <div class="chapter__epigraphs">
-        {%- for epigraph in chapter.epigraphs %}
-        <figure class="epigraph" data-reveal>
-          <blockquote><p>{{ epigraph.quote }}</p></blockquote>
-          <figcaption>{{ epigraph.author }}</figcaption>
-        </figure>
-        {%- endfor %}
-      </div>
-      {%- endif %}
     </header>
+    {%- if chapter.epigraph %}
+    <figure class="epigraph chapter__epigraph" data-stars-avoid data-reveal>
+      <blockquote><p>{{ chapter.epigraph.quote }}</p></blockquote>
+      <figcaption>{{ chapter.epigraph.author }}</figcaption>
+    </figure>
+    {%- endif %}
     {%- comment %} A body whose own pieces arrive one by one (cards, notes) is not revealed as a whole. {% endcomment %}
     <div class="chapter__body prose" data-stars-avoid{% unless chapter.content contains "data-reveal" %} data-reveal{% endunless %}>
       {{ chapter.content }}

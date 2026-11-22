@@ -25,7 +25,10 @@
   color: var(--text-muted);
 }
 
-// Epigraph under a chapter title.
+// Epigraph: at the head of a chapter's content (_chapter.scss), or under the
+// title of a standalone page. The opening quotation mark hangs in the margin,
+// so the words themselves line up with what is below them; the lines are
+// balanced so a long quote breaks evenly.
 
 .epigraph {
   max-width: 34rem;
@@ -34,13 +37,20 @@
   blockquote {
     color: var(--gold);
     font-family: var(--font-display);
-    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+    font-size: clamp(1.3rem, 2.3vw, 1.6rem);
     font-style: italic;
     font-weight: 500;
     line-height: 1.4;
+    text-wrap: balance;
+
+    p {
+      position: relative;
+    }
 
     p::before {
       content: "\201C";
+      position: absolute;
+      right: 100%;
     }
 
     p::after {
@@ -110,8 +120,8 @@
   list-style: none;
 }
 
-// The geometry, shared with the Experience chapter's epigraphs (_chapter.scss),
-// which line up with the stages and the branches.
+// The geometry, shared with the Experience chapter's epigraph (_chapter.scss),
+// which lines up with the schools.
 .path,
 .chapter--experience {
   --axis: 0.45rem; // the line, from the entries' left edge
@@ -307,12 +317,25 @@
   color: var(--text-muted);
 }
 
-.path__honors,
-.path__note {
+.path__honors {
   margin-top: 0.15rem;
   color: var(--text-muted);
   font-size: 0.95rem;
   font-style: italic;
+}
+
+// A few words after the title (Regional Finalist · 123 of 3,600+ entries).
+.path__note {
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-style: italic;
+
+  &::before {
+    content: "\00b7";
+    margin: 0 0.5em;
+    font-style: normal;
+  }
 }
 
 .path__honor-year {

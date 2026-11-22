@@ -168,6 +168,11 @@ a {
     margin-top: 1.5rem;
   }
 
+  // No paragraph ends on a lone word: the browser rebalances its last lines.
+  > p {
+    text-wrap: pretty;
+  }
+
   // Sections inside a chapter (Markdown `###`), with a short accent rule.
   // Headings with a class belong to a component (cards) and style themselves.
   h3:not([class]) {

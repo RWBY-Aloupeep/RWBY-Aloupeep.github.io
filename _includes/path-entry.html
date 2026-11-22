@@ -1,15 +1,19 @@
 {%- comment -%}
   One entry of the Experience timeline (_includes/path.html): its node on the line,
   the lit stretch of line (trace) that path.js draws, its years, a heading
-  (`head`), a muted line under it (`detail`), and the optional honors, note
-  and motivation (`why`, a list of keywords or one phrase, shown as tags).
+  (`head`, followed by the optional `note`), a muted line under it
+  (`detail`), and the optional honors and motivation (`why`, a list of
+  keywords or one phrase, shown as tags).
 {%- endcomment -%}
 {%- assign e = include.entry -%}
 <div class="{{ include.classes | strip }}">
   <span class="path__trace" aria-hidden="true"></span>
   <span class="path__node" aria-hidden="true"></span>
   <p class="path__year">{{ e.year }}</p>
-  <{{ include.tag }} class="path__title">{% include inline-markdown.html text=include.head %}</{{ include.tag }}>
+  <{{ include.tag }} class="path__title">
+    {%- include inline-markdown.html text=include.head -%}
+    {%- if e.note %}<span class="path__note">{% include inline-markdown.html text=e.note %}</span>{% endif -%}
+  </{{ include.tag }}>
   {%- if include.detail %}
   <p class="path__where">{% include inline-markdown.html text=include.detail %}</p>
   {%- endif %}
@@ -20,9 +24,6 @@
     {%- unless forloop.last %} · {% endunless -%}
     {%- endfor -%}
   </p>
-  {%- endif %}
-  {%- if e.note %}
-  <p class="path__note">{% include inline-markdown.html text=e.note %}</p>
   {%- endif %}
   {%- if e.why and e.why != empty %}
   {%- assign keywords = e.why | join: "§" | split: "§" %}
