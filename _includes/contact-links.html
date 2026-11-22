@@ -1,6 +1,11 @@
 {%- comment -%}
   A row of icon + label contact links (the prologue), built from `author` in
   _config.yml. A link is left out when its field is empty.
+
+  The email link copies the address (site.js). Pointed at, it shows the
+  address above itself; clicked, it copies it, its envelope turns into a check
+  and the note above says "Copied" for a moment. Without the script, or where
+  the clipboard is out of reach, it opens the mail app as usual.
 {%- endcomment -%}
 {%- assign author = site.author -%}
 {%- assign services = "email,github,linkedin" | split: "," -%}
@@ -23,10 +28,23 @@
     {%- assign href = "https://www.linkedin.com/in/" | append: id -%}
   {%- endcase %}
   <li>
-    <a class="contact__link" href="{{ href }}"{% unless service == "email" %} target="_blank" rel="noopener"{% endunless %}>
+    {%- if service == "email" %}
+    <a class="contact__link contact__link--copy" href="{{ href }}" data-copy="{{ id }}">
+      {% include icon.html name=icon %}{% include icon.html name="check" %}
+      <span class="contact__label">{{ label }}</span>
+      <span class="contact__tip" aria-hidden="true">
+        <span class="contact__tip-address">{{ id }}</span>
+        <span class="contact__tip-hint">Click to copy</span>
+        <span class="contact__tip-done">Copied</span>
+      </span>
+    </a>
+    <span class="visually-hidden" role="status" data-copy-status></span>
+    {%- else %}
+    <a class="contact__link" href="{{ href }}" target="_blank" rel="noopener">
       {% include icon.html name=icon %}
       <span class="contact__label">{{ label }}</span>
     </a>
+    {%- endif %}
   </li>
   {%- endfor %}
 </ul>

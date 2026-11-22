@@ -1,5 +1,8 @@
 // Header, navigation, and footer.
 
+// The header: the star and the name on the left, the chapters on the right.
+// A hairline along its bottom edge fills with the page as it is read, and
+// empties again on the way back up.
 .site-header {
   position: sticky;
   top: 0;
@@ -23,13 +26,52 @@
   height: var(--header-h);
 }
 
+.site-header__progress {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .site-header__progress {
+    animation: header-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@keyframes header-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   margin-right: auto;
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 600;
   white-space: nowrap;
   text-decoration: none;
+
+  .icon {
+    width: 1.05rem;
+    height: 1.05rem;
+    color: var(--accent);
+    transition: transform 0.6s var(--ease);
+  }
+
+  &:hover .icon {
+    transform: rotate(72deg);
+  }
 }
 
 .icon-button {
@@ -53,29 +95,45 @@
 
 .site-nav__list {
   display: flex;
-  gap: 0.15rem;
-  margin: 0;
+  gap: 0.25rem;
+  margin: 0 0.5rem 0 0;
   padding: 0;
   list-style: none;
 
   a {
+    @include label;
+    position: relative;
     display: block;
-    padding: 0.45rem 0.8rem;
-    border-radius: 999px;
+    padding: 0.55rem 0.75rem;
     color: var(--text-muted);
-    font-family: var(--font-ui);
-    font-size: 0.9rem;
-    font-weight: 500;
     text-decoration: none;
-    transition: color 0.2s, background-color 0.2s;
+    transition: color 0.2s;
 
     &:hover {
-      background: var(--accent-soft);
       color: var(--text);
+    }
+
+    // The chapter being read: violet, with a small star under it.
+    &::after {
+      content: "\2726";
+      position: absolute;
+      bottom: -0.35rem;
+      left: 50%;
+      color: var(--accent);
+      font-size: 0.6rem;
+      letter-spacing: 0;
+      opacity: 0;
+      transform: translate(-50%, -0.25rem);
+      transition: opacity 0.25s, transform 0.35s var(--ease);
     }
 
     &[aria-current] {
       color: var(--accent);
+
+      &::after {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
     }
   }
 }
@@ -127,19 +185,19 @@
       display: none;
       flex-direction: column;
       gap: 0;
+      margin: 0;
       padding: 0.25rem var(--gutter) 1rem;
       border-bottom: 1px solid var(--line);
       background: var(--bg);
       box-shadow: var(--shadow);
 
       a {
-        padding: 0.9rem 0;
+        padding: 1rem 0;
         border-bottom: 1px solid var(--line);
-        border-radius: 0;
-        font-size: 1rem;
+        font-size: 0.8rem;
 
-        &:hover {
-          background: none;
+        &::after {
+          display: none;
         }
       }
 
@@ -173,37 +231,58 @@
   }
 }
 
+// The colophon, as at the end of a book: who, when, and the typefaces, with
+// the way back to the top on the right.
 .site-footer {
-  margin-top: clamp(3rem, 8vw, 4.5rem);
+  margin-top: clamp(4rem, 9vw, 6rem);
   border-top: 1px solid var(--line);
-  color: var(--text-muted);
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
 }
 
-// One centered line. Contact links live in the prologue and the Contact
-// chapter.
 .site-footer__inner {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  padding-top: 1.75rem;
+  padding-bottom: 2rem;
 }
 
-.site-footer__copy > span {
-  white-space: nowrap;
-}
+.site-footer__colophon {
+  @include label;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0;
+  color: var(--text-faint);
 
-.site-footer__sep {
-  margin: 0 0.4em;
-}
-
-// On phones: two centered lines instead of one with the dot.
-@media (max-width: $bp-sm - 1px) {
-  .site-footer__copy > span {
-    display: block;
+  span {
+    white-space: nowrap;
   }
 
-  .site-footer__copy > .site-footer__sep {
-    display: none;
+  span + span::before {
+    content: "\00b7";
+    margin: 0 0.8em;
+  }
+}
+
+.site-footer__top {
+  @include label;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+// On phones: one item to a line, without the dots.
+@media (max-width: $bp-sm - 1px) {
+  .site-footer__colophon {
+    flex-direction: column;
+
+    span + span::before {
+      display: none;
+    }
   }
 }

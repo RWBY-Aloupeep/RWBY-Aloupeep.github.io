@@ -42,10 +42,10 @@
   title: "Bachelor of Science in Mathematics and Applied Mathematics"
   why: ["Scientific computing", "Numerical analysis"]
   honors:
-    - title: "Bowen Scholarship"
-      year: "2021–2024"
     - title: "School of Science and Engineering Dean’s List"
       year: "2022–23, 2023–24"
+    - title: "Bowen Scholarship"
+      year: "2021–2024"
   items:
     - year: "2025"
       title: "Community Contributor"

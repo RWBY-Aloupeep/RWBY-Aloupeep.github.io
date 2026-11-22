@@ -1,46 +1,51 @@
 // Chapters on the home page (_layouts/home.html), and the standalone page
 // layout (_layouts/page.html, used by the 404 page).
+//
+// The page reads like a book: the prologue, then the chapters (Experience,
+// Notes, Life), then the back matter (Acknowledgments), which is set quieter.
+//
+// A chapter sits on the home grid (_tokens.scss): its title in the rail, its
+// epigraph and content beside it. The rail stays in view
+// while its chapter is read (it is sticky), so a long chapter (Experience)
+// never loses its name. The title and the first line beside it (the
+// epigraph's, or the content's) share a baseline.
+//
+// A wide chapter (`wide: true`: Notes, Life) puts its content under the head,
+// across the whole grid: a row of items fills the width rather than leaving
+// the title alone in an empty column. Its epigraph has the rest of the head's
+// width, so a long quote (Life) takes one line.
+//
+// Spacing: about 7rem from one chapter to the next, 2.5rem between a
+// chapter's head and the content under it.
 
-// A chapter: its label and title in a column on the left, and beside them its
-// epigraph, if any, at the head of the content. Whatever comes first beside
-// the title (the quote, or the text of a chapter without one: Acks, Contact)
-// starts on the title's baseline. Stacked on narrow screens. Like the
-// prologue, it stops short of the right edge (--home-measure).
-//
-// A wide chapter (`wide: true`: Notes, Life) puts its content under the
-// title, across both columns: a grid of items fills the width rather than
-// leaving the title alone in an empty column. Its epigraph follows the title
-// straight away rather than waiting for the 17rem column, and runs to the
-// right edge, so a long quote (Life) takes one line instead of three.
-//
-// Spacing: about 6rem from one chapter to the next, and 2.5rem between a
-// chapter's head (its title, and the quote beside it) and what follows under
-// it (the timeline, the notes, the cards), so a title sits clearly with its
-// own content.
 .chapter {
   position: relative;
   display: grid;
-  gap: clamp(1.5rem, 3vw, 2.5rem) 3rem;
+  gap: 2rem;
   max-width: var(--home-measure);
-  margin-top: clamp(2.5rem, 5vw, 4rem);
-  padding-top: clamp(1.5rem, 3vw, 2rem);
+  margin-top: clamp(4.5rem, 8vw, 7rem);
 
   @media (min-width: $bp-lg) {
-    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+    @include home-grid;
+    align-items: baseline;
 
-    .chapter__header,
-    .chapter__epigraph,
-    .chapter__body {
-      align-self: baseline;
-    }
-
-    .chapter__epigraph,
-    .chapter__body {
-      grid-column: 2;
+    .chapter__header {
+      position: sticky;
+      top: calc(var(--header-h) + 2.5rem);
     }
 
     &.chapter--wide {
       grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 3.5rem;
+      row-gap: 2.5rem;
+
+      .chapter__header {
+        position: static;
+      }
+
+      .chapter__main {
+        display: contents;
+      }
 
       .chapter__body {
         grid-column: 1 / -1;
@@ -49,47 +54,20 @@
   }
 }
 
-.chapter--wide .chapter__epigraph {
-  max-width: none;
+.chapter__main {
+  min-width: 0;
+
+  > .chapter__epigraph + .chapter__body {
+    margin-top: 2.5rem;
+  }
 }
 
-// Sized so the longest one-word title ("Acknowledgments") fits the 17rem
-// column and a 320px phone.
+// Sized so "Experience" fits the 15rem rail and a 320px phone.
 .chapter__title {
-  margin-top: 0.5rem;
-  font-size: clamp(2.25rem, 3.4vw, 2.5rem);
+  font-size: clamp(2.5rem, 3.6vw, 3rem);
   font-weight: 500;
-  line-height: 1.05;
+  line-height: 1;
   letter-spacing: -0.015em;
-
-  // Without a label above it, it lines up with the content.
-  &:first-child {
-    margin-top: 0;
-  }
-}
-
-// No divider between chapters: space, and a soft glow centred on each
-// chapter's title, and on the prologue's at the top of the page. The title is
-// only as wide as its text, so the glow sits on the words themselves; the glow
-// sits below the text and over the stars. It opens as the title arrives
-// (_home.scss).
-.chapter > .chapter__header > .chapter__title,
-.prologue__title {
-  position: relative;
-  width: fit-content;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: -1;
-    width: 28rem;
-    height: 16rem;
-    background: radial-gradient(closest-side, var(--title-glow), transparent);
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-  }
 }
 
 .chapter__body {
@@ -101,10 +79,49 @@
   }
 }
 
-// The epigraph, at the head of the content. On Experience it lines up with
-// the schools on the timeline (--stage-x).
+// The epigraph, at the head of the content: flush right, across from the
+// title and level with it, the signature under its end. A long quote (Life)
+// keeps to one line while it fits, and breaks into even lines, still flush
+// right, where it does not.
 .chapter__epigraph {
-  margin: 0 0 0 var(--stage-x, 0);
+  max-width: none;
+  margin: 0 0 0 auto;
+  text-align: right;
+}
+
+// Back matter: quieter. A smaller title in italic; the rail does not follow
+// the page.
+.chapter--back {
+  @media (min-width: $bp-lg) {
+    .chapter__header {
+      position: static;
+    }
+  }
+
+  .chapter__title {
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+}
+
+// Acknowledgments: set like a dedication.
+.chapter--acks .chapter__body {
+  .lead {
+    max-width: 40rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  strong {
+    font-style: normal;
+    font-weight: 600;
+  }
 }
 
 // Standalone page.

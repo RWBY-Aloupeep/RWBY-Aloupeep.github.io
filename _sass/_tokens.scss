@@ -1,67 +1,80 @@
-// Design tokens. Colors are CSS custom properties so the theme can switch at
-// runtime (see _includes/head.html); breakpoints are Sass variables because
-// media queries cannot read custom properties.
+// Design tokens and shared mixins. Colors are CSS custom properties so the
+// theme can switch at runtime (see _includes/head.html); breakpoints are Sass
+// variables because media queries cannot read custom properties.
+//
+// The colors mean something: violet is the path (links, the timeline, what
+// can be clicked), gold is the why (the quotes, the motivations, the honors).
 
 $bp-sm: 520px;
 $bp-md: 760px;
-$bp-lg: 880px;
+$bp-lg: 960px; // the rail beside the content
 $bp-xl: 1120px; // room for the four note topics and the five Life cards in one row
 
-// Dark: near-black with a violet accent.
+// Night: violet-black, as before.
 @mixin dark-theme {
   color-scheme: dark;
   --bg: #0c0a10;
   --bg-raised: #15121c;
-  --bg-header: rgba(12, 10, 16, 0.85);
+  --bg-header: rgba(12, 10, 16, 0.82);
   --text: #ece8f3;
   --text-muted: #a69fb6;
-  --text-faint: #857d98;
-  --line: #241f2e;
+  --text-faint: #7f7892;
+  --line: #262130;
+  --line-strong: #3b3448;
   --accent: #b69cff;
-  --gold: #dcb76e; // the chapter epigraphs
-  --accent-line: rgba(182, 156, 255, 0.4);
+  --gold: #dcb76e;
+  --accent-line: rgba(182, 156, 255, 0.42);
   --accent-soft: rgba(182, 156, 255, 0.1);
-  --title-glow: rgba(126, 104, 196, 0.22);
+  --gold-line: rgba(220, 183, 110, 0.45);
   --star-core: #f6f3ff;
   --star-edge: #9d93c4;
   --star-glow: rgba(196, 177, 255, 0.8);
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 14px 34px rgba(0, 0, 0, 0.38);
 }
 
-// Light: the same violet on a pale lavender ground.
+// Paper: violet ink and gold on a warm, book-like ground.
 @mixin light-theme {
   color-scheme: light;
-  --bg: #f8f6fc;
-  --bg-raised: #ffffff;
-  --bg-header: rgba(248, 246, 252, 0.86);
-  --text: #1c1826;
-  --text-muted: #5b5468;
-  --text-faint: #8a8398;
-  --line: #e5e0ef;
-  --accent: #6d4bd8;
-  --gold: #8a6312; // darker, to keep its contrast on the light ground
-  --accent-line: rgba(109, 75, 216, 0.35);
-  --accent-soft: rgba(109, 75, 216, 0.08);
-  --title-glow: rgba(150, 120, 230, 0.2);
+  --bg: #f6f4ef;
+  --bg-raised: #fffdf9;
+  --bg-header: rgba(246, 244, 239, 0.84);
+  --text: #1d1a24;
+  --text-muted: #5c5766;
+  --text-faint: #8a8494;
+  --line: #e2ddd3;
+  --line-strong: #cbc4b6;
+  --accent: #6045d6;
+  --gold: #8a6312;
+  --accent-line: rgba(96, 69, 214, 0.36);
+  --accent-soft: rgba(96, 69, 214, 0.08);
+  --gold-line: rgba(138, 99, 18, 0.4);
   --star-core: #ffffff;
   --star-edge: #b3a2e6;
   --star-glow: rgba(109, 75, 216, 0.35);
-  --shadow: 0 1px 2px rgba(28, 24, 38, 0.04), 0 10px 30px rgba(28, 24, 38, 0.08);
+  --shadow: 0 1px 2px rgba(29, 26, 36, 0.04), 0 14px 34px rgba(29, 26, 36, 0.09);
 }
 
 :root {
   @include light-theme;
+  // Three voices: the display face for names and titles, the text face for
+  // reading, and a monospace for data (years, labels, counts, the menu). The
+  // system's own sans sets the small gold tags of the timeline.
   --font-display: "Cormorant Garamond", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
   --font-body: "Source Serif 4", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", "PingFang SC", "Microsoft YaHei", monospace;
   --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
   --wrap: 46rem;
   --wrap-wide: 72rem;
-  // The home page's prologue and chapters: flush left in --wrap-wide, short of
-  // its right edge, which leaves room on the right.
+  // The home page sits on one grid, top to bottom: a rail on the left (the
+  // portrait, the chapter titles, the labels) and the content beside it. It
+  // stops short of the right edge of --wrap-wide, which leaves room on the
+  // right.
+  --rail: 15rem;
+  --rail-gap: 4rem;
   --home-measure: 66rem;
   --gutter: clamp(1.25rem, 5vw, 2.5rem);
   --header-h: 4rem;
-  --radius: 14px;
+  --radius: 12px;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
@@ -75,4 +88,40 @@ $bp-xl: 1120px; // room for the four note topics and the five Life cards in one 
 
 :root[data-theme="dark"] {
   @include dark-theme;
+}
+
+// Small uppercase monospace: years, labels, the menu.
+@mixin label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+// Bordered surfaces that react on hover (the Life cards).
+@mixin surface {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.25s, transform 0.25s var(--ease);
+}
+
+@mixin surface-hover {
+  border-color: var(--accent-line);
+  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+}
+
+// The home page's grid: the rail, then the content beside it. Shared by the
+// prologue, its facts and the chapters (_chapter.scss), so that everything
+// from the portrait to the last chapter hangs from the same two lines.
+@mixin home-grid {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  column-gap: var(--rail-gap);
 }
